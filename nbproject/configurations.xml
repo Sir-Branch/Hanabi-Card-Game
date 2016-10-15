@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="97">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <logicalFolder name="f1" displayName="Networking" projectFiles="true">
+        <logicalFolder name="f1" displayName="Hanabi Game Packets" projectFiles="true">
+          <itemPath>Hanabi_Ack_Packet.h</itemPath>
+          <itemPath>Hanabi_Discard_Packet.h</itemPath>
+          <itemPath>Hanabi_Draw_Packet.h</itemPath>
+          <itemPath>Hanabi_Error_Packet.h</itemPath>
+          <itemPath>Hanabi_Game_Over_Packet.h</itemPath>
+          <itemPath>Hanabi_IStart_Packet.h</itemPath>
+          <itemPath>Hanabi_Match_Over_Packet.h</itemPath>
+          <itemPath>Hanabi_Name_Is_Packet.h</itemPath>
+          <itemPath>Hanabi_Name_Packet.h</itemPath>
+          <itemPath>Hanabi_Network_Defines.h</itemPath>
+          <itemPath>Hanabi_Play_Again_Packet.h</itemPath>
+          <itemPath>Hanabi_Play_Packet.h</itemPath>
+          <itemPath>Hanabi_Quit_Packet.h</itemPath>
+          <itemPath>Hanabi_Start_Info_Packet.h</itemPath>
+          <itemPath>Hanabi_We_Lost_Packet.h</itemPath>
+          <itemPath>Hanabi_We_Won_Packet.h</itemPath>
+          <itemPath>Hanabi_You_Have_Packet.h</itemPath>
+          <itemPath>Hanabi_You_Start_Packet.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f2" displayName="TFTP Basic Conexion" projectFiles="true">
+          <itemPath>TFTPClient.h</itemPath>
+          <itemPath>TFTPCxn.h</itemPath>
+          <itemPath>TFTPServer.h</itemPath>
+          <itemPath>TFTP_Ack_Packet.h</itemPath>
+          <itemPath>TFTP_Data_Packet.h</itemPath>
+          <itemPath>TFTP_Err_Packet.h</itemPath>
+          <itemPath>TFTP_Packet.h</itemPath>
+          <itemPath>TFTP_Rq_Packet.h</itemPath>
+        </logicalFolder>
+      </logicalFolder>
+      <itemPath>Deck.h</itemPath>
+      <itemPath>Hanabi_Board.h</itemPath>
+      <itemPath>Hanabi_Card.h</itemPath>
+      <itemPath>Hanabi_Deck.h</itemPath>
+      <itemPath>Token.h</itemPath>
+      <itemPath>my_sleep_ms.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <logicalFolder name="f1" displayName="Networking" projectFiles="true">
+        <logicalFolder name="f2" displayName="Hanabi Game Packets" projectFiles="true">
+          <itemPath>Hanabi_Ack_Packet.cpp</itemPath>
+          <itemPath>Hanabi_Discard_Packet.cpp</itemPath>
+          <itemPath>Hanabi_Draw_Packet.cpp</itemPath>
+          <itemPath>Hanabi_Error_Packet.cpp</itemPath>
+          <itemPath>Hanabi_Game_Over_Packet.cpp</itemPath>
+          <itemPath>Hanabi_IStart_Packet.cpp</itemPath>
+          <itemPath>Hanabi_Match_Over_Packet.cpp</itemPath>
+          <itemPath>Hanabi_Name_Is_Packet.cpp</itemPath>
+          <itemPath>Hanabi_Name_Packet.cpp</itemPath>
+          <itemPath>Hanabi_Play_Again_Packet.cpp</itemPath>
+          <itemPath>Hanabi_Play_Packet.cpp</itemPath>
+          <itemPath>Hanabi_Quit_Packet.cpp</itemPath>
+          <itemPath>Hanabi_Start_Info_Packet.cpp</itemPath>
+          <itemPath>Hanabi_We_Lost_Packet.cpp</itemPath>
+          <itemPath>Hanabi_We_Won_Packet.cpp</itemPath>
+          <itemPath>Hanabi_You_Have_Packet.cpp</itemPath>
+          <itemPath>Hanabi_You_Start_Packet.cpp</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f1" displayName="TFTP Basic Conexion" projectFiles="true">
+          <itemPath>TFTPClient.cpp</itemPath>
+          <itemPath>TFTPCxn.cpp</itemPath>
+          <itemPath>TFTPServer.cpp</itemPath>
+          <itemPath>TFTP_Ack_Packet.cpp</itemPath>
+          <itemPath>TFTP_Data_Packet.cpp</itemPath>
+          <itemPath>TFTP_Err_Packet.cpp</itemPath>
+          <itemPath>TFTP_Packet.cpp</itemPath>
+          <itemPath>TFTP_Rq_Packet.cpp</itemPath>
+        </logicalFolder>
+        <itemPath>Hanabi_Player.cpp</itemPath>
+        <itemPath>Hanabi_Player.h</itemPath>
+      </logicalFolder>
+      <itemPath>Deck.cpp</itemPath>
+      <itemPath>Hanabi_Board.cpp</itemPath>
+      <itemPath>Hanabi_Card.cpp</itemPath>
+      <itemPath>Hanabi_Deck.cpp</itemPath>
+      <itemPath>Token.cpp</itemPath>
+      <itemPath>main.cpp</itemPath>
+      <itemPath>my_sleep_ms.cpp</itemPath>
+      <itemPath>network_main_test.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerOptionItem>`pkg-config --libs apr-1`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="Deck.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Deck.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Ack_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Ack_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Board.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Board.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Card.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Card.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Deck.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Deck.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Discard_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Discard_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Draw_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Draw_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Error_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Error_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Game_Over_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Game_Over_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_IStart_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_IStart_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Match_Over_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Match_Over_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Name_Is_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Name_Is_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Name_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Name_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Network_Defines.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Play_Again_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Play_Again_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Play_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Play_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Player.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Player.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Quit_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Quit_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Start_Info_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Start_Info_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_We_Lost_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_We_Lost_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_We_Won_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_We_Won_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_You_Have_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_You_Have_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_You_Start_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_You_Start_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TFTPClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TFTPClient.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TFTPCxn.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TFTPCxn.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TFTPServer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TFTPServer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TFTP_Ack_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TFTP_Ack_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TFTP_Data_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TFTP_Data_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TFTP_Err_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TFTP_Err_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TFTP_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TFTP_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TFTP_Rq_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TFTP_Rq_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Token.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Token.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="my_sleep_ms.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="my_sleep_ms.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="network_main_test.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="Deck.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Deck.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Ack_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Ack_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Board.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Board.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Card.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Card.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Deck.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Deck.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Discard_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Discard_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Draw_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Draw_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Error_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Error_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Game_Over_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Game_Over_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_IStart_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_IStart_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Match_Over_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Match_Over_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Name_Is_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Name_Is_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Name_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Name_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Network_Defines.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Play_Again_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Play_Again_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Play_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Play_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Player.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Player.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Quit_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Quit_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_Start_Info_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Start_Info_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_We_Lost_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_We_Lost_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_We_Won_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_We_Won_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_You_Have_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_You_Have_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Hanabi_You_Start_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_You_Start_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TFTPClient.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TFTPClient.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TFTPCxn.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TFTPCxn.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TFTPServer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TFTPServer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TFTP_Ack_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TFTP_Ack_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TFTP_Data_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TFTP_Data_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TFTP_Err_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TFTP_Err_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TFTP_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TFTP_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TFTP_Rq_Packet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TFTP_Rq_Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Token.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Token.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="my_sleep_ms.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="my_sleep_ms.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="network_main_test.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

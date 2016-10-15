@@ -1,0 +1,282 @@
+#
+# Generated Makefile - do not edit!
+#
+# Edit the Makefile in the project folder instead (../Makefile). Each target
+# has a -pre and a -post target defined where you can add customized code.
+#
+# This makefile implements configuration specific macros and targets.
+
+
+# Environment
+MKDIR=mkdir
+CP=cp
+GREP=grep
+NM=nm
+CCADMIN=CCadmin
+RANLIB=ranlib
+CC=gcc
+CCC=g++
+CXX=g++
+FC=gfortran
+AS=as
+
+# Macros
+CND_PLATFORM=GNU-Linux
+CND_DLIB_EXT=so
+CND_CONF=Release
+CND_DISTDIR=dist
+CND_BUILDDIR=build
+
+# Include project Makefile
+include Makefile
+
+# Object Directory
+OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
+
+# Object Files
+OBJECTFILES= \
+	${OBJECTDIR}/Deck.o \
+	${OBJECTDIR}/Hanabi_Ack_Packet.o \
+	${OBJECTDIR}/Hanabi_Board.o \
+	${OBJECTDIR}/Hanabi_Card.o \
+	${OBJECTDIR}/Hanabi_Deck.o \
+	${OBJECTDIR}/Hanabi_Discard_Packet.o \
+	${OBJECTDIR}/Hanabi_Draw_Packet.o \
+	${OBJECTDIR}/Hanabi_Error_Packet.o \
+	${OBJECTDIR}/Hanabi_Game_Over_Packet.o \
+	${OBJECTDIR}/Hanabi_IStart_Packet.o \
+	${OBJECTDIR}/Hanabi_Match_Over_Packet.o \
+	${OBJECTDIR}/Hanabi_Name_Is_Packet.o \
+	${OBJECTDIR}/Hanabi_Name_Packet.o \
+	${OBJECTDIR}/Hanabi_Play_Again_Packet.o \
+	${OBJECTDIR}/Hanabi_Play_Packet.o \
+	${OBJECTDIR}/Hanabi_Player.o \
+	${OBJECTDIR}/Hanabi_Quit_Packet.o \
+	${OBJECTDIR}/Hanabi_Start_Info_Packet.o \
+	${OBJECTDIR}/Hanabi_We_Lost_Packet.o \
+	${OBJECTDIR}/Hanabi_We_Won_Packet.o \
+	${OBJECTDIR}/Hanabi_You_Have_Packet.o \
+	${OBJECTDIR}/Hanabi_You_Start_Packet.o \
+	${OBJECTDIR}/TFTPClient.o \
+	${OBJECTDIR}/TFTPCxn.o \
+	${OBJECTDIR}/TFTPServer.o \
+	${OBJECTDIR}/TFTP_Ack_Packet.o \
+	${OBJECTDIR}/TFTP_Data_Packet.o \
+	${OBJECTDIR}/TFTP_Err_Packet.o \
+	${OBJECTDIR}/TFTP_Packet.o \
+	${OBJECTDIR}/TFTP_Rq_Packet.o \
+	${OBJECTDIR}/Token.o \
+	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/my_sleep_ms.o \
+	${OBJECTDIR}/network_main_test.o
+
+
+# C Compiler Flags
+CFLAGS=
+
+# CC Compiler Flags
+CCFLAGS=
+CXXFLAGS=
+
+# Fortran Compiler Flags
+FFLAGS=
+
+# Assembler Flags
+ASFLAGS=
+
+# Link Libraries and Options
+LDLIBSOPTIONS=
+
+# Build Targets
+.build-conf: ${BUILD_SUBPROJECTS}
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/red_management_tpfinal
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/red_management_tpfinal: ${OBJECTFILES}
+	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/red_management_tpfinal ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/Deck.o: Deck.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Deck.o Deck.cpp
+
+${OBJECTDIR}/Hanabi_Ack_Packet.o: Hanabi_Ack_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Ack_Packet.o Hanabi_Ack_Packet.cpp
+
+${OBJECTDIR}/Hanabi_Board.o: Hanabi_Board.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Board.o Hanabi_Board.cpp
+
+${OBJECTDIR}/Hanabi_Card.o: Hanabi_Card.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Card.o Hanabi_Card.cpp
+
+${OBJECTDIR}/Hanabi_Deck.o: Hanabi_Deck.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Deck.o Hanabi_Deck.cpp
+
+${OBJECTDIR}/Hanabi_Discard_Packet.o: Hanabi_Discard_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Discard_Packet.o Hanabi_Discard_Packet.cpp
+
+${OBJECTDIR}/Hanabi_Draw_Packet.o: Hanabi_Draw_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Draw_Packet.o Hanabi_Draw_Packet.cpp
+
+${OBJECTDIR}/Hanabi_Error_Packet.o: Hanabi_Error_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Error_Packet.o Hanabi_Error_Packet.cpp
+
+${OBJECTDIR}/Hanabi_Game_Over_Packet.o: Hanabi_Game_Over_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Game_Over_Packet.o Hanabi_Game_Over_Packet.cpp
+
+${OBJECTDIR}/Hanabi_IStart_Packet.o: Hanabi_IStart_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_IStart_Packet.o Hanabi_IStart_Packet.cpp
+
+${OBJECTDIR}/Hanabi_Match_Over_Packet.o: Hanabi_Match_Over_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Match_Over_Packet.o Hanabi_Match_Over_Packet.cpp
+
+${OBJECTDIR}/Hanabi_Name_Is_Packet.o: Hanabi_Name_Is_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Name_Is_Packet.o Hanabi_Name_Is_Packet.cpp
+
+${OBJECTDIR}/Hanabi_Name_Packet.o: Hanabi_Name_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Name_Packet.o Hanabi_Name_Packet.cpp
+
+${OBJECTDIR}/Hanabi_Play_Again_Packet.o: Hanabi_Play_Again_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Play_Again_Packet.o Hanabi_Play_Again_Packet.cpp
+
+${OBJECTDIR}/Hanabi_Play_Packet.o: Hanabi_Play_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Play_Packet.o Hanabi_Play_Packet.cpp
+
+${OBJECTDIR}/Hanabi_Player.o: Hanabi_Player.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Player.o Hanabi_Player.cpp
+
+${OBJECTDIR}/Hanabi_Quit_Packet.o: Hanabi_Quit_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Quit_Packet.o Hanabi_Quit_Packet.cpp
+
+${OBJECTDIR}/Hanabi_Start_Info_Packet.o: Hanabi_Start_Info_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Start_Info_Packet.o Hanabi_Start_Info_Packet.cpp
+
+${OBJECTDIR}/Hanabi_We_Lost_Packet.o: Hanabi_We_Lost_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_We_Lost_Packet.o Hanabi_We_Lost_Packet.cpp
+
+${OBJECTDIR}/Hanabi_We_Won_Packet.o: Hanabi_We_Won_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_We_Won_Packet.o Hanabi_We_Won_Packet.cpp
+
+${OBJECTDIR}/Hanabi_You_Have_Packet.o: Hanabi_You_Have_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_You_Have_Packet.o Hanabi_You_Have_Packet.cpp
+
+${OBJECTDIR}/Hanabi_You_Start_Packet.o: Hanabi_You_Start_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_You_Start_Packet.o Hanabi_You_Start_Packet.cpp
+
+${OBJECTDIR}/TFTPClient.o: TFTPClient.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TFTPClient.o TFTPClient.cpp
+
+${OBJECTDIR}/TFTPCxn.o: TFTPCxn.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TFTPCxn.o TFTPCxn.cpp
+
+${OBJECTDIR}/TFTPServer.o: TFTPServer.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TFTPServer.o TFTPServer.cpp
+
+${OBJECTDIR}/TFTP_Ack_Packet.o: TFTP_Ack_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TFTP_Ack_Packet.o TFTP_Ack_Packet.cpp
+
+${OBJECTDIR}/TFTP_Data_Packet.o: TFTP_Data_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TFTP_Data_Packet.o TFTP_Data_Packet.cpp
+
+${OBJECTDIR}/TFTP_Err_Packet.o: TFTP_Err_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TFTP_Err_Packet.o TFTP_Err_Packet.cpp
+
+${OBJECTDIR}/TFTP_Packet.o: TFTP_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TFTP_Packet.o TFTP_Packet.cpp
+
+${OBJECTDIR}/TFTP_Rq_Packet.o: TFTP_Rq_Packet.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TFTP_Rq_Packet.o TFTP_Rq_Packet.cpp
+
+${OBJECTDIR}/Token.o: Token.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Token.o Token.cpp
+
+${OBJECTDIR}/main.o: main.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+
+${OBJECTDIR}/my_sleep_ms.o: my_sleep_ms.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/my_sleep_ms.o my_sleep_ms.cpp
+
+${OBJECTDIR}/network_main_test.o: network_main_test.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/network_main_test.o network_main_test.cpp
+
+# Subprojects
+.build-subprojects:
+
+# Clean Targets
+.clean-conf: ${CLEAN_SUBPROJECTS}
+	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/red_management_tpfinal
+
+# Subprojects
+.clean-subprojects:
+
+# Enable dependency checking
+.dep.inc: .depcheck-impl
+
+include .dep.inc
