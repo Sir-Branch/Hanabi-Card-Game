@@ -23,7 +23,7 @@ template <class CARD_T>
 class Deck {
 public:
     Deck();
-    virtual ~Deck();
+    //virtual ~Deck();
 	
     unsigned int size();
 	void addcard_end(const CARD_T& cardtoadd);
@@ -46,9 +46,10 @@ template <class CARD_T>
 Deck<CARD_T>::Deck() {
 }
 
+/*
 template <class CARD_T>
 Deck<CARD_T>::~Deck(){
-}
+}*/
 
 template <class CARD_T>
 unsigned int Deck<CARD_T>::size(){
