@@ -99,8 +99,21 @@ bool Deck<CARD_T>::draw_ncard(unsigned int place, CARD_T& card_taken)
 }
 
 #include <stdlib.h>
+/*
+ * This function draws a random card from the deck, the card is stored by reference and the success of the action is returned
+ * with a boolean value. 
+ * Note: Uses rand() and deck size to pull the random card, don't forget to seed rand with srand(time(NULL))
+ * 
+ * Input:
+ *	-CARD_T &card_taken: Reference to CARD_T in which the card taken will be stored.
+ * 
+ * Return:
+ *	-bool: Returns true if a random card was successfully drawn from the deck
+ *
+ * 
+ */
 template <class CARD_T>
-bool  Deck<CARD_T>::draw_rand_card(CARD_T& card_taken)
+bool Deck<CARD_T>::draw_rand_card(CARD_T& card_taken)
 {
 	bool able_to_draw = false;
 	if(deck.size())
@@ -109,26 +122,38 @@ bool  Deck<CARD_T>::draw_rand_card(CARD_T& card_taken)
 	return able_to_draw;
 }
 
+/*
+ * This function removes a card in a specific place from the deck. DOESN'T return in any way the card value, and 
+ * the success of the action is returned with a boolean value. 
+ * 
+ * Input:
+ *	-Unsigned int place: Place of the card which will be removed. Starts from 0 (zero being the first card)
+ * 
+ * Return:
+ *	-bool: Returns true if a randome card was successfully drawn from the deck
+ *
+ * 
+ */
 template <class CARD_T>
 bool Deck<CARD_T>::remove_ncard(unsigned int place)
 {
 	bool erased_card = false;
-	if(place && deck.size() >= place)
+	if(deck.size() > place)
 	{
 		it = deck.begin();
-		std::advance(it,place-1);
+		std::advance(it,place);
 		erased_card = true;
 		it =  deck.erase(it++);
 	}
 	return erased_card;
 }
 
-//STARTS FROM 1
+//STARTS FROM 0
 template <class CARD_T>
 bool Deck<CARD_T>::draw(CARD_T& card_taken)
 {
 	bool grabbed_card = false;
-	if( deck.size()) // no puede ser 0 place
+	if( deck.size()) 
 	{
 		grabbed_card = true;
 		card_taken = * deck.begin();
