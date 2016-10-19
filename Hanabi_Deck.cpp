@@ -13,7 +13,9 @@
 #include "Hanabi_Card.h"
 #include "Hanabi_Deck.h"
 
-//Una mejor 
+/*
+ * Constructor for a hanabi deck, loads all the cards needed to start the game.
+ */
 Hanabi_Deck::Hanabi_Deck() 
 {
 	hanabi_suits_t hanabi_suits[HANABI_CARD_NUM_SUITS] = { HANABI_CARD_YELLOW, HANABI_CARD_RED, HANABI_CARD_BLUE, HANABI_CARD_WHITE, HANABI_CARD_GREEN};
@@ -32,6 +34,7 @@ Hanabi_Deck::Hanabi_Deck()
 	}
 }
 
+//No me gusta como esta, ver bien como hacer 
 Hanabi_Deck::Hanabi_Deck(bool true_or_false_for_empty_deck)
 {
 	

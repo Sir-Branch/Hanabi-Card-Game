@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   Hanabiboard.h
  * Author: r2d2
@@ -38,6 +32,7 @@ typedef struct
 
 //The suit of each card has a position for the central array use get_suit_number_array
 
+#warning "Think about making players class"
 #include "TFTPCxn.h"
 
 class Hanabi_Board{
@@ -60,7 +55,7 @@ public:
 	void print_my_hand(void);
 	Hanabi_Deck hanabi_game_deck;
     
-public:
+public://Public for testing functions
 	
 	void lose_life(void);
 	void flip_clue_tokens(bool flip_head);

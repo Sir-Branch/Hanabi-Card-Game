@@ -89,6 +89,7 @@ void Deck<CARD_T>::addcard_front(const CARD_T& cardtoadd){
 
 /*
  * This function removes a specific card from the deck.  The success of the action is returned with a boolean value. 
+ * NOTE: CARD_T must have the == operator overloaded.
  * 
  * Input:
  *	-CARD_T card_to_remove: Copy of the card to be removed, only removes the first copy of the card found.
