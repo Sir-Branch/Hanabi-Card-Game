@@ -15,7 +15,7 @@
 #define DECK_H
 
 #include <list>
-// ANTES DE QUE ME RE CAGUES A PEDOS AGUSTIN: Cuando trabajo con tamplates no puedo separar en .cpp y .h sino te rompe las pelotas el compilador 
+// ANTES DE QUE ME RE CAGUES A PEDOS AGUSTIN: Cuando trabajo con tamplates no puedo separar en .cpp y .h 
 //http://stackoverflow.com/questions/495021/why-can-templates-only-be-implemented-in-the-header-file
 
 
@@ -51,22 +51,52 @@ template <class CARD_T>
 Deck<CARD_T>::~Deck(){
 }*/
 
+
 template <class CARD_T>
 unsigned int Deck<CARD_T>::size(){
 	return deck.size();
 }
 
-
+/*
+ * This function adds a card to the end of the deck, the card is received by reference.
+ * 
+ * Input:
+ *	-CARD_T &cardtoadd: Reference to CARD_T which will be added to the end of the deck.
+ * 
+ * Return:
+ *	-void
+ * 
+ */
 template <class CARD_T>
 void Deck<CARD_T>::addcard_end(const CARD_T& cardtoadd){
 	deck.push_back(cardtoadd); 	
 }
 
+/*
+ * This function adds a card to the front of the deck, the card is received by reference.
+ * 
+ * Input:
+ *	-CARD_T &cardtoadd: Reference to CARD_T which will be added to the end of the deck.
+ * 
+ * Return:
+ *	-void
+ * 
+ */
 template <class CARD_T>
 void Deck<CARD_T>::addcard_front(const CARD_T& cardtoadd){
 	deck.push_front(cardtoadd); 	
 }
 
+/*
+ * This function removes a specific card from the deck.  The success of the action is returned with a boolean value. 
+ * 
+ * Input:
+ *	-CARD_T card_to_remove: Copy of the card to be removed, only removes the first copy of the card found.
+ * 
+ * Return:
+ *	-bool: Returns true if the card in the place was successfully removed from the deck.
+ * 
+ */
 template <class CARD_T>
 bool Deck<CARD_T>::remove_specific_card(CARD_T card_to_remove)
 {
@@ -82,7 +112,18 @@ bool Deck<CARD_T>::remove_specific_card(CARD_T card_to_remove)
 	return card_found;
 }
 
-//STARTS FROM 0
+/*
+ * This function draws a card in a specific position from the deck, the card is stored by reference and 
+ * the success of the action is returned with a boolean value. 
+ * 
+ * Input:
+ *	-Unsigned int place: Place of the card which will be removed. Starts from 0 (zero being the first card)
+ *	-CARD_T &card_taken: Reference to CARD_T in which the card taken will be stored.
+ * 
+ * Return:
+ *	-bool: Returns true if the card in the place was successfully drawn from the deck.
+ * 
+ */
 template <class CARD_T>
 bool Deck<CARD_T>::draw_ncard(unsigned int place, CARD_T& card_taken)
 {
@@ -100,8 +141,8 @@ bool Deck<CARD_T>::draw_ncard(unsigned int place, CARD_T& card_taken)
 
 #include <stdlib.h>
 /*
- * This function draws a random card from the deck, the card is stored by reference and the success of the action is returned
- * with a boolean value. 
+ * This function draws a random card from the deck, the card is stored by reference and the success of 
+ * the action is returned with a boolean value. 
  * Note: Uses rand() and deck size to pull the random card, don't forget to seed rand with srand(time(NULL))
  * 
  * Input:
@@ -110,7 +151,6 @@ bool Deck<CARD_T>::draw_ncard(unsigned int place, CARD_T& card_taken)
  * Return:
  *	-bool: Returns true if a random card was successfully drawn from the deck
  *
- * 
  */
 template <class CARD_T>
 bool Deck<CARD_T>::draw_rand_card(CARD_T& card_taken)
@@ -130,8 +170,7 @@ bool Deck<CARD_T>::draw_rand_card(CARD_T& card_taken)
  *	-Unsigned int place: Place of the card which will be removed. Starts from 0 (zero being the first card)
  * 
  * Return:
- *	-bool: Returns true if a randome card was successfully drawn from the deck
- *
+ *	-bool: Returns true if the card in the place was successfully removed from the deck.
  * 
  */
 template <class CARD_T>
@@ -148,7 +187,17 @@ bool Deck<CARD_T>::remove_ncard(unsigned int place)
 	return erased_card;
 }
 
-//STARTS FROM 0
+/*
+ * This function draws a card from the deck(top of deck), the card is stored by reference and the success of 
+ * the action is returned with a boolean value. 
+ * 
+ * Input:
+ *	-CARD_T &card_taken: Reference to CARD_T in which the card taken will be stored.
+ * 
+ * Return:
+ *	-bool: Returns true if a card(the top card) was successfully drawn from the deck
+ * 
+ */
 template <class CARD_T>
 bool Deck<CARD_T>::draw(CARD_T& card_taken)
 {
