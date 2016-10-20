@@ -46,7 +46,7 @@ public:
 	//Players only have 3 possible actions 
 	bool player_action_play_card(unsigned int card_my_hand);
 	void player_action_discard_card(unsigned int card_my_hand);
-	void player_action_give_clue(char value_or_suit,TFTPCxn * cxn );
+	bool player_action_give_clue(char value_or_suit,TFTPCxn * cxn );
 #warning "Falta probar give clue"
 	
 //	void recieve_action_play_card(Hanabi_Card card);

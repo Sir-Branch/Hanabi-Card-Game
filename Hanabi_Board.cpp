@@ -218,7 +218,17 @@ bool Hanabi_Board::draw_card(unsigned int card_my_hand)
 
 #include "Hanabi_Card.h"
 #include "Hanabi_Network_Defines.h"
+/*
+ * This function receives a clue and updates the cards in hand to reflect the clues.
+ * 
 
+ * Input:
+ *	-char value_or_suit: Hint received, can be a value or suit Example 1 or 'R'
+ * 
+ * Return:
+ *	-void
+ *
+ */
 void Hanabi_Board::receive_action_get_clue(char value_or_suit)
 {
 	if(value_or_suit >= 'A' && value_or_suit <= 'Z') //if suit/color
@@ -237,8 +247,9 @@ void Hanabi_Board::receive_action_get_clue(char value_or_suit)
 }
 
 //PLAYERS possible ACTION 
-//	-Draw Card
-//	-Play Card 
+//	
+//	-Play Card
+//	-Discard Card
 //	-Give hint
 
 
@@ -272,26 +283,47 @@ bool Hanabi_Board::player_action_play_card(unsigned int card_my_hand)
 	return could_place_card;
 }
 
-#include <iostream>
-
+/*
+ * This function carries out one of the three possible player actions: Discard card
+ * 
+ * Discard card action:	1) Discards specific card in hand
+ *						2) Flips clue tokens (adds a clue, max 8 or 9 depending on settings)
+ *						3) Draw Card
+ *
+ * Input:
+ *	-unsigned int card_my_hand: Card position in hand, goes from 0 to 5. 
+ * 
+ * Return:
+ *	-void
+ */
 void  Hanabi_Board::player_action_discard_card(unsigned int card_my_hand)
 {
 	discard_card(card_my_hand);
 	flip_clue_tokens(false); //False adds new clue
 	draw_card(card_my_hand);
-
 }
 
 
-
+#include <iostream>
 #include "Hanabi_You_Have_Packet.h"
 #include "TFTP_Packet.h"
 #include "Hanabi_Network_Defines.h"
 
-void Hanabi_Board::player_action_give_clue(char value_or_suit,TFTPCxn * cxn )
+/*
+ * This function carries out one of the three possible player actions: Give hint
+ * 
+ * Discard card action:	Send hint via network
+ *					
+ * Input:
+ *	-char value_or_suit: Hint to be sent, can be a value or suit Example 1 or 'R'
+ * 
+ * Return:
+ *	-bool: Returns true if the hint was sent successfully
+ */
+bool Hanabi_Board::player_action_give_clue(char value_or_suit,TFTPCxn * cxn )
 {
 	Hanabi_You_Have_Packet * to_send = new Hanabi_You_Have_Packet(value_or_suit);
-	to_send->send_packet(cxn->get_cxn_socket());
+	return APR_SUCCESS == to_send->send_packet(cxn->get_cxn_socket());
 }
 
 #include <iostream>
