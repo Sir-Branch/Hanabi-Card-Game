@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
 	game_board.print_my_hand();
 	
 	std::cout << "Any clues left: " << game_board.any_clues_left() << std::endl;
-	std::cout << "Any lifes left: " << game_board.any_lifes_left() << std::endl;
+	std::cout << "Any lives left: " << game_board.any_lifes_left() << std::endl;
 	
 	game_board.flip_clue_tokens(true);
 	game_board.flip_clue_tokens(true);
@@ -36,11 +36,11 @@ int main(int argc, char** argv) {
 	
 	std::cout << "All clues left: " << game_board.all_clues_left() << std::endl;
 	
-	game_board.lose_life();
-	game_board.lose_life();
-	game_board.lose_life();
+	game_board.lose_live();
+	game_board.lose_live();
+	game_board.lose_live();
 	
-	std::cout << "Any lifes left: " << game_board.any_lifes_left() << std::endl;
+	std::cout << "Any lives left: " << game_board.any_lifes_left() << std::endl;
 
 	
 	for(int i = 0 ; i < 6 ; i++)

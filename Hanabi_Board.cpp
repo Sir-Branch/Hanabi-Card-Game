@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   Hanabiboard.cpp
  * Author: r2d2
@@ -13,14 +7,21 @@
 
 #include "Hanabi_Board.h"
 #include <time.h>
-Hanabi_Board::Hanabi_Board() {
-	
+Hanabi_Board::Hanabi_Board() {	
 	srand(time(NULL));
 	lost_game = false;
-	
-	
+
 }
 
+/*
+ * This function tells us if there are any games lives left(Lightning tokens in hanabi)
+ * 
+ * Input:
+ *	-void
+ * 
+ * Return:
+ *	-Boolean: If true at least 1 live left.
+ */
 bool Hanabi_Board::any_lifes_left(void)
 {
 	bool any_lifes_left = false;
@@ -32,6 +33,15 @@ bool Hanabi_Board::any_lifes_left(void)
 }
 
 
+/*
+ * This function tells us if there are any games clues tokens left in hanabi game
+ * 
+ * Input:
+ *	-void
+ * 
+ * Return:
+ *	-Boolean: True if at least 1 clue left.
+ */
 bool Hanabi_Board::any_clues_left(void)
 {
 	bool any_clues_left = false;
@@ -42,6 +52,15 @@ bool Hanabi_Board::any_clues_left(void)
 	return any_clues_left;
 }
 
+/*
+ * This function tells us if all clues tokens are left in the hanabi game
+ * 
+ * Input:
+ *	-void
+ * 
+ * Return:
+ *	-Boolean: True if all the clues are left.
+ */
 bool Hanabi_Board::all_clues_left(void)
 {
 	bool all_clues_left = true;
@@ -52,7 +71,16 @@ bool Hanabi_Board::all_clues_left(void)
 	return all_clues_left;
 }
 
-void Hanabi_Board::lose_life(void)
+/*
+ * This function removes one of the lives, when no lives are left this function sets the lost_game flag to true
+ *
+ * Input:
+ *	-void
+ * 
+ * Return:
+ *	-void
+ */
+void Hanabi_Board::lose_live(void)
 {
 	int i;
 	for( i = 0 ; i < HANABI_LIGHT_TOKENS ; i++)
@@ -68,7 +96,7 @@ void Hanabi_Board::lose_life(void)
 
 //true one less clue, tails one more
 //false one more clue
-void Hanabi_Board::flip_clue_tokens(bool remove_clue )
+void Hanabi_Board::flip_clue_tokens(bool remove_clue)
 {
 	for( int i = 0 ; i < HANABI_LIGHT_TOKENS ; i++)
 		if(clue_tokens[i].token_heads() == remove_clue)
@@ -78,7 +106,18 @@ void Hanabi_Board::flip_clue_tokens(bool remove_clue )
 		}
 }
 
-/* Seems really shitty but don't know what else to do
+/*
+ * This function returns the corresponding placement inside arrays according to suit.
+ * Examples:
+ *	 -In what position is the 'R' (red) suit in the graveyard array, or central card array.
+ * Remember that the board has Hanabi_Card central_cards[HANABI_NUMBER_COLORS]; so for example 
+ * to add a Red card we must would use central_cards[ get_suit_number_array('R')] = red_to_add;
+ *
+ * Input:
+ *	-void
+ * 
+ * Return:
+ *	-void
  */
 int Hanabi_Board::get_suit_number_array(hanabi_suits_t suit)
 {
@@ -113,12 +152,33 @@ int Hanabi_Board::get_suit_number_array(hanabi_suits_t suit)
 	
 }
 
+/*
+ * This function discards a specific card in the players hands, and sends it to the graveyard
+ * Note: This game is not Yu-gi-oh, no monster reborn from graveyard.
+ *
+ * Input:
+ *	-unsigned int card_my_hand: Card position in hand, goes from 0 to 5. 
+ * 
+ * Return:
+ *	-void
+ *
+ */
 void Hanabi_Board::discard_card(unsigned int card_my_hand){
 	
 	Hanabi_Card * card = &my_cards[card_my_hand].playing_card;
 	grave_yard[ get_suit_number_array(card->get_suit()) ].addcard_front( *card);
 }
 
+/*
+ * This function tells us if a specific card in the players hands can be placed in the center decks/piles 
+ *
+ * Input:
+ *	-unsigned int card_my_hand: Card position in hand, goes from 0 to 5. 
+ * 
+ * Return:
+ *	-bool: Returns true if the card can be placed
+ *
+ */
 bool Hanabi_Board::can_place_card(unsigned int card_my_hand)
 {
 	bool can_place_card = false;
@@ -130,7 +190,17 @@ bool Hanabi_Board::can_place_card(unsigned int card_my_hand)
 	return can_place_card;
 }
 
-//From 0 to 5
+/*
+ * This function draws a card, in case of not being able to draw a card an empty card is left in the position in the hand
+ * where the drawn card wanted to be placed.
+ *
+ * Input:
+ *	-unsigned int card_my_hand: Card position in hand, goes from 0 to 5. 
+ * 
+ * Return:
+ *	-bool: Returns true if the card could be drawn, if a card couldn't be drawn it's because the deck is empty.
+ *
+ */
 bool Hanabi_Board::draw_card(unsigned int card_my_hand)
 {
 	bool could_draw_card;
@@ -138,7 +208,7 @@ bool Hanabi_Board::draw_card(unsigned int card_my_hand)
 	
 	if( !(could_draw_card = hanabi_game_deck.draw_rand_card(card_to_draw.playing_card) ))
 	{
-		#warning "ADD flag if no cards are left in deck thus only 2 hands remain"
+		#warning "ADD flag if no cards are left in deck thus only 1 move each remains"
 		card_to_draw.playing_card = Hanabi_Card();
 
 	}
@@ -167,19 +237,35 @@ void Hanabi_Board::receive_action_get_clue(char value_or_suit)
 }
 
 //PLAYERS possible ACTION 
+//	-Draw Card
+//	-Play Card 
+//	-Give hint
 
+
+/*
+ * This function carries out one of the three possible player actions: Play card
+ * 
+ * Play card action:	1) Tries to play card in center, if not posible loses live and discard card
+ *						2) Draw card
+ *
+ * Input:
+ *	-unsigned int card_my_hand: Card position in hand, goes from 0 to 5. 
+ * 
+ * Return:
+ *	-bool: Returns true if the card could be played.
+ *
+ */
 bool Hanabi_Board::player_action_play_card(unsigned int card_my_hand)
 {
 	bool could_place_card;
-	if( could_place_card=can_place_card(card_my_hand) )
+	if( could_place_card = can_place_card(card_my_hand) )
 	{
 		central_cards[ get_suit_number_array(  my_cards[card_my_hand].playing_card.get_suit() )] = my_cards[card_my_hand].playing_card;
-		
 	}
 	else
 	{
 		this->discard_card(card_my_hand);
-		this->lose_life();
+		this->lose_live();
 	}
 	
 	draw_card(card_my_hand); //EXPLOTA tdoa revisar
