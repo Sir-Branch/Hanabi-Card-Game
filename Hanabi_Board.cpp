@@ -10,7 +10,6 @@
 Hanabi_Board::Hanabi_Board() {	
 	srand(time(NULL));
 	lost_game = false;
-
 }
 
 /*
@@ -94,17 +93,61 @@ void Hanabi_Board::lose_live(void)
 	
 }
 
-//true one less clue, tails one more
-//false one more clue
-void Hanabi_Board::flip_clue_tokens(bool remove_clue)
+/*
+ * This function adds(Flips to head) one clue to the clue tokens. If all clues are available this function won't do anything.
+ * and return false
+ * 
+ * Input:
+ *	-void
+ * 
+ * Return:
+ *	-bool: If successfully "added"(flips to head) one clue, return true. 
+ *	If this function return false it's because all clue were available, thus no more clues can be added.
+ * 
+ * NOTE CLUE TOKENS:
+ *	-Head: Clue available
+ *	-Tails: Clue not available/has been used.
+ */
+bool Hanabi_Board::add_clue_tokens(void)
 {
-	for( int i = 0 ; i < HANABI_LIGHT_TOKENS ; i++)
-		if(clue_tokens[i].token_heads() == remove_clue)
+	bool clue_added = false;
+	for( int i = 0 ; i < HANABI_LIGHT_TOKENS && clue_added == false ; i++)
+		if( !clue_tokens[i].token_heads())
 		{
 			clue_tokens[i].flip_token();
-			break;
+			clue_added = true;
 		}
+	return clue_added;
 }
+
+/*
+ * This function removes(Flips to tails) one clue from the clue tokens. If all clues are not available this function won't do anything.
+ * and returnss false
+ * 
+ * Input:
+ *	-void
+ * 
+ * Return:
+ *	-bool: If successfully "removed"(flips to tails) one clue, return true. 
+ *	If this function return false it's because all clue were not available, thus no more clues can be removed.
+ * 
+ * NOTE CLUE TOKENS:
+ *	-Head: Clue available
+ *	-Tails: Clue not available/has been used.
+ */
+bool Hanabi_Board::remove_clue_tokens(void)
+{
+	bool clue_removed = false;
+	for( int i = 0 ; i < HANABI_LIGHT_TOKENS && clue_removed == false; i++)
+		if(clue_tokens[i].token_heads() )
+		{
+			clue_tokens[i].flip_token();
+			clue_removed = true;
+		}
+	return clue_removed;
+}
+
+
 
 /*
  * This function returns the corresponding placement inside arrays according to suit.
