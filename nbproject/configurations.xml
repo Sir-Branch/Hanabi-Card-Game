@@ -80,8 +80,6 @@
           <itemPath>TFTP_Packet.cpp</itemPath>
           <itemPath>TFTP_Rq_Packet.cpp</itemPath>
         </logicalFolder>
-        <itemPath>Hanabi_Player.cpp</itemPath>
-        <itemPath>Hanabi_Player.h</itemPath>
       </logicalFolder>
       <itemPath>Deck.cpp</itemPath>
       <itemPath>Hanabi_Board.cpp</itemPath>
@@ -180,10 +178,6 @@
       <item path="Hanabi_Play_Packet.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Hanabi_Play_Packet.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Hanabi_Player.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Hanabi_Player.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Hanabi_Quit_Packet.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -335,10 +329,6 @@
       <item path="Hanabi_Play_Packet.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Hanabi_Play_Packet.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Hanabi_Player.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Hanabi_Player.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Hanabi_Quit_Packet.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -50,7 +50,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/Hanabi_Name_Packet.o \
 	${OBJECTDIR}/Hanabi_Play_Again_Packet.o \
 	${OBJECTDIR}/Hanabi_Play_Packet.o \
-	${OBJECTDIR}/Hanabi_Player.o \
 	${OBJECTDIR}/Hanabi_Quit_Packet.o \
 	${OBJECTDIR}/Hanabi_Start_Info_Packet.o \
 	${OBJECTDIR}/Hanabi_We_Lost_Packet.o \
@@ -169,11 +168,6 @@ ${OBJECTDIR}/Hanabi_Play_Packet.o: Hanabi_Play_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g `pkg-config --cflags apr-1`   -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Play_Packet.o Hanabi_Play_Packet.cpp
-
-${OBJECTDIR}/Hanabi_Player.o: Hanabi_Player.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -g `pkg-config --cflags apr-1`   -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Player.o Hanabi_Player.cpp
 
 ${OBJECTDIR}/Hanabi_Quit_Packet.o: Hanabi_Quit_Packet.cpp 
 	${MKDIR} -p ${OBJECTDIR}

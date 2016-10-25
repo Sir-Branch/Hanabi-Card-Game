@@ -20,8 +20,7 @@
 class Hanabi_Deck : public Deck<Hanabi_Card> {
 public:
     
-    Hanabi_Deck();
-	Hanabi_Deck(bool true_or_false_for_empty_deck);
+	Hanabi_Deck();
 	void print_deck(void);
    // Hanabi_Deck(const Hanabi_Deck& orig);
    // virtual ~Hanabi_Deck();

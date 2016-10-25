@@ -28,11 +28,7 @@ Hanabi_Deck::Hanabi_Deck()
 	}
 }
 
-//No me gusta como esta, ver bien como hacer 
-Hanabi_Deck::Hanabi_Deck(bool true_or_false_for_empty_deck)
-{
-	
-}
+
 #include <iostream>
 void Hanabi_Deck::print_deck(void)
 {

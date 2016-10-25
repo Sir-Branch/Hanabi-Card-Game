@@ -49,12 +49,14 @@ public:
 	bool player_action_give_clue(char value_or_suit,TFTPCxn * cxn );
 #warning "Falta probar give clue"
 	
-//	void recieve_action_play_card(Hanabi_Card card);
-//	void recieve_action_discard_card(Hanabi_Card card);
+	void receive_action_draw_card(Hanabi_Card card);
+	void receive_action_play_card(unsigned int card_my_hand);
+	void receive_action_discard_card(unsigned int card_my_hand);
 	void receive_action_get_clue(char value_or_suit);//player can only "receive" one action which is a clue
+	
 	void print_my_hand(void);
-	Hanabi_Deck hanabi_game_deck;
     
+#warning "After testing switch to private"
 public://Public for testing functions
 	
 	void lose_live(void);
@@ -67,8 +69,9 @@ public://Public for testing functions
 	bool draw_card(unsigned int card_my_hand);
 	void discard_card(unsigned int card_my_hand);
 	
+	Hanabi_Deck hanabi_game_deck;
 #warning "Hanabi_deck graveyard starting with all cards"
-	Hanabi_Deck grave_yard[HANABI_NUMBER_COLORS]; // Uno por color
+	Deck<Hanabi_Card> grave_yard[HANABI_NUMBER_COLORS]; // Uno por color
     Token light_tokens[HANABI_LIGHT_TOKENS];//Representan las vidas 
     Token clue_tokens[HANABI_CLUE_TOKENS];//Maxima numero de pistas que se pueden dar sin tomar carta
     unsigned int score;//0 a 25
