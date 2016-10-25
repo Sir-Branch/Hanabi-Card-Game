@@ -15,9 +15,6 @@ using namespace std;
 
 int main(int argc, char** argv) {
 			
-	
-	
-	
 	Hanabi_Board game_board;
 
 	game_board.hanabi_game_deck.print_deck();
@@ -30,9 +27,10 @@ int main(int argc, char** argv) {
 	std::cout << "Any clues left: " << game_board.any_clues_left() << std::endl;
 	std::cout << "Any lives left: " << game_board.any_lifes_left() << std::endl;
 	
-	game_board.flip_clue_tokens(true);
-	game_board.flip_clue_tokens(true);
-	game_board.flip_clue_tokens(true);
+	game_board.remove_clue_token();
+	game_board.remove_clue_token();
+	game_board.remove_clue_token();
+	
 	
 	std::cout << "All clues left: " << game_board.all_clues_left() << std::endl;
 	

@@ -58,8 +58,8 @@ public:
 public://Public for testing functions
 	
 	void lose_live(void);
-	bool Hanabi_Board::add_clue_tokens(void);
-	bool Hanabi_Board::remove_clue_tokens(void);
+	bool add_clue_token(void);
+	bool remove_clue_token(void);
 	
 	bool can_place_card(unsigned int card_my_hand);
 	int get_suit_number_array(hanabi_suits_t suit);

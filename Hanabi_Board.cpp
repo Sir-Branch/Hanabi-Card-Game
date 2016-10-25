@@ -108,7 +108,7 @@ void Hanabi_Board::lose_live(void)
  *	-Head: Clue available
  *	-Tails: Clue not available/has been used.
  */
-bool Hanabi_Board::add_clue_tokens(void)
+bool Hanabi_Board::add_clue_token(void)
 {
 	bool clue_added = false;
 	for( int i = 0 ; i < HANABI_LIGHT_TOKENS && clue_added == false ; i++)
@@ -135,7 +135,7 @@ bool Hanabi_Board::add_clue_tokens(void)
  *	-Head: Clue available
  *	-Tails: Clue not available/has been used.
  */
-bool Hanabi_Board::remove_clue_tokens(void)
+bool Hanabi_Board::remove_clue_token(void)
 {
 	bool clue_removed = false;
 	for( int i = 0 ; i < HANABI_LIGHT_TOKENS && clue_removed == false; i++)
@@ -342,7 +342,7 @@ bool Hanabi_Board::player_action_play_card(unsigned int card_my_hand)
 void  Hanabi_Board::player_action_discard_card(unsigned int card_my_hand)
 {
 	discard_card(card_my_hand);
-	flip_clue_tokens(false); //False adds new clue
+	add_clue_tokens(); //False adds new clue
 	draw_card(card_my_hand);
 }
 
