@@ -342,7 +342,7 @@ bool Hanabi_Board::player_action_play_card(unsigned int card_my_hand)
 void  Hanabi_Board::player_action_discard_card(unsigned int card_my_hand)
 {
 	discard_card(card_my_hand);
-	add_clue_tokens(); //False adds new clue
+	add_clue_token(); //False adds new clue
 	draw_card(card_my_hand);
 }
 
