@@ -8,8 +8,11 @@
 #include "Hanabi_Board.h"
 #include <time.h>
 Hanabi_Board::Hanabi_Board() {	
-	srand(time(NULL));
+#warning "Move at end stage to main srand"
+	srand(time(NULL)); 
 	lost_game = false;
+	last_hand = false;
+
 }
 
 /*
@@ -206,7 +209,8 @@ int Hanabi_Board::get_suit_number_array(hanabi_suits_t suit)
  *	-void
  *
  */
-void Hanabi_Board::discard_card(unsigned int card_my_hand){
+void Hanabi_Board::discard_card(unsigned int card_my_hand)
+{
 	
 	Hanabi_Card * card = &my_cards[card_my_hand].playing_card;
 	grave_yard[ get_suit_number_array(card->get_suit()) ].addcard_front( *card);
@@ -225,6 +229,7 @@ void Hanabi_Board::discard_card(unsigned int card_my_hand){
 bool Hanabi_Board::can_place_card(unsigned int card_my_hand)
 {
 	bool can_place_card = false;
+	
 	Hanabi_Card * card = &my_cards[card_my_hand].playing_card;
 	if( card->get_suit() != HANABI_CARD_SUIT_EMPTY)
 		if ( central_cards[ get_suit_number_array( card->get_suit()) ].get_value() == (card->get_value()-1) )
@@ -247,7 +252,7 @@ bool Hanabi_Board::can_place_card(unsigned int card_my_hand)
 bool Hanabi_Board::draw_card(unsigned int card_my_hand)
 {
 	bool could_draw_card;
-	in_game_hanabi_Card_t card_to_draw = {false,false};
+	in_game_hanabi_Card_t card_to_draw = {false, false}; 
 	
 	if( !(could_draw_card = hanabi_game_deck.draw_rand_card(card_to_draw.playing_card) ))
 	{
@@ -286,6 +291,35 @@ void Hanabi_Board::receive_action_get_clue(char value_or_suit)
 			if(my_cards[i].playing_card.get_value() == value_or_suit)
 				my_cards[i].num_hint = true;
 	}
+	
+}
+
+
+void Hanabi_Board::receive_action_draw_card(Hanabi_Card card_drawn)
+{
+	hanabi_game_deck.remove_specific_card(card_drawn);
+	
+	
+}
+
+void Hanabi_Board::receive_action_play_card(unsigned int card_other_hand)
+{
+	bool could_place_card;
+	if( could_place_card = can_place_card(card_other_hand) )
+	{
+		central_cards[ get_suit_number_array( otherplayers_hand[card_other_hand].get_suit() )] = otherplayers_hand[card_other_hand];
+	}
+	else
+	{
+		otherplayers_hand[card_other_hand] ;
+		this->lose_live();
+	}
+
+}
+
+void Hanabi_Board::receive_action_discard_card(unsigned int card_my_hand)
+{
+	
 	
 }
 
