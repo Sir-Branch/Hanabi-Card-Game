@@ -32,12 +32,12 @@ public:
 	TFTPCxn();
 	virtual ~TFTPCxn();
 	apr_socket_t * get_cxn_socket();
+	apr_status_t send_packet( const char * const pck_to_send, unsigned long int size_pck);
     //apr_status_t get_connection_status();
         
-
 protected:
-	apr_socket_t *socket;
-	apr_pool_t *mem_pool;
+	apr_socket_t * socket;
+	apr_pool_t * mem_pool;
     apr_status_t cxn_status;
 };
 

@@ -70,7 +70,7 @@ int main(int argc, char** argv) {
 	for(int i = 0 ; i < 5 ; i ++)
 	{
 		std::cout << "Printing graveyard for #" << i << std::endl;
-		game_board.grave_yard[i].print_deck();
+		//game_board.grave_yard[i].print_deck();
 		
 	}
 	

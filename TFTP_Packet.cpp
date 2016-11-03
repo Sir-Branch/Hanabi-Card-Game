@@ -84,6 +84,7 @@ apr_status_t TFTP_Packet::send_packet(apr_socket_t *sock)
  * 
  * 
  */
+/*
 bool TFTP_Packet::recieve_pck(apr_socket_t *sock)
 {
 	bool packet_picked_up=false;
@@ -109,10 +110,10 @@ bool TFTP_Packet::recieve_pck(apr_socket_t *sock)
 
 	return packet_picked_up;
 	
-}
+}*/
 
 #include <stdio.h>
-void TFTP_Packet:: print_packet(void)
+void TFTP_Packet::print_packet(void)
 {
 	if(size_pck)
 	{	
@@ -122,4 +123,10 @@ void TFTP_Packet:: print_packet(void)
 		
 		printf("\n");
 	}	
+}
+
+
+const char * const  TFTP_Packet::get_data_pck(void)
+{
+	return (const char * const) this->packet_data;
 }
