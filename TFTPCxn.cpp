@@ -5,6 +5,7 @@
 #include <apr-1.0/apr_strings.h>
 #include <apr-1.0/apr_file_io.h>
 #include "TFTPCxn.h"
+#include "TFTP_Packet.h"
 
 
 TFTPCxn::TFTPCxn()
@@ -31,20 +32,21 @@ apr_socket_t * TFTPCxn::get_cxn_socket()
 
 #include <iostream>
 
-apr_status_t TFTPCxn::send_packet(const char * const pck_to_send, unsigned long int size_pck)
+//apr_status_t TFTPCxn::send_packet(const char * const pck_to_send, unsigned long int size_pck)
+apr_status_t TFTPCxn::send_packet(TFTP_Packet * pck_to_send)
 {
 	apr_status_t rv;
-	unsigned long int len_send = size_pck;
+	unsigned long int len_send = pck_to_send->size();
 	
-	std::cout << "sending packet length "<<size_pck<<std::endl;//Debugging
+	std::cout << "sending packet length "<<len_send<<std::endl;//Debugging
 	
-	rv = apr_socket_send(this->socket, pck_to_send, &len_send); //simplemente mandamos al socket "sock" el string "req_hdr" del largo len. Es an�logo para cualquier bloque de bytes que queramos mandar.
+	rv = apr_socket_send(this->socket, pck_to_send->get_data_pck() , &len_send); //simplemente mandamos al socket "sock" el string "req_hdr" del largo len. Es an�logo para cualquier bloque de bytes que queramos mandar.
 	if (rv != APR_SUCCESS)
 		std::cout << "CANNOT send info\n" ;
-	else if(len_send!=size_pck) // nose si podria pasar 
-		std::cout << "Incomplete packet sent(like your birth) :D\n";
+	else if(len_send != pck_to_send->size()) // nose si podria pasar 
+		std::cout << "Incomplete packet sent(like your birth) D:\n";
 	else
-		std::cout <<"Packet has been sent"<<std::endl;
+		std::cout <<"Packet has been sent \n";
 	return rv;
 	
 }

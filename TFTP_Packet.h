@@ -39,7 +39,8 @@ public:
     //Funciones de paquetes recibir y enviar los mismo mediante un socket
     apr_status_t send_packet(apr_socket_t *sock); 
     void print_packet(void);
-	const char * const get_data_pck(void);
+	const char * get_data_pck(void);
+	long unsigned int size(void);
 
     //bool recieve_pck(apr_socket_t *sock);
 protected:

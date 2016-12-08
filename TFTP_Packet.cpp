@@ -126,7 +126,13 @@ void TFTP_Packet::print_packet(void)
 }
 
 
-const char * const  TFTP_Packet::get_data_pck(void)
+const char *  TFTP_Packet::get_data_pck(void)
 {
-	return (const char * const) this->packet_data;
+	return (const char *) this->packet_data; //Read Only. LOOKY BUT NO TOUCHY, cunt.
+}
+
+
+long unsigned int TFTP_Packet::size(void)
+{
+	return this->size_pck;
 }

@@ -18,6 +18,7 @@
 #include <apr-1.0/apr_network_io.h>
 #include <apr-1.0/apr_strings.h>
 #include <apr-1.0/apr_file_io.h>
+#include "TFTP_Packet.h"
 
 #define DEF_REMOTE_PORT		13796					// default connect port number 
 #define DEF_SOCK_TIMEOUT	(APR_USEC_PER_SEC * 5)	//TIMEOUT DE TODAS LAS OPERACIONES (ENVIAR, RECIBIR, CONECTAR) EN SEGUNDOS
@@ -31,8 +32,8 @@ class TFTPCxn
 public:
 	TFTPCxn();
 	virtual ~TFTPCxn();
-	apr_socket_t * get_cxn_socket();
-	apr_status_t send_packet( const char * const pck_to_send, unsigned long int size_pck);
+	apr_socket_t * get_cxn_socket(); //Shouldn't be necessary ....
+	apr_status_t send_packet(TFTP_Packet * pck_to_send);
     //apr_status_t get_connection_status();
         
 protected:
