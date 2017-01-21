@@ -12,6 +12,15 @@
 
 static bool check_folder_exists(const char * folder_name);
 
+/*
+ * Constructor for Hanabi_Skin Initializes all the bitmaps in NULL 
+ * 
+ * Input:
+ *	-void
+ * 
+ * Return:
+ *	-No return in constructor
+ */
 Hanabi_Skin::Hanabi_Skin() 
 {
 	main_menu = NULL;
@@ -41,6 +50,16 @@ Hanabi_Skin::Hanabi_Skin()
 
 }
 
+/*
+ * Destructor for Hanabi_Skin destroys all the bitmaps which were loaded (using al_destroy_bitmap)
+ * if a bitmap is set to NULL it will no be destroyed as there is nothing to destroy.
+ * 
+ * Input:
+ *	-void
+ * 
+ * Return:
+ *	-No return in constructor
+ */
 Hanabi_Skin::~Hanabi_Skin() 
 {
 	if( this->main_menu != NULL)
@@ -73,13 +92,32 @@ Hanabi_Skin::~Hanabi_Skin()
 	}
 }
 
-
+/*
+ * Taken from stackoverflow http://stackoverflow.com/questions/12510874/how-can-i-check-if-a-directory-exists
+ * uses #include <sys/stat.h>
+ * 
+ * Input:
+ *	-const char * folder_name: Name of folder, will check inside root directory of project. Example "Hanabi Themes"
+ * 
+ * Return:
+ *	-bool: True is folder exists, false if it does not.
+ */
 bool check_folder_exists(const char * folder_name)
 {
 	struct stat sb;
 	return ( stat(folder_name, &sb) == 0 && S_ISDIR(sb.st_mode) );	
 }
 
+/*
+ * Destructor for Hanabi_Skin destroys all the bitmaps which were loaded (using al_destroy_bitmap)
+ * if a bitmap is set to NULL it will no be destroyed as there is nothing to destroy.
+ * 
+ * Input:
+ *	-string theme_name : Name of theme folder, example "Pokemon" or "Classic"
+ * 
+ * Return:
+ *	-bool: True if ALL skins were successfully loaded, false if any skin fails to load
+ */
 bool Hanabi_Skin::load_theme(std::string theme_name)
 {
 	bool success = false;

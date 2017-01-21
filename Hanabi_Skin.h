@@ -8,8 +8,8 @@
 #ifndef HANABI_SKIN_H
 #define HANABI_SKIN_H
 
-#include "allegro5/allegro5.h"
 #include <string>
+#include "allegro5/allegro5.h"
 
 class Hanabi_Skin {
 public:
