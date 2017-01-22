@@ -8,6 +8,21 @@
 #include "Eda_Button.h"
 
 /*
+ * Default Constructor
+ * To be able to use arrays inside classes and avoid dynamic allocation  
+ * Input:
+ *	-No Input default constructor
+ * 
+ * Return:
+ *	-No return in constructor
+ */
+Eda_Button::Eda_Button()
+{
+	this->fill_hover_image = NULL;
+	this->fill_image = NULL;
+	this->fill_selection_image = NULL;
+}
+/*
  * Constructor for Eda_Button Initializes all the variables with parameters passed in construction
  * NOTE: all x and y values range from 0 to 1.0, this represents the percent of screen, this allows for
  * different resolutions and screens to look similar 
@@ -83,6 +98,9 @@ Eda_Button::~Eda_Button()
 		al_destroy_bitmap(fill_image);
 	if(fill_hover_image != NULL)
 		al_destroy_bitmap(fill_hover_image);
+	if(fill_selection_image != NULL)
+		al_destroy_bitmap(fill_selection_image);
+
 }
 
 /*

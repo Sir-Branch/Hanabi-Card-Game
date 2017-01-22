@@ -14,7 +14,7 @@ typedef enum{NO_EVENT, EDA_BUTTON_PLAY_PRESSED, EDA_BUTTON_SETT_PRESSED}event_bu
 
 class Eda_Button{
 public:
-//	Eda_Button();
+	Eda_Button();
 	Eda_Button(float x_center , float y_center ,float x_size_percent , float y_size_percent, const char * fill_image ,
 				const char * hover_image, const char * selection_image,event_button_t generated_event_click);
 	virtual ~Eda_Button();
