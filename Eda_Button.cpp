@@ -63,12 +63,11 @@ Eda_Button::Eda_Button(float x_center , float y_center ,float x_size_percent , f
 
 	if( (this->fill_image = al_load_bitmap(fill_image))== NULL)
 		;
-	if(hover_option && ((this->fill_hover_image = al_load_bitmap(hover_image)) == NULL))
+	if( hover_option && ((this->fill_hover_image = al_load_bitmap(hover_image)) == NULL) )
 		;//Throw exception or what??? 
 	if( selection_option && ((this->fill_selection_image = al_load_bitmap(selection_image)) == NULL) )
 		;//Throw exception or what??? 
-
-
+	
 }
 
 	
