@@ -25,16 +25,20 @@
  * Return:
  *	-No return in constructor
  */
-Eda_Button::Eda_Button(float x_center , float y_center ,float x_size_percent , float y_size_percent,
-	const char * fill_image , bool hover_option, const char * hover_image, event_t generated_event_click)
+Eda_Button::Eda_Button(float x_center , float y_center ,float x_size_percent , float y_size_percent, const char * fill_image ,
+					const char * hover_image, const char * selection_image, event_button_t generated_event_click)
 {
 	this->x_center = x_center;
 	this->y_center = y_center;
 	this->x_size_percent = x_size_percent;
 	this->y_size_percent = y_size_percent;
 	this->generated_event_click = generated_event_click;
-	this->hover_option = hover_option;
+	
 	this->hovering = false;
+	this->hover_option = (hover_image != NULL); //if NULL then no hover option
+	
+	this->selected = false;
+	this->selection_option = (selection_image != NULL);
 	
 	if( (this->fill_image = al_load_bitmap(fill_image))== NULL)
 		;
@@ -43,11 +47,26 @@ Eda_Button::Eda_Button(float x_center , float y_center ,float x_size_percent , f
 	{	
 		if( (this->fill_hover_image = al_load_bitmap(hover_image)) == NULL)
 			;//Throw exception or what??? 
-#warning "Figure out what to do with fail on load bitmap on button"
+			#warning "Figure out what to do with fail on load bitmap on button"
 	}
 	else
 		this->fill_hover_image = NULL;
+	
+	
+	if(selection_option)
+	{	
+		if( (this->fill_selection_image = al_load_bitmap(selection_image)) == NULL)
+			;//Throw exception or what??? 
+			#warning "Figure out what to do with fail on load bitmap on button"
+	}
+	else
+		this->fill_selection_image = NULL;
+
+
 }
+
+	
+
 
 /*
  * Destructor for Eda_Button frees all loaded bitmaps
@@ -83,7 +102,14 @@ void Eda_Button::draw(ALLEGRO_DISPLAY * display)
 							(y_center-0.5 * y_size_percent) * al_get_display_height(display),  //y_cord to draw
 							x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
 							0); //flags
-	if(hover_option && hovering)
+	if(selection_option && selected)
+		al_draw_scaled_bitmap(fill_selection_image, 
+								0.0, 0.0, al_get_bitmap_width(fill_selection_image), al_get_bitmap_height(fill_selection_image),
+								(x_center-0.5 * x_size_percent) * al_get_display_width(display), //x_cord to draw
+								(y_center-0.5 * y_size_percent) * al_get_display_height(display),  //y_cord to draw
+								x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
+								0); //flags 
+	else if(hover_option && hovering)
 		al_draw_scaled_bitmap(fill_hover_image, 
 								0.0, 0.0, al_get_bitmap_width(fill_hover_image), al_get_bitmap_height(fill_hover_image),
 								(x_center-0.5 * x_size_percent) * al_get_display_width(display), //x_cord to draw
@@ -138,6 +164,37 @@ bool Eda_Button::check_mouse_over(ALLEGRO_DISPLAY * display, float x_mouse, floa
 }
 
 /*
+ * Similar to check mouse over, but sets selection if mouse over. 
+ * The idea is for this to be called exclusively when a click is generate.
+ * 
+ * Input:
+ *	-ALLEGRO_DISPLAY * display: Active display, will be used to get width and height
+ *	-float x_mouse,y_mouse: Mouse x and y cord, will be used in conjunction with display to check mouseover
+ * 
+ * Return:
+ *	-bool: Returns if mouse is on top of button. True mouse if on top, false mouse is not on top of button
+ */
+bool Eda_Button::check_mouse_over_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse)
+{
+	bool mouse_over = false;
+	if (x_mouse >= ((x_center-0.5 * x_size_percent) * al_get_display_width(display)) 
+		&& x_mouse <= ((x_center+0.5 * x_size_percent) * al_get_display_width(display)) 
+		&& y_mouse >= ((y_center-0.5 * y_size_percent) * al_get_display_height(display))
+		&& y_mouse <= ((y_center+0.5 * y_size_percent) * al_get_display_height(display)) )
+	{
+		selected = true;
+		mouse_over = true;
+	}
+	return mouse_over;
+}
+
+/*
+ * Deselects a button
+ */
+void Eda_Button::deselect(void){
+	selected = false;
+}
+/*
  * Returns event, which is intended for when the button is clicked.The idea is on a mouse click, check mouse over
  *	(with check_mouse_over method) and if the mouse is clicking button call get_click_event method.
  * 
@@ -147,7 +204,7 @@ bool Eda_Button::check_mouse_over(ALLEGRO_DISPLAY * display, float x_mouse, floa
  * Return:
  *	-event_t: Returns the event which is intented for when the button is clicked
  */
-event_t Eda_Button::get_click_event(void)
+event_button_t Eda_Button::get_click_event(void)
 {
 	return this->generated_event_click;
 }

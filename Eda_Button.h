@@ -10,20 +10,22 @@
 
 #include <allegro5/allegro5.h>
 
-typedef enum{NO_EVENT, EDA_BUTTON_PLAY_PRESSED, EDA_BUTTON_SETT_PRESSED}event_t;
+typedef enum{NO_EVENT, EDA_BUTTON_PLAY_PRESSED, EDA_BUTTON_SETT_PRESSED}event_button_t;
 
 class Eda_Button{
 public:
 //	Eda_Button();
-	Eda_Button(float x_center , float y_center ,float x_size_percent , float y_size_percent,
-				const char * fill_image , bool hover_option, const char * hover_image, event_t generated_event_click);
+	Eda_Button(float x_center , float y_center ,float x_size_percent , float y_size_percent, const char * fill_image ,
+				const char * hover_image, const char * selection_image,event_button_t generated_event_click);
 	virtual ~Eda_Button();
 	
 	void draw(ALLEGRO_DISPLAY * display);
 	
 	bool update_hovering(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse);
 	bool check_mouse_over(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse);//useful for detecting clicks 
-	event_t get_click_event(void);
+	bool check_mouse_over_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse);
+	void deselect(void);
+	event_button_t get_click_event(void);
 	//void set_hovering(bool hovering);
 	
 private:
@@ -33,12 +35,17 @@ private:
 	float x_size_percent , y_size_percent; //Percentage of display size, this allows for same button size across various resolutions
 	
 	ALLEGRO_BITMAP * fill_image;
-	ALLEGRO_BITMAP * fill_hover_image; //On hover will always draw fill_image and hover on top just incase hover border
+	ALLEGRO_BITMAP * fill_hover_image; //On hover will always draw fill_image and hover on top just incase hover is a border
+	ALLEGRO_BITMAP * fill_selection_image;//On selection will always draw fill_image and selection on top just incase selection is aborder
+	//If selected hover will not be drawn
 	
 	bool hover_option; //If true, then on hover option will be displayed
 	bool hovering;
 	
-	event_t generated_event_click;
+	bool selection_option;//might be easiest way to use for game buttons
+	bool selected;
+	
+	event_button_t generated_event_click;
 	
 };
 

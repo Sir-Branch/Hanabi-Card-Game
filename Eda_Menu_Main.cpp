@@ -7,8 +7,8 @@
 
 #include "Eda_Menu_Main.h"
 #include "Eda_Button.h"
-Eda_Menu_Main::Eda_Menu_Main() : play(0.5, 0.6, 0.10, 0.08 ,"play.png",true, "play_glow.png",EDA_BUTTON_PLAY_PRESSED),
-								settings(0.5, 0.70, 0.20, 0.08 ,"settings.png",true, "settings_glow.png",EDA_BUTTON_SETT_PRESSED )
+Eda_Menu_Main::Eda_Menu_Main() : play(0.5, 0.6, 0.10, 0.08 ,"play.png", "play_glow.png", NULL, EDA_BUTTON_PLAY_PRESSED),
+								settings(0.5, 0.70, 0.20, 0.08 ,"settings.png","settings_glow.png", NULL, EDA_BUTTON_SETT_PRESSED )
 {
 	
 }
