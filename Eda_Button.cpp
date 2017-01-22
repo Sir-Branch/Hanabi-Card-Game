@@ -43,6 +43,10 @@ Eda_Button::Eda_Button()
 Eda_Button::Eda_Button(float x_center , float y_center ,float x_size_percent , float y_size_percent, const char * fill_image ,
 					const char * hover_image, const char * selection_image, event_button_t generated_event_click)
 {
+	this->fill_image = NULL;
+	this->fill_selection_image = NULL;
+	this->fill_hover_image = NULL;
+	
 	this->x_center = x_center;
 	this->y_center = y_center;
 	this->x_size_percent = x_size_percent;
@@ -55,27 +59,14 @@ Eda_Button::Eda_Button(float x_center , float y_center ,float x_size_percent , f
 	this->selected = false;
 	this->selection_option = (selection_image != NULL);
 	
+	#warning "Figure out what to do with fail on load bitmap on button"
+
 	if( (this->fill_image = al_load_bitmap(fill_image))== NULL)
 		;
-	
-	if(hover_option)
-	{	
-		if( (this->fill_hover_image = al_load_bitmap(hover_image)) == NULL)
-			;//Throw exception or what??? 
-			#warning "Figure out what to do with fail on load bitmap on button"
-	}
-	else
-		this->fill_hover_image = NULL;
-	
-	
-	if(selection_option)
-	{	
-		if( (this->fill_selection_image = al_load_bitmap(selection_image)) == NULL)
-			;//Throw exception or what??? 
-			#warning "Figure out what to do with fail on load bitmap on button"
-	}
-	else
-		this->fill_selection_image = NULL;
+	if(hover_option && ((this->fill_hover_image = al_load_bitmap(hover_image)) == NULL))
+		;//Throw exception or what??? 
+	if( selection_option && ((this->fill_selection_image = al_load_bitmap(selection_image)) == NULL) )
+		;//Throw exception or what??? 
 
 
 }
