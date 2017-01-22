@@ -7,267 +7,118 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <allegro5/allegro5.h>
+#include <allegro5/allegro_image.h>
+#include <queue>
 #include "Hanabi_Board.h"
-
+#include "Hanabi_Skin.h"
+#include "Eda_Button.h"
+#include "Eda_Menu_Main.h"
+#include "Eda_Menu_Game.h"
 
 using namespace std;
 
 
-int main(int argc, char** argv) {
-			
-	Hanabi_Board game_board;
-
-	game_board.hanabi_game_deck.print_deck();
-	for(int i = 0 ; i < 6 ; i++)
-		game_board.draw_card(i);
-	game_board.hanabi_game_deck.print_deck();
-	
-	game_board.print_my_hand();
-	
-	std::cout << "Any clues left: " << game_board.any_clues_left() << std::endl;
-	std::cout << "Any lives left: " << game_board.any_lifes_left() << std::endl;
-	
-	game_board.remove_clue_token();
-	game_board.remove_clue_token();
-	game_board.remove_clue_token();
-	
-	
-	std::cout << "All clues left: " << game_board.all_clues_left() << std::endl;
-	
-	game_board.lose_live();
-	game_board.lose_live();
-	game_board.lose_live();
-	
-	std::cout << "Any lives left: " << game_board.any_lifes_left() << std::endl;
-
-	
-	for(int i = 0 ; i < 6 ; i++)
-	{
-		std::cout << "Can place card #" << i <<": " << game_board.can_place_card( i ) << std::endl;
-		if(game_board.can_place_card(i))
-		{
-			game_board.player_action_play_card(i);
-			std::cout<< "Card Placed NIGGAAAA \n";
-			game_board.print_my_hand();
-		}
-	}
-	
-	game_board.print_my_hand();
-	game_board.player_action_discard_card(0);
-	std::cout << "All clues left: " << game_board.all_clues_left() << std::endl;
-	
-
-	game_board.print_my_hand();
-	game_board.player_action_discard_card(0);
-	std::cout << "All clues left: " << game_board.all_clues_left() << std::endl;
-	
-	
-	game_board.print_my_hand();
-	game_board.player_action_discard_card(0);
-	std::cout << "All clues left: " << game_board.all_clues_left() << std::endl;
-	game_board.print_my_hand();
-	
-	for(int i = 0 ; i < 5 ; i ++)
-	{
-		std::cout << "Printing graveyard for #" << i << std::endl;
-		//game_board.grave_yard[i].print_deck();
-		
-	}
-	
-
-	game_board.receive_action_get_clue('B');
-	game_board.receive_action_get_clue(1);
-	game_board.receive_action_get_clue('Y');
-	game_board.receive_action_get_clue(2);
-	game_board.receive_action_get_clue('G');
-	game_board.receive_action_get_clue(3);
-	game_board.receive_action_get_clue('W');
-	game_board.receive_action_get_clue(4);
-	game_board.receive_action_get_clue('R');
-	game_board.receive_action_get_clue(5);
-	
-	return 0;
-}
-
-
-#if 0
-
-#include "TFTPServer.h"
-#include "TFTPClient.h"
-#include "TFTP_Packet.h"
-
-#include "Hanabi_Name_Is_Packet.h"
-#include "Hanabi_Ack_Packet.h"
-#include "Hanabi_Discard_Packet.h"
-#include "Hanabi_Draw_Packet.h"
-#include "Hanabi_Error_Packet.h"
-#include "Hanabi_Game_Over_Packet.h"
-#include "Hanabi_IStart_Packet.h"
-#include "Hanabi_Match_Over_Packet.h"
-#include "Hanabi_Name_Is_Packet.h"
-#include "Hanabi_Name_Packet.h"
-#include "Hanabi_Play_Again_Packet.h"
-#include "Hanabi_Play_Packet.h"
-#include "Hanabi_Quit_Packet.h"
-#include "Hanabi_Start_Info_Packet.h"
-#include "Hanabi_We_Lost_Packet.h"
-#include "Hanabi_We_Won_Packet.h"
-#include "Hanabi_You_Have_Packet.h"
-#include "Hanabi_You_Start_Packet.h"
-
-
-
-void create_packet_test_array(TFTP_Packet *tosend[17]);
-
-int main(int argc, char** argv) {
-
-	apr_initialize();
-
-	TFTPCxn * cxn = new TFTPClient();
-	std::cout << "Will search for server for 5 seconds \n";
-	if(!((TFTPClient *)cxn)->try_connect_server(5.0,HOME_ADRESS, DEF_REMOTE_PORT, DEF_IPMODE ))
-	{
-		delete cxn;
-		cxn = new TFTPServer(NULL, DEF_REMOTE_PORT, DEF_IPMODE );
-		std::cout << "Server will now try listening for client for 600secs \n";
-		if (((TFTPServer*)cxn)->listen_for_client(600.0) )
-		{
-			std::cout << "Able to connect to client \n";
-			std::cout << "Server press character to send name packet \n";
-			TFTP_Packet *tosend[17];
-			create_packet_test_array(tosend);
-			
-			for(int i=0 ; i < 17 ; i++)
-			{	
-				getchar();
-				tosend[i]->print_packet();
-				if (tosend[i]->send_packet(cxn->get_cxn_socket()) == APR_SUCCESS )
-					std::cout << "Able to send packet \n";
-				else
-					std::cout << "Unable to send packet \n";
-		
-			}
-		}
-			
-	}
-	else
-	{
-		std::cout << "ABLE TO CONNECT TO SERVER YEAH BITCHES \n";
-		std::cout << "Server press character to receive packet WAIT FOR SERVER TO SEND \n";
-		TFTP_Packet torecieve;
-
-		for(int i=0 ; i < 17 ; i++)
-		{	
-			getchar();
-			if (torecieve.recieve_pck(cxn->get_cxn_socket()))
-			{
-				std::cout << "Packet recieved correctly \n" ;
-				torecieve.print_packet();
-			}
-			else 
-				std::cout << "Packet not recieved correctly \n" ;
-		}
-			
-	}
-	
-	printf("END PROGRAM \n");
-	while(1);
-	return 0;
-}
-
-#include "Hanabi_Card.h"
-void create_packet_test_array(TFTP_Packet *tosend[17])
+ 
+#define FPS				60.0
+#define SCREEN_W		1024
+#define SCREEN_H		576
+ 
+int main(void)
 {
-	tosend[0] = new Hanabi_Ack_Packet() ;
-	tosend[1] = new Hanabi_Name_Packet() ;
-	tosend[2] = new Hanabi_Name_Is_Packet("Rama Merello");
+   ALLEGRO_DISPLAY *display = NULL;
+   ALLEGRO_EVENT_QUEUE *event_queue = NULL;
+   ALLEGRO_TIMER *timer = NULL;
+  
+   std::queue<event_button_t> button_event_queue;
 	
-	Hanabi_Card client_array[6] = {	Hanabi_Card(HANABI_CARD_WHITE,HANABI_CARD_ONE),
-								Hanabi_Card(HANABI_CARD_WHITE,HANABI_CARD_TWO),
-								Hanabi_Card(HANABI_CARD_WHITE,HANABI_CARD_THREE),
-								Hanabi_Card(HANABI_CARD_WHITE,HANABI_CARD_FOUR),
-								Hanabi_Card(HANABI_CARD_WHITE,HANABI_CARD_FIVE),
-								Hanabi_Card(HANABI_CARD_BLUE,HANABI_CARD_ONE)
-							};
-	
-	Hanabi_Card server_array[6] = {	Hanabi_Card(HANABI_CARD_BLUE,HANABI_CARD_TWO),
-								Hanabi_Card(HANABI_CARD_BLUE,HANABI_CARD_THREE),
-								Hanabi_Card(HANABI_CARD_BLUE,HANABI_CARD_FOUR),
-								Hanabi_Card(HANABI_CARD_BLUE,HANABI_CARD_FIVE),
-								Hanabi_Card(HANABI_CARD_GREEN,HANABI_CARD_ONE),
-								Hanabi_Card(HANABI_CARD_GREEN,HANABI_CARD_TWO)
-							};
-	
-	tosend[3] = new Hanabi_Start_Info_Packet(client_array,server_array);
-	
-	tosend[4] = new Hanabi_You_Start_Packet() ;
-	tosend[5] = new Hanabi_IStart_Packet() ;
-	
-	tosend[6] = new Hanabi_Discard_Packet(0x01) ;
-	tosend[7] = new Hanabi_Play_Packet(0x02) ;
-	tosend[8] = new Hanabi_You_Have_Packet(HANABI_CARD_RED) ;
-	tosend[9] = new Hanabi_Draw_Packet(Hanabi_Card(HANABI_CARD_RED,HANABI_CARD_THREE)) ;
-	
-	tosend[10] = new Hanabi_We_Won_Packet() ;
-	tosend[11] = new Hanabi_We_Lost_Packet() ;
-	tosend[12] = new Hanabi_Match_Over_Packet() ;
-	tosend[13] = new Hanabi_Play_Again_Packet();
-	tosend[14] = new Hanabi_Game_Over_Packet() ;
-	tosend[15] = new Hanabi_Quit_Packet() ;
-	tosend[16] = new Hanabi_Error_Packet() ;
-	
+   bool redraw = false;
+   bool do_exit = false;
+ 
+   if(!al_init()) {
+      fprintf(stderr, "failed to initialize allegro!\n");
+      return -1;
+   }
+ 
+   al_init_image_addon();
+   
+   if(!al_install_mouse()) {
+      fprintf(stderr, "failed to initialize the mouse!\n");
+      return -1;
+   }
+ 
+   timer = al_create_timer(1.0 / FPS);
+   if(!timer) {
+      fprintf(stderr, "failed to create timer!\n");
+      return -1;
+   }
+   al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR);  
+   
+   display = al_create_display(SCREEN_W, SCREEN_H);
+   if(!display) {
+      fprintf(stderr, "failed to create display!\n");
+      al_destroy_timer(timer);
+      return -1;
+   }
+ 
+   event_queue = al_create_event_queue();
+   if(!event_queue) {
+      fprintf(stderr, "failed to create event_queue!\n");
+      al_destroy_display(display);
+      al_destroy_timer(timer);
+      return -1;
+   }
+   
+   Hanabi_Skin * theme = new Hanabi_Skin();
+   theme->load_theme("Classic");
+   
+   Eda_Menu * active_menu = new Eda_Menu_Main();
+   
+   al_register_event_source(event_queue, al_get_display_event_source(display));
+   al_register_event_source(event_queue, al_get_timer_event_source(timer));
+   al_register_event_source(event_queue, al_get_mouse_event_source());
+ 
+   active_menu->draw(display,theme);
+   al_start_timer(timer);
+ 
+   while(!do_exit)  // idem anterior
+   {
+      ALLEGRO_EVENT ev;
+      al_wait_for_event(event_queue, &ev);
+ 
+      if(ev.type == ALLEGRO_EVENT_TIMER) // por que tenemos un timer para redibujar?
+         redraw = true;
+	  
+      else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)//Si se cierra el display o click de mouse cerrar
+         do_exit = true;
+	  
+      else if(ev.type == ALLEGRO_EVENT_MOUSE_AXES || ev.type == ALLEGRO_EVENT_MOUSE_ENTER_DISPLAY) 
+		 active_menu->update_buttons(display,ev.mouse.x, ev.mouse.y);
+	  
+	  else if(ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP)
+		  active_menu->check_for_click(display,ev.mouse.x, ev.mouse.y,button_event_queue);
+	  
+      if(redraw && al_is_event_queue_empty(event_queue)) 
+	  {
+         redraw = false;
+         active_menu->draw(display,theme);
+      }
+	  
+	  if(!button_event_queue.empty())
+	  {
+		 if( button_event_queue.front() == EDA_BUTTON_PLAY_PRESSED )
+		 {
+			button_event_queue.pop();
+			delete active_menu;
+			active_menu = new Eda_Menu_Game();
+		 }
+	  }
+	  
+   }
+ 
+   al_destroy_timer(timer);
+   al_destroy_display(display);
+   al_destroy_event_queue(event_queue);
+   delete active_menu;
+   return 0;
 }
-#endif
-
-
-/*
- * OUTPUT:
- * Printing my hand 
-B1
-R3
-Y3
-B2
-B3
-G4
-Any clues left: 1
-Any lifes left: 1
-All clues left: 0
-Any lifes left: 1
-Any lifes left: 1
-Any lifes left: 0
-Can place card #0: 1
-Card Placed NIGGAAAA 
-
-Printing my hand 
-R3
-R3
-Y3
-B2
-B3
-G4
-Can place card #1: 0
-Can place card #2: 0
-Can place card #3: 1
-Card Placed NIGGAAAA 
-
-Printing my hand 
-R3
-R3
-Y3
-R1
-B3
-G4
-Can place card #4: 1
-Card Placed NIGGAAAA 
-
-Printing my hand 
-R3
-R3
-Y3
-R1
-R2
-G4
-Can place card #5: 0
-
- * 
- */
