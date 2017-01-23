@@ -15,7 +15,7 @@
 
 #define HANABI_LIGHT_TOKENS		3	//These are the "lifes" in hanabi
 #define HANABI_CLUE_TOKENS		9	
-#define HANABI_NUMBER_COLORS	5	//Yeah colors the u is only if u are British 
+#define HANABI_NUMBER_COLORS	5	//Yeah colors, the u is only if u are British 
 #define HANABI_CARDS_PER_HAND	6
 
 /*
@@ -39,19 +39,22 @@ class Hanabi_Board{
 public:
     Hanabi_Board();
 	
-    bool any_lifes_left(void);
+    bool any_lives_left(void);
     bool any_clues_left(void);
 	bool all_clues_left(void);
+	
+	unsigned int number_clues_left(void);
+	unsigned int number_lives_left(void);
 	
 	//Players only have 3 possible actions 
 	bool player_action_play_card(unsigned int card_my_hand);
 	void player_action_discard_card(unsigned int card_my_hand);
-	bool player_action_give_clue(char value_or_suit,TFTPCxn * cxn );
+	bool player_action_give_clue(char value_or_suit, TFTPCxn * cxn );
 #warning "Falta probar give clue"
 	
 	void receive_action_draw_card(Hanabi_Card card);
-	void receive_action_play_card(unsigned int card_my_hand);
-	void receive_action_discard_card(unsigned int card_my_hand);
+	void receive_action_play_card(unsigned int card_other_hand);
+	void receive_action_discard_card(unsigned int card_other_hand);
 	void receive_action_get_clue(char value_or_suit);//player can only "receive" one action which is a clue
 	
 	void print_my_hand(void);
@@ -80,6 +83,8 @@ public://Public for testing functions
 	//Convendra usar una de ints del 0 al 5??
 	
 	Hanabi_Card otherplayers_hand[HANABI_CARDS_PER_HAND];
+	unsigned int otherplayers_card_replace; // Card to be replaced on draw. 
+	
 	in_game_hanabi_Card_t my_cards[HANABI_CARDS_PER_HAND];
 	
 	bool last_hand; //Deck was emptied one play each left.

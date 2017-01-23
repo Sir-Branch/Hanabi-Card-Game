@@ -24,7 +24,7 @@ Hanabi_Board::Hanabi_Board() {
  * Return:
  *	-Boolean: If true at least 1 live left.
  */
-bool Hanabi_Board::any_lifes_left(void)
+bool Hanabi_Board::any_lives_left(void)
 {
 	bool any_lifes_left = false;
 	for(int i = 0 ; (any_lifes_left == false) && i < HANABI_LIGHT_TOKENS ; i++)
@@ -211,7 +211,6 @@ int Hanabi_Board::get_suit_number_array(hanabi_suits_t suit)
  */
 void Hanabi_Board::discard_card(unsigned int card_my_hand)
 {
-	
 	Hanabi_Card * card = &my_cards[card_my_hand].playing_card;
 	grave_yard[ get_suit_number_array(card->get_suit()) ].addcard_front( *card);
 }
@@ -279,11 +278,11 @@ bool Hanabi_Board::draw_card(unsigned int card_my_hand)
  */
 void Hanabi_Board::receive_action_get_clue(char value_or_suit)
 {
-	if(value_or_suit >= 'A' && value_or_suit <= 'Z') //if suit/color
+	if(value_or_suit >= 'A' && value_or_suit <= 'Z') //if its a suit/color hint
 	{
 		for(int i = 0 ; i < HANABI_HAND_SIZE ; i++ )
 			if(my_cards[i].playing_card.get_suit() == value_or_suit)
-				my_cards[i].color_hint = true;
+				my_cards[i].color_hint = true; 
 	}
 	else // is a value hint
 	{
@@ -294,33 +293,41 @@ void Hanabi_Board::receive_action_get_clue(char value_or_suit)
 	
 }
 
-
 void Hanabi_Board::receive_action_draw_card(Hanabi_Card card_drawn)
 {
-	hanabi_game_deck.remove_specific_card(card_drawn);
-	
-	
+	if( hanabi_game_deck.remove_specific_card(card_drawn) )
+	{
+		otherplayers_hand[otherplayers_card_replace] = card_drawn;
+	}
+	else
+	{
+		;//ERROR
+	}
 }
 
 void Hanabi_Board::receive_action_play_card(unsigned int card_other_hand)
 {
 	bool could_place_card;
-	if( could_place_card = can_place_card(card_other_hand) )
+	
+	if( could_place_card = can_place_card(card_other_hand) ) // If the card could be placed we add it to the central deck.
 	{
-		central_cards[ get_suit_number_array( otherplayers_hand[card_other_hand].get_suit() )] = otherplayers_hand[card_other_hand];
+		central_cards[ get_suit_number_array(otherplayers_hand[card_other_hand].get_suit()) ] = otherplayers_hand[card_other_hand];
 	}
 	else
 	{
-		otherplayers_hand[card_other_hand] ;
+		//Adds card to graveyard, no monster reborn in this game
+		grave_yard[ get_suit_number_array(otherplayers_hand[card_other_hand].get_suit()) ].addcard_end( otherplayers_hand[card_other_hand] );
 		this->lose_live();
 	}
-
+	
+	otherplayers_card_replace = card_other_hand; //Will recieve a Draw after this, so we must know in which position to place the drawn card.
 }
 
-void Hanabi_Board::receive_action_discard_card(unsigned int card_my_hand)
+void Hanabi_Board::receive_action_discard_card(unsigned int card_other_hand)
 {
-	
-	
+	otherplayers_card_replace = card_other_hand; //Will recieve a Draw after this, so we must know in which position to place the drawn card.
+	if ( !this->add_clue_token() )
+		;//ERROR
 }
 
 //PLAYERS possible ACTION 
@@ -333,7 +340,7 @@ void Hanabi_Board::receive_action_discard_card(unsigned int card_my_hand)
 /*
  * This function carries out one of the three possible player actions: Play card
  * 
- * Play card action:	1) Tries to play card in center, if not posible loses live and discard card
+ * Play card action:	1) Tries to play card in center, if not possible loses a life and discard the card
  *						2) Draw card
  *
  * Input:
@@ -397,10 +404,10 @@ void  Hanabi_Board::player_action_discard_card(unsigned int card_my_hand)
  * Return:
  *	-bool: Returns true if the hint was sent successfully
  */
-bool Hanabi_Board::player_action_give_clue(char value_or_suit,TFTPCxn * cxn )
+bool Hanabi_Board::player_action_give_clue(char value_or_suit, TFTPCxn * cxn)
 {
 	Hanabi_You_Have_Packet * to_send = new Hanabi_You_Have_Packet(value_or_suit);
-	return APR_SUCCESS == to_send->send_packet(cxn->get_cxn_socket());
+	return (APR_SUCCESS == cxn->send_packet(to_send));
 }
 
 #include <iostream>
@@ -409,4 +416,25 @@ void Hanabi_Board::print_my_hand(void)
 	std::cout << "\nPrinting my hand \n";
 	for(int i = 0 ; i < HANABI_HAND_SIZE ; i++)
 		my_cards[i].playing_card.print_card();
+}
+
+unsigned int Hanabi_Board::number_clues_left(void)
+{
+	unsigned int clues_left = 0;
+	for(int i = 0; i < HANABI_CLUE_TOKENS ; i++)
+		if( clue_tokens[i].token_heads())
+			clues_left++;// could use directly i and break;
+	
+	return clues_left;
+	
+}
+
+unsigned int Hanabi_Board::number_lives_left(void)
+{
+	unsigned int lifes_left = 0;
+	for(int i = 0; i < HANABI_LIGHT_TOKENS ; i++)
+		if( light_tokens[i].token_heads())
+			lifes_left++;// could use directly i and break;
+	
+	return lifes_left;
 }
