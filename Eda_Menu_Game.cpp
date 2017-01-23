@@ -7,46 +7,60 @@
 
 #include "Eda_Menu_Game.h"
 #include "Eda_Button.h"
+#include "Hanabi_Board.h"
 
 Eda_Menu_Game::Eda_Menu_Game()
 {
-	color_buttons[0] = new Eda_Button(0.410, 0.615, 0.045, 0.08, CLUE_BUT_DIR "Button White.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_WHITE_PRESSED);
-	color_buttons[1] = new Eda_Button(0.455, 0.615, 0.045, 0.08, CLUE_BUT_DIR "Button Blue.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_BLUE_PRESSED);
-	color_buttons[2] = new Eda_Button(0.500, 0.615, 0.045, 0.08, CLUE_BUT_DIR "Button Green.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_GREEN_PRESSED);
-	color_buttons[3] = new Eda_Button(0.545, 0.615, 0.045, 0.08, CLUE_BUT_DIR "Button Yellow.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_YELLOW_PRESSED);
-	color_buttons[4] = new Eda_Button(0.590, 0.615, 0.045, 0.08, CLUE_BUT_DIR "Button Red.png",	CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_RED_PRESSED);
+	//give clue could be a Button and not a pointer and construct during call but I rather everything be the same in this menu
+	give_clue = new Eda_Button(0.5, 0.737, 0.281, 0.08, CLUE_BUT_DIR "give_clue.png", CLUE_BUT_DIR "give_clue_hover.png", NULL, EDA_BUTTON_GIVE_CLUE_PRESSED);
+		
+	color_buttons[0] = new Eda_Button(0.410, 0.575, 0.045, 0.08, CLUE_BUT_DIR "Button White.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_WHITE_PRESSED);
+	color_buttons[1] = new Eda_Button(0.455, 0.575, 0.045, 0.08, CLUE_BUT_DIR "Button Blue.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_BLUE_PRESSED);
+	color_buttons[2] = new Eda_Button(0.500, 0.575, 0.045, 0.08, CLUE_BUT_DIR "Button Green.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_GREEN_PRESSED);
+	color_buttons[3] = new Eda_Button(0.545, 0.575, 0.045, 0.08, CLUE_BUT_DIR "Button Yellow.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_YELLOW_PRESSED);
+	color_buttons[4] = new Eda_Button(0.590, 0.575, 0.045, 0.08, CLUE_BUT_DIR "Button Red.png",	CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_RED_PRESSED);
 
-	number_buttons[0] = new Eda_Button(0.410, 0.70, 0.045, 0.08, CLUE_BUT_DIR "Number1.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_ONE_PRESSED);
-	number_buttons[1] = new Eda_Button(0.455, 0.70, 0.045, 0.08, CLUE_BUT_DIR "Number2.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_TWO_PRESSED);
-	number_buttons[2] = new Eda_Button(0.500, 0.70, 0.045, 0.08, CLUE_BUT_DIR "Number3.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_THREE_PRESSED);
-	number_buttons[3] = new Eda_Button(0.545, 0.70, 0.045, 0.08, CLUE_BUT_DIR "Number4.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_FOUR_PRESSED);
-	number_buttons[4] = new Eda_Button(0.590, 0.70, 0.045, 0.08, CLUE_BUT_DIR "Number5.png",	CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_FIVE_PRESSED);
+	number_buttons[0] = new Eda_Button(0.410, 0.655, 0.045, 0.08, CLUE_BUT_DIR "Number1.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_ONE_PRESSED);
+	number_buttons[1] = new Eda_Button(0.455, 0.655, 0.045, 0.08, CLUE_BUT_DIR "Number2.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_TWO_PRESSED);
+	number_buttons[2] = new Eda_Button(0.500, 0.655, 0.045, 0.08, CLUE_BUT_DIR "Number3.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_THREE_PRESSED);
+	number_buttons[3] = new Eda_Button(0.545, 0.655, 0.045, 0.08, CLUE_BUT_DIR "Number4.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_FOUR_PRESSED);
+	number_buttons[4] = new Eda_Button(0.590, 0.655, 0.045, 0.08, CLUE_BUT_DIR "Number5.png",	CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_FIVE_PRESSED);
+
 }
 
 Eda_Menu_Game::Eda_Menu_Game(const Eda_Menu_Game& orig) {
 }
 
-Eda_Menu_Game::~Eda_Menu_Game() {
-	
+Eda_Menu_Game::~Eda_Menu_Game() 
+{	
 	for(int i = 0 ; i < 5 ; i++)
 	{
 		delete color_buttons[i];
 		delete number_buttons[i];
 	}
+	delete give_clue; 
 }
 
-void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme)
+void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board)
 {
 	al_draw_scaled_bitmap(theme->game_mat, 
 							0.0, 0.0, al_get_bitmap_width(theme->main_menu), al_get_bitmap_height(theme->main_menu),
 							0.0, 0.0, al_get_display_width(display), al_get_display_height(display), //x , y cord to draw and width and height to draw
 							0); //flags	
+	
 	for(int i = 0 ; i < 5 ; i++)
 	{
 		color_buttons[i]->draw(display);
 		number_buttons[i]->draw(display);
 	}
+	give_clue->draw(display);
 	
+	draw_clue_tokens(display, theme, game_board, 
+					0.1, 0.1,
+					0.045, 0.08 );
+	draw_lightning_tokens(display, theme, game_board, 
+					0.2, 0.1,
+					0.045, 0.08 );
 	al_flip_display();
 }
 
@@ -58,6 +72,8 @@ void Eda_Menu_Game::update_buttons(ALLEGRO_DISPLAY * display, float x_mouse, flo
 		color_buttons[i]->update_hovering(display, x_mouse, y_mouse);
 		number_buttons[i]->update_hovering(display, x_mouse, y_mouse);
 	}
+	give_clue->update_hovering(display, x_mouse, y_mouse);
+
 
 }
 
@@ -75,8 +91,8 @@ bool Eda_Menu_Game::check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, fl
 			click_number = true;
 	}
 	
-	--i; // I will woint to the click button in array
-	//If click on a button will deselet rest of buttons
+	--i; // i will point to the click button in array
+	//If click occurs on a button will deselect rest of buttons
 	if(click_color || click_number)
 		for(int j = 0 ; j < 5 ; j++)
 		{
@@ -88,8 +104,55 @@ bool Eda_Menu_Game::check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, fl
 	
 
 	return click_color || click_number;
+}
+
+void Eda_Menu_Game::draw_lightning_tokens(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board,
+					float x_center , float y_center ,float x_size_percent , float y_size_percent)
+{
+	unsigned int used_tokens = HANABI_LIGHT_TOKENS - game_board->number_lives_left();
+	
+	for(unsigned int i = 1 ; i <= HANABI_LIGHT_TOKENS ; i++)
+	{
+		if( i <= used_tokens)
+			al_draw_scaled_bitmap(theme->token_lightning[0], //token_lightning[0] corresponds to disabled
+							0.0, 0.0, al_get_bitmap_width(theme->token_lightning[0]), al_get_bitmap_height(theme->token_lightning[0]),
+							(x_center-0.5 * x_size_percent) * al_get_display_width(display), //x_cord to draw
+							(y_center-0.5 * y_size_percent + y_size_percent * (i-1)) * al_get_display_height(display),  //y_cord to draw
+							x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
+							0); //flags
+		else
+			al_draw_scaled_bitmap(theme->token_lightning[1], 	//token_lightning[1] corresponds to enabled
+								0.0, 0.0, al_get_bitmap_width(theme->token_lightning[1]), al_get_bitmap_height(theme->token_lightning[1]),
+								(x_center-0.5 * x_size_percent) * al_get_display_width(display), //x_cord to draw
+								(y_center-0.5 * y_size_percent + y_size_percent * (i-1)) * al_get_display_height(display),  //y_cord to draw
+								x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
+								0); //flags
+	}
+	
+}
+void Eda_Menu_Game::draw_clue_tokens(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board,
+						float x_center , float y_center ,float x_size_percent , float y_size_percent)
+{
+	unsigned int used_tokens = HANABI_CLUE_TOKENS - game_board->number_clues_left();
+	
+	for(unsigned int i = 1 ; i <= HANABI_CLUE_TOKENS ; i++)
+	{
+		if( i <= used_tokens)
+			al_draw_scaled_bitmap(theme->token_clue[0], //token_lightning[0] corresponds to disabled
+							0.0, 0.0, al_get_bitmap_width(theme->token_clue[0]), al_get_bitmap_height(theme->token_clue[0]),
+							(x_center-0.5 * x_size_percent) * al_get_display_width(display), //x_cord to draw
+							(y_center-0.5 * y_size_percent + y_size_percent * (i-1)) * al_get_display_height(display),  //y_cord to draw
+							x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
+							0); //flags
+		else
+			al_draw_scaled_bitmap(theme->token_clue[1], 	//token_lightning[1] corresponds to enabled
+								0.0, 0.0, al_get_bitmap_width(theme->token_lightning[1]), al_get_bitmap_height(theme->token_clue[1]),
+								(x_center-0.5 * x_size_percent) * al_get_display_width(display), //x_cord to draw
+								(y_center-0.5 * y_size_percent + y_size_percent * (i-1)) * al_get_display_height(display),  //y_cord to draw
+								x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
+								0); //flags
+	}
 	
 	
 }
-
 

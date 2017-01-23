@@ -16,7 +16,7 @@ Eda_Menu_Main::Eda_Menu_Main() : play(0.5, 0.6, 0.10, 0.08 ,"play.png", "play_gl
 Eda_Menu_Main::~Eda_Menu_Main() {
 }
 
-void Eda_Menu_Main::draw(ALLEGRO_DISPLAY * display, Hanabi_Skin * theme)
+void Eda_Menu_Main::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board)
 {
 	al_draw_scaled_bitmap(theme->main_menu, 
 							0.0, 0.0, al_get_bitmap_width(theme->main_menu), al_get_bitmap_height(theme->main_menu),

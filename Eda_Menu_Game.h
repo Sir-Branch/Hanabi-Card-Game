@@ -13,6 +13,7 @@
 #include "Eda_Button.h"
 #include "Eda_Menu.h"
 #include "Hanabi_Skin.h"
+#include "Hanabi_Board.h"
 
 #define CLUE_BUT_DIR "Clue Buttons/" //Clue button Directory path
 
@@ -21,14 +22,20 @@ class Eda_Menu_Game : public Eda_Menu
 public:
 	Eda_Menu_Game();
 	virtual ~Eda_Menu_Game();
-	void draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme);
+	void draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board);
 	void update_buttons(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse);
 	bool check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse, std::queue<event_button_t> &button_event_queue);
 	
-public:
+private:
+	void draw_clue_tokens(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board,
+					float x_center , float y_center ,float x_size_percent , float y_size_percent);
+	void draw_lightning_tokens(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board,
+					float x_center , float y_center ,float x_size_percent , float y_size_percent);
+	
 	Eda_Menu_Game(const Eda_Menu_Game& orig);
-	Eda_Button *color_buttons[5];
-	Eda_Button *number_buttons[5];
+	Eda_Button * color_buttons[5];
+	Eda_Button * number_buttons[5];
+	Eda_Button * give_clue;
 };
 
 #endif /* EDA_MENU_GAME_H */

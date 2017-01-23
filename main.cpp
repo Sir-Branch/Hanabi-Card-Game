@@ -21,8 +21,9 @@ using namespace std;
 
  
 #define FPS				60.0
-#define SCREEN_W		1024
-#define SCREEN_H		576
+//1280×720 1024x576
+#define SCREEN_W		1280 
+#define SCREEN_H		720
  
 int main(void)
 {
@@ -70,7 +71,10 @@ int main(void)
    }
    
    Hanabi_Skin * theme = new Hanabi_Skin();
+   Hanabi_Board game_board; 
    theme->load_theme("Classic");
+   game_board.lose_live();
+   game_board.remove_clue_token();
    
    Eda_Menu * active_menu = new Eda_Menu_Main();
    
@@ -78,7 +82,7 @@ int main(void)
    al_register_event_source(event_queue, al_get_timer_event_source(timer));
    al_register_event_source(event_queue, al_get_mouse_event_source());
  
-   active_menu->draw(display,theme);
+   active_menu->draw(display,theme, &game_board);
    al_start_timer(timer);
  
    while(!do_exit)  // idem anterior
@@ -101,17 +105,18 @@ int main(void)
       if(redraw && al_is_event_queue_empty(event_queue)) 
 	  {
          redraw = false;
-         active_menu->draw(display,theme);
+         active_menu->draw(display,theme, &game_board);
       }
 	  
 	  if(!button_event_queue.empty())
 	  {
 		 if( button_event_queue.front() == EDA_BUTTON_PLAY_PRESSED )
 		 {
-			button_event_queue.pop();
 			delete active_menu;
 			active_menu = new Eda_Menu_Game();
 		 }
+		 button_event_queue.pop();
+
 	  }
 	  
    }
