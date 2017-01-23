@@ -21,10 +21,11 @@ using namespace std;
 
  
 #define FPS				60.0
-//1280×720 1024x576
-#define SCREEN_W		1280 
-#define SCREEN_H		720
+//16:9 1280×720 1024x576
+#define SCREEN_W		1152 
+#define SCREEN_H		648
  
+//4:3 1024×768
 int main(void)
 {
    ALLEGRO_DISPLAY *display = NULL;
@@ -73,9 +74,20 @@ int main(void)
    Hanabi_Skin * theme = new Hanabi_Skin();
    Hanabi_Board game_board; 
    theme->load_theme("Classic");
+   
    game_board.lose_live();
    game_board.remove_clue_token();
    
+   
+   game_board.otherplayers_hand[0] = Hanabi_Card(HANABI_CARD_WHITE, HANABI_CARD_TWO); 
+   game_board.otherplayers_hand[1] = Hanabi_Card(HANABI_CARD_BLUE, HANABI_CARD_ONE); 
+   game_board.otherplayers_hand[2] = Hanabi_Card(HANABI_CARD_GREEN, HANABI_CARD_ONE); 
+   game_board.otherplayers_hand[3] = Hanabi_Card(HANABI_CARD_YELLOW, HANABI_CARD_ONE); 
+   game_board.otherplayers_hand[4] = Hanabi_Card(HANABI_CARD_RED, HANABI_CARD_ONE); 
+   game_board.otherplayers_hand[5] = Hanabi_Card(HANABI_CARD_WHITE, HANABI_CARD_TWO); 
+
+	   
+	   
    Eda_Menu * active_menu = new Eda_Menu_Main();
    
    al_register_event_source(event_queue, al_get_display_event_source(display));

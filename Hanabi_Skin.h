@@ -22,13 +22,16 @@ public:
 	ALLEGRO_BITMAP * connecting_background;
 	ALLEGRO_BITMAP * game_mat;
 	
+	ALLEGRO_BITMAP * cards_backside;
+	ALLEGRO_BITMAP * deck[5][5]; // Changed to this approach as it allows for easier management and avoiding if statements 
+	//Order will be like a rainbow White, blue, green , yellow , red
+	/*
 	ALLEGRO_BITMAP * cards_blue[5];
 	ALLEGRO_BITMAP * cards_green[5];
 	ALLEGRO_BITMAP * cards_red[5];
 	ALLEGRO_BITMAP * cards_white[5];
 	ALLEGRO_BITMAP * cards_yellow[5];
-	ALLEGRO_BITMAP * cards_backside;
-	
+	*/
 	//0 Will correspond to disable 1 to enabled for tokens
 	ALLEGRO_BITMAP * token_clue[2]; 
 	ALLEGRO_BITMAP * token_lightning[2];

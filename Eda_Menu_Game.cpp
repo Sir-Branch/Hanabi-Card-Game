@@ -61,6 +61,26 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 	draw_lightning_tokens(display, theme, game_board, 
 					0.2, 0.1,
 					0.045, 0.08 );
+	
+	
+	draw_cards(display,theme, //DRAW OTHER PLAYERS CARDS
+					0.5, 0.1,
+					0.063, 0.168, 0.005,
+					6 , game_board->otherplayers_hand);
+	
+	draw_cards(display,theme, //DRAW CENTRAL_CARDS
+					0.5, 0.4,
+					0.063, 0.168, 0.02,
+					5 , game_board->central_cards);
+					//0.0495, 0.132);
+					//0.045, 0.12);
+	
+	
+	draw_cards(display,theme, //DRAW Other players hand repeated just for looks
+					0.5, 0.9,
+					0.063, 0.168, 0.005,
+					6 , game_board->otherplayers_hand);
+	
 	al_flip_display();
 }
 
@@ -130,6 +150,7 @@ void Eda_Menu_Game::draw_lightning_tokens(ALLEGRO_DISPLAY *display, Hanabi_Skin 
 	}
 	
 }
+
 void Eda_Menu_Game::draw_clue_tokens(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board,
 						float x_center , float y_center ,float x_size_percent , float y_size_percent)
 {
@@ -156,3 +177,34 @@ void Eda_Menu_Game::draw_clue_tokens(ALLEGRO_DISPLAY *display, Hanabi_Skin *them
 	
 }
 
+void Eda_Menu_Game::draw_cards(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme,
+					float x_center , float y_center ,float x_size_percent , float y_size_percent, float space_between,
+					int number_cards, const Hanabi_Card * cards_to_draw)
+{
+	Hanabi_Card empty_card;	
+	for(int i = 0 ; i < number_cards ; i++)
+	{
+		Hanabi_Card temp_copy = cards_to_draw[i];
+		if( empty_card == cards_to_draw[i] )
+			al_draw_scaled_bitmap(theme->cards_backside, 
+									0.0, 0.0, al_get_bitmap_width(theme->cards_backside), al_get_bitmap_height(theme->cards_backside),
+									(x_center + (space_between+x_size_percent) * (i-number_cards/2.0)) * al_get_display_width(display), //x_cord to draw
+									(y_center - 0.5 * y_size_percent) * al_get_display_height(display),  //y_cord to draw
+									x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
+									0); //flags
+		else
+		{
+			int suit_num = temp_copy.get_suit_number();
+			al_draw_scaled_bitmap(theme->deck[suit_num][temp_copy.get_value()-1],
+									0.0, 0.0, al_get_bitmap_width(theme->deck[suit_num][temp_copy.get_value()-1]), al_get_bitmap_height(theme->deck[suit_num][temp_copy.get_value()-1]),
+									(x_center + (space_between+x_size_percent) * (i-number_cards/2.0)) * al_get_display_width(display), //x_cord to draw
+									(y_center - 0.5 * y_size_percent) * al_get_display_height(display),  //y_cord to draw
+									x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
+									0); //flags
+		}
+#warning "Check with 6 cards if number_cards/2 or number_cards/2.0 as to conserve half"
+		
+	}							
+	
+	
+}

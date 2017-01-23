@@ -31,6 +31,9 @@ private:
 					float x_center , float y_center ,float x_size_percent , float y_size_percent);
 	void draw_lightning_tokens(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board,
 					float x_center , float y_center ,float x_size_percent , float y_size_percent);
+	void draw_cards(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme,
+					float x_center , float y_center ,float x_size_percent , float y_size_percent, float space_between,
+					int number_cards, const Hanabi_Card * cards_to_draw);
 	
 	Eda_Menu_Game(const Eda_Menu_Game& orig);
 	Eda_Button * color_buttons[5];

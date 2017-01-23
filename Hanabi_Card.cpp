@@ -45,3 +45,49 @@ void Hanabi_Card::print_card(void)
 	std::cout << (char)suit << (int) value <<std::endl;  
 }
 
+
+/*
+ * This function returns the corresponding placement inside arrays according to suit.
+ * Examples:
+ *	 -In what position is the 'R' (red) suit in the graveyard array, or central card array.
+ * Remember that the board has Hanabi_Card central_cards[HANABI_NUMBER_COLORS]; so for example 
+ * to add a Red card we must would use central_cards[ get_suit_number_array('R')] = red_to_add;
+ *
+ * Input:
+ *	-void
+ * 
+ * Return:
+ *	-void
+ */
+int Hanabi_Card::get_suit_number(void)
+{
+	
+	switch(this->suit)
+	{
+		case HANABI_CARD_WHITE:
+			return 0;
+			break;
+			
+		case HANABI_CARD_BLUE:
+			return 1;
+			break;
+			
+		case HANABI_CARD_GREEN:
+			return 2;
+			break;
+			
+		case HANABI_CARD_YELLOW:
+			return 3;
+			break;
+			
+		case HANABI_CARD_RED:
+			return 4;
+			break;
+			
+		default:
+			return -1;
+			break;
+			
+	}
+	
+}

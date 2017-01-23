@@ -67,7 +67,6 @@ public://Public for testing functions
 	bool remove_clue_token(void);
 	
 	bool can_place_card(unsigned int card_my_hand);
-	int get_suit_number_array(hanabi_suits_t suit);
 	
 	bool draw_card(unsigned int card_my_hand);
 	void discard_card(unsigned int card_my_hand);

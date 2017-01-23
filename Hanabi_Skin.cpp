@@ -29,13 +29,17 @@ Hanabi_Skin::Hanabi_Skin()
 	
 	cards_backside = NULL;
 	for(unsigned int i = 0 ; i < 5 ; i++)
+		for(unsigned int j = 0 ; j < 5 ; j++)
+			deck[i][j] = NULL;
+	/*
+	for(unsigned int i = 0 ; i < 5 ; i++)
 	{
 		cards_blue[i] = NULL;
 		cards_green[i] = NULL;
 		cards_red[i] = NULL;
 		cards_white[i] = NULL;
 		cards_yellow[i] = NULL;	
-	}
+	}*/
 
 	//0 Will correspond to disable 1 to enabled for tokens
 	token_clue[0] = NULL; 
@@ -78,7 +82,11 @@ Hanabi_Skin::~Hanabi_Skin()
 		al_destroy_bitmap(this->cards_backside);
 	
 	for(unsigned int i = 0 ; i < 5 ; i++)
-	{
+		for(unsigned int j = 0 ; j < 5 ; j++)
+				if( this->deck[i][j] != NULL)
+					al_destroy_bitmap(this->deck[i][j]);
+			
+	/*	
 		if( this->cards_blue[i] != NULL)
 			al_destroy_bitmap(this->cards_blue[i]);
 		if( this->cards_green[i] != NULL)
@@ -90,6 +98,7 @@ Hanabi_Skin::~Hanabi_Skin()
 		if( this->cards_yellow[i] != NULL)
 			al_destroy_bitmap(this->cards_yellow[i]);
 	}
+	 */
 }
 
 /*
@@ -157,11 +166,18 @@ bool Hanabi_Skin::load_theme(std::string theme_name)
 		else
 		{
 
-			std::string toload = deck + "blue" + "0";
+			std::string toload = deck + "white" + "0";
+			for(unsigned int i = 0 ; i < 5 && success ; i++)
+			{
+				toload[toload.size()-1]++; //Increases number at end of string
+				if( (this->deck[0][i] = al_load_bitmap((toload+".png").c_str() ) ) == NULL)
+					success = false;
+			}
+			toload = deck + "blue" + "0";
 			for(unsigned int i = 0 ; i < 5 && success ; i++)
 			{
 				toload[toload.size()-1]++; //Increases number at end of string deck/blue1 then deck/blue2 etc...
-				if( (this->cards_blue[i] = al_load_bitmap((toload+".png").c_str() ) ) == NULL)
+				if( (this->deck[1][i] = al_load_bitmap((toload+".png").c_str() ) ) == NULL)
 					success = false;
 			}
 			
@@ -169,15 +185,16 @@ bool Hanabi_Skin::load_theme(std::string theme_name)
 			for(unsigned int i = 0 ; i < 5 && success ; i++)
 			{
 				toload[toload.size()-1]++; //Increases number at end of string
-				if( (this->cards_green[i] = al_load_bitmap((toload+".png").c_str() ) ) == NULL)
+				if( (this->deck[2][i] = al_load_bitmap((toload+".png").c_str() ) ) == NULL)
 					success = false;
 			}
 			
-			toload = deck + "white" + "0";
+			
+			toload = deck + "yellow" + "0";
 			for(unsigned int i = 0 ; i < 5 && success ; i++)
 			{
 				toload[toload.size()-1]++; //Increases number at end of string
-				if( (this->cards_white[i] = al_load_bitmap((toload+".png").c_str() ) ) == NULL)
+				if( (this->deck[3][i] = al_load_bitmap((toload+".png").c_str() ) ) == NULL)
 					success = false;
 			}
 			
@@ -185,15 +202,7 @@ bool Hanabi_Skin::load_theme(std::string theme_name)
 			for(unsigned int i = 0 ; i < 5 && success ; i++)
 			{
 				toload[toload.size()-1]++; //Increases number at end of string
-				if( (this->cards_red[i] = al_load_bitmap((toload+".png").c_str() ) ) == NULL)
-					success = false;
-			}
-			
-			toload = deck + "yellow" + "0";
-			for(unsigned int i = 0 ; i < 5 && success ; i++)
-			{
-				toload[toload.size()-1]++; //Increases number at end of string
-				if( (this->cards_yellow[i] = al_load_bitmap((toload+".png").c_str() ) ) == NULL)
+				if( (this->deck[4][i] = al_load_bitmap((toload+".png").c_str() ) ) == NULL)
 					success = false;
 			}
 			

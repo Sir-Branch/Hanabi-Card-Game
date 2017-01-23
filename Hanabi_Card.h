@@ -30,6 +30,7 @@ public:
     //operator= no need to overwrite 
 	hanabi_suits_t get_suit(void);
 	hanabi_values_t get_value(void);
+	int get_suit_number(void);
 	void print_card(void);
 	
 private:

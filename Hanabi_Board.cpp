@@ -151,53 +151,6 @@ bool Hanabi_Board::remove_clue_token(void)
 }
 
 
-
-/*
- * This function returns the corresponding placement inside arrays according to suit.
- * Examples:
- *	 -In what position is the 'R' (red) suit in the graveyard array, or central card array.
- * Remember that the board has Hanabi_Card central_cards[HANABI_NUMBER_COLORS]; so for example 
- * to add a Red card we must would use central_cards[ get_suit_number_array('R')] = red_to_add;
- *
- * Input:
- *	-void
- * 
- * Return:
- *	-void
- */
-int Hanabi_Board::get_suit_number_array(hanabi_suits_t suit)
-{
-	
-	switch(suit)
-	{
-		case HANABI_CARD_YELLOW:
-			return 0;
-			break;
-			
-		case HANABI_CARD_RED:
-			return 1;
-			break;
-			
-		case HANABI_CARD_BLUE:
-			return 2;
-			break;
-			
-		case HANABI_CARD_WHITE:
-			return 3;
-			break;
-			
-		case HANABI_CARD_GREEN:
-			return 4;
-			break;
-			
-		default:
-			return -1;
-			break;
-			
-	}
-	
-}
-
 /*
  * This function discards a specific card in the players hands, and sends it to the graveyard
  * Note: This game is not Yu-gi-oh, no monster reborn from graveyard.
@@ -212,7 +165,7 @@ int Hanabi_Board::get_suit_number_array(hanabi_suits_t suit)
 void Hanabi_Board::discard_card(unsigned int card_my_hand)
 {
 	Hanabi_Card * card = &my_cards[card_my_hand].playing_card;
-	grave_yard[ get_suit_number_array(card->get_suit()) ].addcard_front( *card);
+	grave_yard[ card->get_suit_number() ].addcard_front( *card);
 }
 
 /*
@@ -231,7 +184,7 @@ bool Hanabi_Board::can_place_card(unsigned int card_my_hand)
 	
 	Hanabi_Card * card = &my_cards[card_my_hand].playing_card;
 	if( card->get_suit() != HANABI_CARD_SUIT_EMPTY)
-		if ( central_cards[ get_suit_number_array( card->get_suit()) ].get_value() == (card->get_value()-1) )
+		if ( central_cards[ card->get_suit_number() ].get_value() == (card->get_value()-1) )
 			can_place_card = true;//If the card of the same suit in the central array is the previous value then I can place the card.
 		
 	return can_place_card;
@@ -311,12 +264,12 @@ void Hanabi_Board::receive_action_play_card(unsigned int card_other_hand)
 	
 	if( could_place_card = can_place_card(card_other_hand) ) // If the card could be placed we add it to the central deck.
 	{
-		central_cards[ get_suit_number_array(otherplayers_hand[card_other_hand].get_suit()) ] = otherplayers_hand[card_other_hand];
+		central_cards[ otherplayers_hand[card_other_hand].get_suit_number() ] = otherplayers_hand[card_other_hand];
 	}
 	else
 	{
 		//Adds card to graveyard, no monster reborn in this game
-		grave_yard[ get_suit_number_array(otherplayers_hand[card_other_hand].get_suit()) ].addcard_end( otherplayers_hand[card_other_hand] );
+		grave_yard[ otherplayers_hand[card_other_hand].get_suit_number() ].addcard_end( otherplayers_hand[card_other_hand] );
 		this->lose_live();
 	}
 	
@@ -355,7 +308,7 @@ bool Hanabi_Board::player_action_play_card(unsigned int card_my_hand)
 	bool could_place_card;
 	if( could_place_card = can_place_card(card_my_hand) )
 	{
-		central_cards[ get_suit_number_array(  my_cards[card_my_hand].playing_card.get_suit() )] = my_cards[card_my_hand].playing_card;
+		central_cards[ my_cards[card_my_hand].playing_card.get_suit_number() ] = my_cards[card_my_hand].playing_card;
 	}
 	else
 	{
