@@ -19,8 +19,9 @@ public:
 	
 public:
 	ALLEGRO_BITMAP * main_menu;
-	ALLEGRO_BITMAP * connecting_background;
 	ALLEGRO_BITMAP * game_mat;
+	ALLEGRO_BITMAP * connecting_background;
+	ALLEGRO_BITMAP * setting_background;
 	
 	ALLEGRO_BITMAP * cards_backside;
 	ALLEGRO_BITMAP * deck[5][5]; // Changed to this approach as it allows for easier management and avoiding if statements 

@@ -70,6 +70,8 @@ Hanabi_Skin::~Hanabi_Skin()
 		al_destroy_bitmap(this->main_menu);
 	if( this->connecting_background != NULL)
 		al_destroy_bitmap(this->connecting_background);
+	if( this->setting_background != NULL)
+		al_destroy_bitmap(this->connecting_background);
 	if( this->token_clue[0] != NULL)
 		al_destroy_bitmap(this->token_clue[0]);
 	if( this->token_clue[1] != NULL)
@@ -135,14 +137,16 @@ bool Hanabi_Skin::load_theme(std::string theme_name)
 	if( check_folder_exists( ("Hanabi Themes/" + theme_name).c_str()))
 	{
 		success = true;
-		std::string main_menu, game_mat, connecting_background, token_clue,
-			token_lightning, deck;
+		std::string main_menu, game_mat, connecting_background, setting_background,
+					token_clue, token_lightning, deck;
 		
 		current_folder =   "Hanabi Themes/" + theme_name + "/";
 		
 		main_menu = current_folder + "main_menu.png";
 		game_mat = current_folder + "game_mat.png";
 		connecting_background = current_folder + "connecting_background.png"; 
+		setting_background = current_folder + "setting_background.png"; 
+		
 		token_clue = current_folder + "Token Clue/";
 		token_lightning = current_folder + "Token Lightning/";
 		deck = current_folder + "Deck/"; 
@@ -152,6 +156,8 @@ bool Hanabi_Skin::load_theme(std::string theme_name)
 		else if( (this->game_mat = al_load_bitmap(game_mat.c_str())) == NULL)
 			success = false;
 		else if( (this->connecting_background = al_load_bitmap(connecting_background.c_str())) == NULL)
+			success = false;
+		else if( (this->setting_background = al_load_bitmap(setting_background.c_str())) == NULL)
 			success = false;
 		else if( (this->token_clue[0] = al_load_bitmap( (token_clue + "disable.png").c_str())) == NULL)
 			success = false;
