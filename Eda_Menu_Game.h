@@ -39,6 +39,8 @@ private:
 	Eda_Button * color_buttons[5];
 	Eda_Button * number_buttons[5];
 	Eda_Button * give_clue;
+	Eda_Button * discard_card;
+	Eda_Button * play_card;
 };
 
 #endif /* EDA_MENU_GAME_H */

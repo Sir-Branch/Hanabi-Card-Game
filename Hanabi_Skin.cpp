@@ -71,7 +71,7 @@ Hanabi_Skin::~Hanabi_Skin()
 	if( this->connecting_background != NULL)
 		al_destroy_bitmap(this->connecting_background);
 	if( this->setting_background != NULL)
-		al_destroy_bitmap(this->connecting_background);
+		al_destroy_bitmap(this->setting_background);
 	if( this->token_clue[0] != NULL)
 		al_destroy_bitmap(this->token_clue[0]);
 	if( this->token_clue[1] != NULL)

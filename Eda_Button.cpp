@@ -227,6 +227,13 @@ bool Eda_Button::check_mouse_over_toggle(ALLEGRO_DISPLAY * display, float x_mous
 void Eda_Button::deselect(void){
 	selected = false;
 }
+
+/*
+ * Selects a button
+ */
+void Eda_Button::select(void){
+	selected = true;
+}
 /*
  * Returns event, which is intended for when the button is clicked.The idea is on a mouse click, check mouse over
  *	(with check_mouse_over method) and if the mouse is clicking button call get_click_event method.

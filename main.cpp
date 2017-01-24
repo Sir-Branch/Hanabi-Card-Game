@@ -15,7 +15,9 @@
 #include "Eda_Button.h"
 #include "Eda_Menu_Main.h"
 #include "Eda_Menu_Game.h"
-
+#include "Eda_Menu_Settings.h"
+#include "allegro5/allegro_font.h"
+#include "allegro5/allegro_ttf.h"
 using namespace std;
 
 
@@ -43,7 +45,8 @@ int main(void)
    }
  
    al_init_image_addon();
-   
+   al_init_font_addon();
+   al_init_ttf_addon();
    if(!al_install_mouse()) {
       fprintf(stderr, "failed to initialize the mouse!\n");
       return -1;
@@ -55,7 +58,7 @@ int main(void)
       return -1;
    }
    al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR);  
-   
+   //al_set_new_display_flags(ALLEGRO_RESIZABLE);
    display = al_create_display(SCREEN_W, SCREEN_H);
    if(!display) {
       fprintf(stderr, "failed to create display!\n");
@@ -63,6 +66,8 @@ int main(void)
       return -1;
    }
  
+   al_set_window_title(display, "Hanabi Card Game");
+   
    event_queue = al_create_event_queue();
    if(!event_queue) {
       fprintf(stderr, "failed to create event_queue!\n");
@@ -71,9 +76,10 @@ int main(void)
       return -1;
    }
    
-   Hanabi_Skin * theme = new Hanabi_Skin();
+   game_configuration_t game_configuration = {NULL,1,0,false};
+   game_configuration.theme_settings = new Hanabi_Skin();
    Hanabi_Board game_board; 
-   theme->load_theme("Classic");
+   game_configuration.theme_settings->load_theme("Classic");
    
    game_board.lose_live();
    game_board.remove_clue_token();
@@ -94,7 +100,7 @@ int main(void)
    al_register_event_source(event_queue, al_get_timer_event_source(timer));
    al_register_event_source(event_queue, al_get_mouse_event_source());
  
-   active_menu->draw(display,theme, &game_board);
+   active_menu->draw(display,game_configuration.theme_settings, &game_board);
    al_start_timer(timer);
  
    while(!do_exit)  // idem anterior
@@ -117,7 +123,7 @@ int main(void)
       if(redraw && al_is_event_queue_empty(event_queue)) 
 	  {
          redraw = false;
-         active_menu->draw(display,theme, &game_board);
+         active_menu->draw(display,game_configuration.theme_settings, &game_board);
       }
 	  
 	  if(!button_event_queue.empty())
@@ -126,6 +132,22 @@ int main(void)
 		 {
 			delete active_menu;
 			active_menu = new Eda_Menu_Game();
+		 }
+		 else if(button_event_queue.front() == EDA_BUTTON_SETT_PRESSED)
+		 {
+			delete active_menu;
+			active_menu = new Eda_Menu_Settings(game_configuration);
+		 }
+		 else if(button_event_queue.front() == EDA_BUTTON_CANCEL_PRESSED)
+		 {
+			delete active_menu;
+			active_menu = new Eda_Menu_Main();
+		 }
+		 else if(button_event_queue.front() == EDA_BUTTON_APPLY_PRESSED)
+		 {
+			((Eda_Menu_Settings *)active_menu)->update_game_settings(display,game_configuration);
+			delete active_menu;
+			active_menu = new Eda_Menu_Main();
 		 }
 		 button_event_queue.pop();
 

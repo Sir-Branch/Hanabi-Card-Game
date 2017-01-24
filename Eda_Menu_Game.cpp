@@ -13,6 +13,8 @@ Eda_Menu_Game::Eda_Menu_Game()
 {
 	//give clue could be a Button and not a pointer and construct during call but I rather everything be the same in this menu
 	give_clue = new Eda_Button(0.5, 0.737, 0.281, 0.08, CLUE_BUT_DIR "give_clue.png", CLUE_BUT_DIR "give_clue_hover.png", NULL, EDA_BUTTON_GIVE_CLUE_PRESSED);
+	discard_card = new Eda_Button(0.85, 0.9, 0.045 * 3.75, 0.08, CLUE_BUT_DIR "discard_card.png", CLUE_BUT_DIR "discard_card_hover.png", NULL, EDA_BUTTON_DISCARD_CARD_PRESSED);
+	play_card = new Eda_Button(0.15, 0.9, 0.045 * 3.75, 0.08, CLUE_BUT_DIR "play_card.png", CLUE_BUT_DIR "play_card_hover.png", NULL, EDA_BUTTON_PLAY_CARD_PRESSED);
 		
 	color_buttons[0] = new Eda_Button(0.410, 0.575, 0.045, 0.08, CLUE_BUT_DIR "Button White.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_WHITE_PRESSED);
 	color_buttons[1] = new Eda_Button(0.455, 0.575, 0.045, 0.08, CLUE_BUT_DIR "Button Blue.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_BLUE_PRESSED);
@@ -54,6 +56,8 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 		number_buttons[i]->draw(display);
 	}
 	give_clue->draw(display);
+	discard_card->draw(display);
+	play_card->draw(display);
 	
 	draw_clue_tokens(display, theme, game_board, 
 					0.1, 0.1,
@@ -93,6 +97,8 @@ void Eda_Menu_Game::update_buttons(ALLEGRO_DISPLAY * display, float x_mouse, flo
 		number_buttons[i]->update_hovering(display, x_mouse, y_mouse);
 	}
 	give_clue->update_hovering(display, x_mouse, y_mouse);
+	discard_card->update_hovering(display, x_mouse, y_mouse);
+	play_card->update_hovering(display, x_mouse, y_mouse);
 
 
 }
@@ -202,7 +208,7 @@ void Eda_Menu_Game::draw_cards(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme,
 									x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
 									0); //flags
 		}
-#warning "Check with 6 cards if number_cards/2 or number_cards/2.0 as to conserve half"
+#warning "FIX DRAWING IS SLIGHTLY OFF WHEN IMPAIR NUMBER DUE TO SPACING I THINK"
 		
 	}							
 	

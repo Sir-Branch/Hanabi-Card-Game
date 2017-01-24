@@ -19,9 +19,10 @@ typedef enum{NO_EVENT, EDA_BUTTON_PLAY_PRESSED, EDA_BUTTON_SETT_PRESSED, //Main_
 			EDA_BUTTON_ONE_PRESSED, EDA_BUTTON_TWO_PRESSED, EDA_BUTTON_THREE_PRESSED,
 			EDA_BUTTON_FOUR_PRESSED, EDA_BUTTON_FIVE_PRESSED,
 	
-			EDA_BUTTON_GIVE_CLUE_PRESSED, EDA_BUTTON_PLAY_CARD_PRESSED , EDA_BUTTON_DISCARD_CARD_PRESSED
+			EDA_BUTTON_GIVE_CLUE_PRESSED, EDA_BUTTON_PLAY_CARD_PRESSED , EDA_BUTTON_DISCARD_CARD_PRESSED,
 			// ********************* Settings Menu ************************************
-	
+			
+			EDA_BUTTON_APPLY_PRESSED, EDA_BUTTON_CANCEL_PRESSED
 			}event_button_t;
 
 class Eda_Button{
@@ -37,7 +38,8 @@ public:
 	bool check_mouse_over(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse);//useful for detecting clicks 
 	bool check_mouse_over_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse);
 	bool check_mouse_over_toggle(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse);
-
+	
+	void select(void);
 	void deselect(void);
 	event_button_t get_click_event(void);
 	//void set_hovering(bool hovering);
