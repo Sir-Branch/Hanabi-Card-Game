@@ -197,6 +197,31 @@ bool Eda_Button::check_mouse_over_click(ALLEGRO_DISPLAY * display, float x_mouse
 }
 
 /*
+ * Similar to check mouse over, but toggles selection if mouse over. 
+ * The idea is for this to be called exclusively when a click is generate.
+ * 
+ * Input:
+ *	-ALLEGRO_DISPLAY * display: Active display, will be used to get width and height
+ *	-float x_mouse,y_mouse: Mouse x and y cord, will be used in conjunction with display to check mouseover
+ * 
+ * Return:
+ *	-bool: Returns if mouse is on top of button. True mouse if on top, false mouse is not on top of button
+ */
+bool Eda_Button::check_mouse_over_toggle(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse)
+{
+	bool mouse_over = false;
+	if (x_mouse >= ((x_center-0.5 * x_size_percent) * al_get_display_width(display)) 
+		&& x_mouse <= ((x_center+0.5 * x_size_percent) * al_get_display_width(display)) 
+		&& y_mouse >= ((y_center-0.5 * y_size_percent) * al_get_display_height(display))
+		&& y_mouse <= ((y_center+0.5 * y_size_percent) * al_get_display_height(display)) )
+	{
+		selected = !selected;
+		mouse_over = true;
+	}
+	return mouse_over;
+}
+
+/*
  * Deselects a button
  */
 void Eda_Button::deselect(void){
