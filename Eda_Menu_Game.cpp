@@ -15,7 +15,11 @@ Eda_Menu_Game::Eda_Menu_Game()
 	give_clue = new Eda_Button(0.5, 0.737, 0.281, 0.08, CLUE_BUT_DIR "give_clue.png", CLUE_BUT_DIR "give_clue_hover.png", NULL, EDA_BUTTON_GIVE_CLUE_PRESSED);
 	discard_card = new Eda_Button(0.85, 0.9, 0.045 * 3.75, 0.08, CLUE_BUT_DIR "discard_card.png", CLUE_BUT_DIR "discard_card_hover.png", NULL, EDA_BUTTON_DISCARD_CARD_PRESSED);
 	play_card = new Eda_Button(0.15, 0.9, 0.045 * 3.75, 0.08, CLUE_BUT_DIR "play_card.png", CLUE_BUT_DIR "play_card_hover.png", NULL, EDA_BUTTON_PLAY_CARD_PRESSED);
-		
+	
+	give_clue->hide();
+	discard_card->hide();
+	play_card->hide();
+	
 	color_buttons[0] = new Eda_Button(0.410, 0.575, 0.045, 0.08, CLUE_BUT_DIR "Button White.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_WHITE_PRESSED);
 	color_buttons[1] = new Eda_Button(0.455, 0.575, 0.045, 0.08, CLUE_BUT_DIR "Button Blue.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_BLUE_PRESSED);
 	color_buttons[2] = new Eda_Button(0.500, 0.575, 0.045, 0.08, CLUE_BUT_DIR "Button Green.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_GREEN_PRESSED);
@@ -26,7 +30,14 @@ Eda_Menu_Game::Eda_Menu_Game()
 	number_buttons[1] = new Eda_Button(0.455, 0.655, 0.045, 0.08, CLUE_BUT_DIR "Number2.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_TWO_PRESSED);
 	number_buttons[2] = new Eda_Button(0.500, 0.655, 0.045, 0.08, CLUE_BUT_DIR "Number3.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_THREE_PRESSED);
 	number_buttons[3] = new Eda_Button(0.545, 0.655, 0.045, 0.08, CLUE_BUT_DIR "Number4.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_FOUR_PRESSED);
-	number_buttons[4] = new Eda_Button(0.590, 0.655, 0.045, 0.08, CLUE_BUT_DIR "Number5.png",	CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_FIVE_PRESSED);
+	number_buttons[4] = new Eda_Button(0.590, 0.655, 0.045, 0.08, CLUE_BUT_DIR "Number5.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_FIVE_PRESSED);
+
+	my_cards_buttons[0] = new Eda_Button(0.325, 0.9, 0.063, 0.168, CLUE_BUT_DIR "Card_back.png", CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_ONE_PRESSED);
+	my_cards_buttons[1] = new Eda_Button(0.395, 0.9, 0.063, 0.168, CLUE_BUT_DIR "Card_back.png", CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_TWO_PRESSED);
+	my_cards_buttons[2] = new Eda_Button(0.465, 0.9, 0.063, 0.168, CLUE_BUT_DIR "Card_back.png", CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_THREE_PRESSED);
+	my_cards_buttons[3] = new Eda_Button(0.535, 0.9, 0.063, 0.168, CLUE_BUT_DIR "Card_back.png", CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_FOUR_PRESSED);
+	my_cards_buttons[4] = new Eda_Button(0.605, 0.9, 0.063, 0.168, CLUE_BUT_DIR "Card_back.png", CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_FIVE_PRESSED);
+	my_cards_buttons[5] = new Eda_Button(0.675, 0.9, 0.063, 0.168, CLUE_BUT_DIR "Card_back.png", CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_FIVE_PRESSED);
 
 }
 
@@ -55,6 +66,9 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 		color_buttons[i]->draw(display);
 		number_buttons[i]->draw(display);
 	}
+	for(int i = 0 ; i < 6 ; i++)
+		my_cards_buttons[i]->draw(display);
+	
 	give_clue->draw(display);
 	discard_card->draw(display);
 	play_card->draw(display);
@@ -80,11 +94,12 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 					//0.045, 0.12);
 	
 	
+	/*/\
 	draw_cards(display,theme, //DRAW Other players hand repeated just for looks
 					0.5, 0.9,
 					0.063, 0.168, 0.005,
 					6 , game_board->otherplayers_hand);
-	
+	*/
 	al_flip_display();
 }
 
@@ -96,6 +111,10 @@ void Eda_Menu_Game::update_buttons(ALLEGRO_DISPLAY * display, float x_mouse, flo
 		color_buttons[i]->update_hovering(display, x_mouse, y_mouse);
 		number_buttons[i]->update_hovering(display, x_mouse, y_mouse);
 	}
+	for(int i = 0 ; i < 6 ; i++)
+		my_cards_buttons[i]->update_hovering(display, x_mouse, y_mouse);
+	
+	
 	give_clue->update_hovering(display, x_mouse, y_mouse);
 	discard_card->update_hovering(display, x_mouse, y_mouse);
 	play_card->update_hovering(display, x_mouse, y_mouse);
@@ -107,19 +126,29 @@ bool Eda_Menu_Game::check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, fl
 {
 	bool click_color = false;
 	bool click_number = false;
-	unsigned int i;
+	bool click_card = false;
+	unsigned int i, k;
 	
 	for(i = 0 ; i < 5 && !click_color &&  !click_number; i++)
 	{
-		if(color_buttons[i]->check_mouse_over_click(display, x_mouse, y_mouse))
+		if(color_buttons[i]->check_mouse_over_toggle(display, x_mouse, y_mouse))
 			click_color = true;
-		else if( number_buttons[i]->check_mouse_over_click(display, x_mouse, y_mouse))
+		else if( number_buttons[i]->check_mouse_over_toggle(display, x_mouse, y_mouse))
 			click_number = true;
 	}
 	
+	
+	for(k = 0 ; k < 6 && !click_card && !click_color &&  !click_number ; k++)
+	{
+		if(my_cards_buttons[k]->check_mouse_over_toggle(display, x_mouse, y_mouse) )
+			click_card = true;
+	}
+			
+	--k;
 	--i; // i will point to the click button in array
 	//If click occurs on a button will deselect rest of buttons
 	if(click_color || click_number)
+	{
 		for(int j = 0 ; j < 5 ; j++)
 		{
 			if( !click_color || i != j) //If click color will deselect all except clicked
@@ -128,7 +157,30 @@ bool Eda_Menu_Game::check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, fl
 				number_buttons[j]->deselect();
 		}
 	
-
+		if(color_buttons[i]->is_selected() || number_buttons[i]->is_selected() )
+			give_clue->show();
+		else
+			give_clue->hide();
+	}
+	
+	else if(click_card)
+	{
+		for(int j = 0 ; j < 6 ; j++)
+			if( k != j) //If click color will deselect all except clicked
+				my_cards_buttons[j]->deselect();
+		
+		if(my_cards_buttons[k]->is_selected())
+		{
+			play_card->show();
+			discard_card->show();
+		}
+		else
+		{
+			play_card->hide();
+			discard_card->hide();
+		}
+	}
+	
 	return click_color || click_number;
 }
 

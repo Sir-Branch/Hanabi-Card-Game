@@ -41,6 +41,10 @@ public:
 	
 	void select(void);
 	void deselect(void);
+	bool is_selected(void);
+
+	void hide(void);
+	void show(void);
 	event_button_t get_click_event(void);
 	//void set_hovering(bool hovering);
 	
@@ -54,6 +58,8 @@ private:
 	ALLEGRO_BITMAP * fill_hover_image; //On hover will always draw fill_image and hover on top just incase hover is a border
 	ALLEGRO_BITMAP * fill_selection_image;//On selection will always draw fill_image and selection on top just incase selection is aborder
 	//If selected hover will not be drawn
+	
+	bool hidden;//If true button will be hidden
 	
 	bool hover_option; //If true, then on hover option will be displayed
 	bool hovering;

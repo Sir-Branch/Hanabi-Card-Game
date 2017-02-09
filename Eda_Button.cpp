@@ -59,6 +59,7 @@ Eda_Button::Eda_Button(float x_center , float y_center ,float x_size_percent , f
 	this->selected = false;
 	this->selection_option = (selection_image != NULL);
 	
+	this->hidden = false;
 	#warning "Figure out what to do with fail on load bitmap on button"
 
 	if( (this->fill_image = al_load_bitmap(fill_image))== NULL)
@@ -104,26 +105,29 @@ Eda_Button::~Eda_Button()
  */
 void Eda_Button::draw(ALLEGRO_DISPLAY * display)
 {
-	al_draw_scaled_bitmap(fill_image, 
-							0.0, 0.0, al_get_bitmap_width(fill_image), al_get_bitmap_height(fill_image),
-							(x_center-0.5 * x_size_percent) * al_get_display_width(display), //x_cord to draw
-							(y_center-0.5 * y_size_percent) * al_get_display_height(display),  //y_cord to draw
-							x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
-							0); //flags
-	if(selection_option && selected)
-		al_draw_scaled_bitmap(fill_selection_image, 
-								0.0, 0.0, al_get_bitmap_width(fill_selection_image), al_get_bitmap_height(fill_selection_image),
+	if( !this->hidden )
+	{
+		al_draw_scaled_bitmap(fill_image, 
+								0.0, 0.0, al_get_bitmap_width(fill_image), al_get_bitmap_height(fill_image),
 								(x_center-0.5 * x_size_percent) * al_get_display_width(display), //x_cord to draw
 								(y_center-0.5 * y_size_percent) * al_get_display_height(display),  //y_cord to draw
 								x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
-								0); //flags 
-	else if(hover_option && hovering)
-		al_draw_scaled_bitmap(fill_hover_image, 
-								0.0, 0.0, al_get_bitmap_width(fill_hover_image), al_get_bitmap_height(fill_hover_image),
-								(x_center-0.5 * x_size_percent) * al_get_display_width(display), //x_cord to draw
-								(y_center-0.5 * y_size_percent) * al_get_display_height(display),  //y_cord to draw
-								x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
-								0); //flags 
+								0); //flags
+		if(selection_option && selected)
+			al_draw_scaled_bitmap(fill_selection_image, 
+									0.0, 0.0, al_get_bitmap_width(fill_selection_image), al_get_bitmap_height(fill_selection_image),
+									(x_center-0.5 * x_size_percent) * al_get_display_width(display), //x_cord to draw
+									(y_center-0.5 * y_size_percent) * al_get_display_height(display),  //y_cord to draw
+									x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
+									0); //flags 
+		else if(hover_option && hovering)
+			al_draw_scaled_bitmap(fill_hover_image, 
+									0.0, 0.0, al_get_bitmap_width(fill_hover_image), al_get_bitmap_height(fill_hover_image),
+									(x_center-0.5 * x_size_percent) * al_get_display_width(display), //x_cord to draw
+									(y_center-0.5 * y_size_percent) * al_get_display_height(display),  //y_cord to draw
+									x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
+									0); //flags 
+	}
 	
 }
 
@@ -140,7 +144,7 @@ void Eda_Button::draw(ALLEGRO_DISPLAY * display)
  */
 bool Eda_Button::update_hovering(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse)
 {
-	if( hover_option 
+	if( !hidden && hover_option 
 		&& x_mouse >= ((x_center-0.5 * x_size_percent) * al_get_display_width(display)) 
 		&& x_mouse <= ((x_center+0.5 * x_size_percent) * al_get_display_width(display)) 
 		&& y_mouse >= ((y_center-0.5 * y_size_percent) * al_get_display_height(display))
@@ -165,7 +169,7 @@ bool Eda_Button::update_hovering(ALLEGRO_DISPLAY * display, float x_mouse, float
  */
 bool Eda_Button::check_mouse_over(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse)
 {
-	return (x_mouse >= ((x_center-0.5 * x_size_percent) * al_get_display_width(display)) 
+	return (!hidden && x_mouse >= ((x_center-0.5 * x_size_percent) * al_get_display_width(display)) 
 			&& x_mouse <= ((x_center+0.5 * x_size_percent) * al_get_display_width(display)) 
 			&& y_mouse >= ((y_center-0.5 * y_size_percent) * al_get_display_height(display))
 			&& y_mouse <= ((y_center+0.5 * y_size_percent) * al_get_display_height(display)) );
@@ -185,7 +189,7 @@ bool Eda_Button::check_mouse_over(ALLEGRO_DISPLAY * display, float x_mouse, floa
 bool Eda_Button::check_mouse_over_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse)
 {
 	bool mouse_over = false;
-	if (x_mouse >= ((x_center-0.5 * x_size_percent) * al_get_display_width(display)) 
+	if (!hidden && x_mouse >= ((x_center-0.5 * x_size_percent) * al_get_display_width(display)) 
 		&& x_mouse <= ((x_center+0.5 * x_size_percent) * al_get_display_width(display)) 
 		&& y_mouse >= ((y_center-0.5 * y_size_percent) * al_get_display_height(display))
 		&& y_mouse <= ((y_center+0.5 * y_size_percent) * al_get_display_height(display)) )
@@ -210,7 +214,7 @@ bool Eda_Button::check_mouse_over_click(ALLEGRO_DISPLAY * display, float x_mouse
 bool Eda_Button::check_mouse_over_toggle(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse)
 {
 	bool mouse_over = false;
-	if (x_mouse >= ((x_center-0.5 * x_size_percent) * al_get_display_width(display)) 
+	if (!hidden && x_mouse >= ((x_center-0.5 * x_size_percent) * al_get_display_width(display)) 
 		&& x_mouse <= ((x_center+0.5 * x_size_percent) * al_get_display_width(display)) 
 		&& y_mouse >= ((y_center-0.5 * y_size_percent) * al_get_display_height(display))
 		&& y_mouse <= ((y_center+0.5 * y_size_percent) * al_get_display_height(display)) )
@@ -221,6 +225,9 @@ bool Eda_Button::check_mouse_over_toggle(ALLEGRO_DISPLAY * display, float x_mous
 	return mouse_over;
 }
 
+bool Eda_Button::is_selected(void){
+	return selected;
+}
 /*
  * Deselects a button
  */
@@ -247,4 +254,14 @@ void Eda_Button::select(void){
 event_button_t Eda_Button::get_click_event(void)
 {
 	return this->generated_event_click;
+}
+
+void Eda_Button::show(void)
+{
+	hidden = false;
+}
+
+void Eda_Button::hide(void)
+{
+	hidden = true;
 }
