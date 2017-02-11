@@ -20,7 +20,7 @@
 class Eda_Menu_Game : public Eda_Menu
 {
 public:
-	Eda_Menu_Game();
+	Eda_Menu_Game(std::string theme = "");
 	virtual ~Eda_Menu_Game();
 	void draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board);
 	void update_buttons(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse);
@@ -34,7 +34,8 @@ private:
 	void draw_cards(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme,
 					float x_center , float y_center ,float x_size_percent , float y_size_percent, float space_between,
 					int number_cards, const Hanabi_Card * cards_to_draw);
-	
+	void draw_deck(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme,float x_center , float y_center ,float x_size_percent , float y_size_percent);
+
 	Eda_Menu_Game(const Eda_Menu_Game& orig);
 	Eda_Button * color_buttons[5];
 	Eda_Button * number_buttons[5];

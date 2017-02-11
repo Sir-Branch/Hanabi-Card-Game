@@ -10,6 +10,7 @@
 
 #include <string>
 #include "allegro5/allegro5.h"
+#include "allegro5/allegro_font.h"
 
 class Hanabi_Skin {
 public:
@@ -23,6 +24,7 @@ public:
 	ALLEGRO_BITMAP * connecting_background;
 	ALLEGRO_BITMAP * setting_background;
 	
+	ALLEGRO_BITMAP * deck_view;
 	ALLEGRO_BITMAP * cards_backside;
 	ALLEGRO_BITMAP * deck[5][5]; // Changed to this approach as it allows for easier management and avoiding if statements 
 	//Order will be like a rainbow White, blue, green , yellow , red
@@ -36,7 +38,8 @@ public:
 	//0 Will correspond to disable 1 to enabled for tokens
 	ALLEGRO_BITMAP * token_clue[2]; 
 	ALLEGRO_BITMAP * token_lightning[2];
-	
+	std::string theme;
+	ALLEGRO_FONT * font;
 	//ALLEGRO_BITMAP * clue_numbers[5];
 	//ALLEGRO_BITMAP * clue_colors[5];
 	//ALLEGRO_BITMAP * clue_hover;

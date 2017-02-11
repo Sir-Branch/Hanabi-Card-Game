@@ -8,8 +8,10 @@
 #include "Eda_Menu_Game.h"
 #include "Eda_Button.h"
 #include "Hanabi_Board.h"
+#include <string>
+#include <allegro5/allegro_color.h>
 
-Eda_Menu_Game::Eda_Menu_Game()
+Eda_Menu_Game::Eda_Menu_Game(std::string theme)
 {
 	//give clue could be a Button and not a pointer and construct during call but I rather everything be the same in this menu
 	give_clue = new Eda_Button(0.5, 0.737, 0.281, 0.08, CLUE_BUT_DIR "give_clue.png", CLUE_BUT_DIR "give_clue_hover.png", NULL, EDA_BUTTON_GIVE_CLUE_PRESSED);
@@ -32,12 +34,12 @@ Eda_Menu_Game::Eda_Menu_Game()
 	number_buttons[3] = new Eda_Button(0.545, 0.655, 0.045, 0.08, CLUE_BUT_DIR "Number4.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_FOUR_PRESSED);
 	number_buttons[4] = new Eda_Button(0.590, 0.655, 0.045, 0.08, CLUE_BUT_DIR "Number5.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_FIVE_PRESSED);
 
-	my_cards_buttons[0] = new Eda_Button(0.325, 0.9, 0.063, 0.168, CLUE_BUT_DIR "Card_back.png", CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_ONE_PRESSED);
-	my_cards_buttons[1] = new Eda_Button(0.395, 0.9, 0.063, 0.168, CLUE_BUT_DIR "Card_back.png", CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_TWO_PRESSED);
-	my_cards_buttons[2] = new Eda_Button(0.465, 0.9, 0.063, 0.168, CLUE_BUT_DIR "Card_back.png", CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_THREE_PRESSED);
-	my_cards_buttons[3] = new Eda_Button(0.535, 0.9, 0.063, 0.168, CLUE_BUT_DIR "Card_back.png", CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_FOUR_PRESSED);
-	my_cards_buttons[4] = new Eda_Button(0.605, 0.9, 0.063, 0.168, CLUE_BUT_DIR "Card_back.png", CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_FIVE_PRESSED);
-	my_cards_buttons[5] = new Eda_Button(0.675, 0.9, 0.063, 0.168, CLUE_BUT_DIR "Card_back.png", CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_FIVE_PRESSED);
+	my_cards_buttons[0] = new Eda_Button(0.325, 0.9, 0.063, 0.168, ("Hanabi Themes/" + theme + "/Deck/back.png").c_str(), CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_GIVE_CARD_ONE);
+	my_cards_buttons[1] = new Eda_Button(0.395, 0.9, 0.063, 0.168, ("Hanabi Themes/" + theme + "/Deck/back.png").c_str(), CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_GIVE_CARD_TWO);
+	my_cards_buttons[2] = new Eda_Button(0.465, 0.9, 0.063, 0.168, ("Hanabi Themes/" + theme + "/Deck/back.png").c_str(), CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_GIVE_CARD_THREE);
+	my_cards_buttons[3] = new Eda_Button(0.535, 0.9, 0.063, 0.168, ("Hanabi Themes/" + theme + "/Deck/back.png").c_str(), CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_GIVE_CARD_FOUR);
+	my_cards_buttons[4] = new Eda_Button(0.605, 0.9, 0.063, 0.168, ("Hanabi Themes/" + theme + "/Deck/back.png").c_str(), CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_GIVE_CARD_FIVE);
+	my_cards_buttons[5] = new Eda_Button(0.675, 0.9, 0.063, 0.168, ("Hanabi Themes/" + theme + "/Deck/back.png").c_str(), CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_GIVE_CARD_SIX);
 
 }
 
@@ -93,7 +95,12 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 					//0.0495, 0.132);
 					//0.045, 0.12);
 	
-	
+	draw_deck(display, theme,
+				0.2, 0.6,
+				0.065, 0.190);
+	al_draw_textf(theme->font, al_color_name("black"),
+					0.2 * al_get_display_width(display), 0.57 * al_get_display_height(display),ALLEGRO_ALIGN_CENTRE,
+					"%d",52);
 	/*/\
 	draw_cards(display,theme, //DRAW Other players hand repeated just for looks
 					0.5, 0.9,
@@ -266,3 +273,15 @@ void Eda_Menu_Game::draw_cards(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme,
 	
 	
 }
+
+void Eda_Menu_Game::draw_deck(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme,float x_center , float y_center ,float x_size_percent , float y_size_percent)
+{
+	//font with number of cards remaining
+	al_draw_scaled_bitmap(theme->deck_view, 
+							0.0, 0.0, al_get_bitmap_width(theme->deck_view), al_get_bitmap_height(theme->deck_view),
+							(x_center-0.5 * x_size_percent) * al_get_display_width(display), //x_cord to draw
+							(y_center-0.5 * y_size_percent) * al_get_display_height(display),  //y_cord to draw
+							x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
+							0); //flags
+}
+

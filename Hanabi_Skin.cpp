@@ -7,8 +7,11 @@
 
 #include <sys/stat.h>
 #include <string>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 #include "Hanabi_Skin.h"
 
+#define HANABI_FONT_SIZE	32
 
 static bool check_folder_exists(const char * folder_name);
 
@@ -27,6 +30,7 @@ Hanabi_Skin::Hanabi_Skin()
 	connecting_background = NULL;
 	game_mat = NULL;
 	
+	deck_view = NULL;
 	cards_backside = NULL;
 	for(unsigned int i = 0 ; i < 5 ; i++)
 		for(unsigned int j = 0 ; j < 5 ; j++)
@@ -47,6 +51,7 @@ Hanabi_Skin::Hanabi_Skin()
 	token_lightning[0] = NULL;
 	token_lightning[1] = NULL;
 	
+	font = NULL;
 	//clue_numbers[5];
 	//clue_colors[5];
 	//clue_hover = NULL;
@@ -82,12 +87,16 @@ Hanabi_Skin::~Hanabi_Skin()
 		al_destroy_bitmap(this->token_lightning[1]);
 	if( this->cards_backside != NULL)
 		al_destroy_bitmap(this->cards_backside);
+	if( this->deck_view != NULL)
+		al_destroy_bitmap(this->deck_view);
 	
 	for(unsigned int i = 0 ; i < 5 ; i++)
 		for(unsigned int j = 0 ; j < 5 ; j++)
 				if( this->deck[i][j] != NULL)
 					al_destroy_bitmap(this->deck[i][j]);
 			
+	if(this->font != NULL)
+		al_destroy_font(this->font);
 	/*	
 		if( this->cards_blue[i] != NULL)
 			al_destroy_bitmap(this->cards_blue[i]);
@@ -133,6 +142,7 @@ bool Hanabi_Skin::load_theme(std::string theme_name)
 {
 	bool success = false;
 	std::string current_folder;
+	this->theme = theme_name;
 	
 	if( check_folder_exists( ("Hanabi Themes/" + theme_name).c_str()))
 	{
@@ -169,6 +179,11 @@ bool Hanabi_Skin::load_theme(std::string theme_name)
 			success = false;
 		else if( (this->cards_backside = al_load_bitmap( (deck + "back.png").c_str())) == NULL)
 			success = false;
+		else if( (this->deck_view = al_load_bitmap((deck + "deck_view.png").c_str())) == NULL)
+			success = false;
+		else if( (this->font = al_load_ttf_font((current_folder + "font.ttf").c_str(), HANABI_FONT_SIZE, 0)) == NULL)
+			success = false;
+		
 		else
 		{
 
