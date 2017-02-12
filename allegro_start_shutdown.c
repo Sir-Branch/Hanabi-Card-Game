@@ -97,6 +97,8 @@ ALLEGRO_DISPLAY * create_display(unsigned int width, unsigned int height)
 	ALLEGRO_DISPLAY *display = NULL;
 	ALLEGRO_BITMAP *icon = NULL;
 
+	al_set_new_bitmap_flags(ALLEGRO_MIN_LINEAR | ALLEGRO_MAG_LINEAR); //like all drawing is scaled this helps with quality  
+
 	if( (display=al_create_display(width,height)) == NULL)
 	{
 		fprintf(stderr,"Unable to create display\n");

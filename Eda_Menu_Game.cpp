@@ -134,21 +134,46 @@ bool Eda_Menu_Game::check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, fl
 	bool click_color = false;
 	bool click_number = false;
 	bool click_card = false;
+	bool click_button = false;
 	unsigned int i, k;
 	
-	for(i = 0 ; i < 5 && !click_color &&  !click_number; i++)
+	if( give_clue->check_mouse_over_toggle(display, x_mouse, y_mouse) )
 	{
-		if(color_buttons[i]->check_mouse_over_toggle(display, x_mouse, y_mouse))
-			click_color = true;
-		else if( number_buttons[i]->check_mouse_over_toggle(display, x_mouse, y_mouse))
-			click_number = true;
+		click_button = true;
+		button_event_queue.push( give_clue->get_click_event() );
+	}
+	else if( play_card->check_mouse_over_toggle(display, x_mouse, y_mouse) )
+	{
+		click_button = true;
+		button_event_queue.push( play_card->get_click_event() );
+	}
+	else if( discard_card->check_mouse_over_toggle(display, x_mouse, y_mouse) )
+	{
+		click_button = true;
+		button_event_queue.push( discard_card->get_click_event() );
 	}
 	
+	for(i = 0 ; i < 5 && !click_button && !click_color &&  !click_number; i++)
+	{
+		if( color_buttons[i]->check_mouse_over_toggle(display, x_mouse, y_mouse) )
+		{	
+			button_event_queue.push( color_buttons[i]->get_click_event() );
+			click_color = true;
+		}
+		else if( number_buttons[i]->check_mouse_over_toggle(display, x_mouse, y_mouse))
+		{
+			button_event_queue.push( number_buttons[i]->get_click_event() );
+			click_number = true;
+		}
+	}
 	
-	for(k = 0 ; k < 6 && !click_card && !click_color &&  !click_number ; k++)
+	for(k = 0 ; k < 6 && !click_button && !click_card && !click_color &&  !click_number ; k++)
 	{
 		if(my_cards_buttons[k]->check_mouse_over_toggle(display, x_mouse, y_mouse) )
+		{
+			button_event_queue.push( my_cards_buttons[k]->get_click_event() );
 			click_card = true;
+		}
 	}
 			
 	--k;
