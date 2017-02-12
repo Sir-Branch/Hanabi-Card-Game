@@ -14,15 +14,9 @@
 
 #include "Eda_Menu.h"
 #include "Hanabi_Skin.h"
+#include "hanabi_game_data.h"
 
-typedef struct
-{
-	Hanabi_Skin * theme_settings;
-	unsigned int selected_resolution;
-	unsigned int selected_theme;
-	bool memory_help;
-	
-}game_configuration_t;
+
 
 class Eda_Menu_Settings : public Eda_Menu
 {
@@ -32,9 +26,9 @@ public:
 
 	void draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board);
 	void update_buttons(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse);
-	bool check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse, std::queue<event_button_t> &button_event_queue);
+	bool check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse, std::queue<hanabi_game_event_t> &button_event_queue);
 	
-	void update_game_settings(ALLEGRO_DISPLAY * display, game_configuration_t & game_config);
+	void update_game_settings(hanabi_game_data_t & game_config);
 private:
 	Eda_Menu_Settings(const Eda_Menu_Settings& orig);
 	

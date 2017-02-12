@@ -34,12 +34,12 @@ Eda_Menu_Game::Eda_Menu_Game(std::string theme)
 	number_buttons[3] = new Eda_Button(0.545, 0.655, 0.045, 0.08, CLUE_BUT_DIR "Number4.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_FOUR_PRESSED);
 	number_buttons[4] = new Eda_Button(0.590, 0.655, 0.045, 0.08, CLUE_BUT_DIR "Number5.png", CLUE_BUT_DIR "hover.png", CLUE_BUT_DIR "selection.png", EDA_BUTTON_FIVE_PRESSED);
 
-	my_cards_buttons[0] = new Eda_Button(0.325, 0.9, 0.063, 0.168, ("Hanabi Themes/" + theme + "/Deck/back.png").c_str(), CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_GIVE_CARD_ONE);
-	my_cards_buttons[1] = new Eda_Button(0.395, 0.9, 0.063, 0.168, ("Hanabi Themes/" + theme + "/Deck/back.png").c_str(), CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_GIVE_CARD_TWO);
-	my_cards_buttons[2] = new Eda_Button(0.465, 0.9, 0.063, 0.168, ("Hanabi Themes/" + theme + "/Deck/back.png").c_str(), CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_GIVE_CARD_THREE);
-	my_cards_buttons[3] = new Eda_Button(0.535, 0.9, 0.063, 0.168, ("Hanabi Themes/" + theme + "/Deck/back.png").c_str(), CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_GIVE_CARD_FOUR);
-	my_cards_buttons[4] = new Eda_Button(0.605, 0.9, 0.063, 0.168, ("Hanabi Themes/" + theme + "/Deck/back.png").c_str(), CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_GIVE_CARD_FIVE);
-	my_cards_buttons[5] = new Eda_Button(0.675, 0.9, 0.063, 0.168, ("Hanabi Themes/" + theme + "/Deck/back.png").c_str(), CLUE_BUT_DIR "Card_hover.png", CLUE_BUT_DIR "Card_selected.png", EDA_BUTTON_GIVE_CARD_SIX);
+	my_cards_buttons[0] = new Eda_Button(0.325, 0.9, 0.063, 0.168, ("Hanabi Themes/" + theme + "/Deck/back.png").c_str(), ("Hanabi Themes/" + theme + "/Deck/Card_hover.png").c_str(), ("Hanabi Themes/" + theme + "/Deck/Card_selected.png").c_str(), EDA_BUTTON_GIVE_CARD_ONE);
+	my_cards_buttons[1] = new Eda_Button(0.395, 0.9, 0.063, 0.168, ("Hanabi Themes/" + theme + "/Deck/back.png").c_str(), ("Hanabi Themes/" + theme + "/Deck/Card_hover.png").c_str(), ("Hanabi Themes/" + theme + "/Deck/Card_selected.png").c_str(), EDA_BUTTON_GIVE_CARD_TWO);
+	my_cards_buttons[2] = new Eda_Button(0.465, 0.9, 0.063, 0.168, ("Hanabi Themes/" + theme + "/Deck/back.png").c_str(), ("Hanabi Themes/" + theme + "/Deck/Card_hover.png").c_str(), ("Hanabi Themes/" + theme + "/Deck/Card_selected.png").c_str(), EDA_BUTTON_GIVE_CARD_THREE);
+	my_cards_buttons[3] = new Eda_Button(0.535, 0.9, 0.063, 0.168, ("Hanabi Themes/" + theme + "/Deck/back.png").c_str(), ("Hanabi Themes/" + theme + "/Deck/Card_hover.png").c_str(), ("Hanabi Themes/" + theme + "/Deck/Card_selected.png").c_str(), EDA_BUTTON_GIVE_CARD_FOUR);
+	my_cards_buttons[4] = new Eda_Button(0.605, 0.9, 0.063, 0.168, ("Hanabi Themes/" + theme + "/Deck/back.png").c_str(), ("Hanabi Themes/" + theme + "/Deck/Card_hover.png").c_str(), ("Hanabi Themes/" + theme + "/Deck/Card_selected.png").c_str(), EDA_BUTTON_GIVE_CARD_FIVE);
+	my_cards_buttons[5] = new Eda_Button(0.675, 0.9, 0.063, 0.168, ("Hanabi Themes/" + theme + "/Deck/back.png").c_str(), ("Hanabi Themes/" + theme + "/Deck/Card_hover.png").c_str(), ("Hanabi Themes/" + theme + "/Deck/Card_selected.png").c_str(), EDA_BUTTON_GIVE_CARD_SIX);
 
 }
 
@@ -129,7 +129,7 @@ void Eda_Menu_Game::update_buttons(ALLEGRO_DISPLAY * display, float x_mouse, flo
 
 }
 
-bool Eda_Menu_Game::check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse, std::queue<event_button_t> &button_event_queue)
+bool Eda_Menu_Game::check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse, std::queue<hanabi_game_event_t> &button_event_queue)
 {
 	bool click_color = false;
 	bool click_number = false;

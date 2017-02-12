@@ -98,7 +98,7 @@ void Eda_Menu_Settings::update_buttons(ALLEGRO_DISPLAY * display, float x_mouse,
 
 }
 
-bool Eda_Menu_Settings::check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse, std::queue<event_button_t> &button_event_queue)
+bool Eda_Menu_Settings::check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse, std::queue<hanabi_game_event_t> &button_event_queue)
 {
 	if( memory_help->check_mouse_over_toggle(display, x_mouse, y_mouse) )
 		enable_mem_help = !enable_mem_help;
@@ -133,36 +133,37 @@ void draw_font(ALLEGRO_DISPLAY * display, const char * font_name, float x_center
 }
 
 #include "allegro5/allegro5.h"
+#include "hanabi_game_data.h"
 #include <sstream>
 #include <iostream>
 //To be called on update
-void Eda_Menu_Settings::update_game_settings(ALLEGRO_DISPLAY * display, game_configuration_t & game_config)
+void Eda_Menu_Settings::update_game_settings(hanabi_game_data_t & game_data)
 {
 	int width, height;//because allegro used ints 
 	//sscanf(available_resolutions[0],"%dx%d\n",&width,&height); //DOESN'T FUCKING WORK WON'T LOAD HEIGHT WHY THE FUCK!!!!
 	//FOUND OUT WHY THE FUCKING x in resolutions was not the same as the one in the keyboard FUCK
 	
-	if(game_config.selected_theme != selected_theme)
+	if(game_data.game_configuration.selected_theme != selected_theme)
 	{
-		game_config.selected_theme = selected_theme;
-		if(game_config.theme_settings != NULL)//couldn't be NULL but just in case
-			delete game_config.theme_settings;
+		game_data.game_configuration.selected_theme = selected_theme;
+		if(game_data.theme_settings != NULL)//couldn't be NULL but just in case
+			delete game_data.theme_settings;
 			
-		game_config.theme_settings = new Hanabi_Skin();
-		game_config.theme_settings->load_theme(available_themes[selected_theme]);
+		game_data.theme_settings = new Hanabi_Skin();
+		game_data.theme_settings->load_theme(available_themes[selected_theme]);
 	}
 	
 	
-	if(game_config.selected_resolution != selected_resolution)
+	if(game_data.game_configuration.selected_resolution != selected_resolution)
 	{
-		game_config.selected_resolution = selected_resolution;
+		game_data.game_configuration.selected_resolution = selected_resolution;
 		sscanf(available_resolutions[selected_resolution], "%dx%d",&width, &height);
 		
-		al_resize_display(display, width, height);
-		al_set_target_backbuffer(display);
+		al_resize_display(game_data.display, width, height);
+		al_set_target_backbuffer(game_data.display);
 	}
 
-	game_config.memory_help = enable_mem_help;
+	game_data.game_configuration.memory_help = enable_mem_help;
 	
 }
 

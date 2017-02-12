@@ -6,6 +6,7 @@
  */
 
 #include "Eda_Button.h"
+#include "hanabi_events.h"
 
 /*
  * Default Constructor
@@ -251,9 +252,12 @@ void Eda_Button::select(void){
  * Return:
  *	-event_t: Returns the event which is intented for when the button is clicked
  */
-event_button_t Eda_Button::get_click_event(void)
+hanabi_game_event_t Eda_Button::get_click_event(void)
 {
-	return this->generated_event_click;
+	hanabi_game_event_t event;
+	event.type = HANABI_EVENT_BUTTON;
+	event.button_event = this->generated_event_click;
+	return event;
 }
 
 void Eda_Button::show(void)

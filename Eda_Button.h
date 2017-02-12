@@ -9,30 +9,13 @@
 #define EDA_BUTTON_H
 
 #include <allegro5/allegro5.h>
-
-typedef enum{NO_EVENT, EDA_BUTTON_PLAY_PRESSED, EDA_BUTTON_SETT_PRESSED, //Main_Menu
-	
-			// ********************* Game Menu ************************************
-			EDA_BUTTON_WHITE_PRESSED, EDA_BUTTON_BLUE_PRESSED, EDA_BUTTON_GREEN_PRESSED,
-			EDA_BUTTON_YELLOW_PRESSED, EDA_BUTTON_RED_PRESSED,
-	
-			EDA_BUTTON_ONE_PRESSED, EDA_BUTTON_TWO_PRESSED, EDA_BUTTON_THREE_PRESSED,
-			EDA_BUTTON_FOUR_PRESSED, EDA_BUTTON_FIVE_PRESSED,
-	
-			EDA_BUTTON_GIVE_CARD_ONE, EDA_BUTTON_GIVE_CARD_TWO, EDA_BUTTON_GIVE_CARD_THREE, 
-			EDA_BUTTON_GIVE_CARD_FOUR, EDA_BUTTON_GIVE_CARD_FIVE, EDA_BUTTON_GIVE_CARD_SIX,
-	
-			EDA_BUTTON_GIVE_CLUE_PRESSED, EDA_BUTTON_PLAY_CARD_PRESSED , EDA_BUTTON_DISCARD_CARD_PRESSED,
-			// ********************* Settings Menu ************************************
-			
-			EDA_BUTTON_APPLY_PRESSED, EDA_BUTTON_CANCEL_PRESSED //Settings
-}event_button_t;
+#include "hanabi_events.h"
 
 class Eda_Button{
 public:
 	Eda_Button();
-	Eda_Button(float x_center , float y_center ,float x_size_percent , float y_size_percent, const char * fill_image ,
-				const char * hover_image, const char * selection_image,event_button_t generated_event_click);
+	Eda_Button(float x_center , float y_center ,float x_size_percent , float y_size_percent, const char * fill_image,
+				const char * hover_image, const char * selection_image, event_button_t generated_event_click);
 	virtual ~Eda_Button();
 	
 	void draw(ALLEGRO_DISPLAY * display);
@@ -48,7 +31,7 @@ public:
 
 	void hide(void);
 	void show(void);
-	event_button_t get_click_event(void);
+	hanabi_game_event_t get_click_event(void);
 	//void set_hovering(bool hovering);
 	
 private:

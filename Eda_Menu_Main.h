@@ -16,12 +16,12 @@
 
 class Eda_Menu_Main : public Eda_Menu{
 public:
-	Eda_Menu_Main();
+	Eda_Menu_Main(std::string theme);
 	virtual ~Eda_Menu_Main();
 	
 	void draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board);
 	void update_buttons(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse);
-	bool check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse, std::queue<event_button_t> &button_event_queue);
+	bool check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse, std::queue<hanabi_game_event_t> &button_event_queue);
 
 private:
 	Eda_Menu_Main(const Eda_Menu_Main& orig);
