@@ -27,6 +27,7 @@ typedef struct
 	Hanabi_Skin * theme_settings;
 	ALLEGRO_DISPLAY * display;
 	Eda_Menu * active_menu;
+	bool do_exit, redraw;
 	
 }hanabi_game_data_t;
 
