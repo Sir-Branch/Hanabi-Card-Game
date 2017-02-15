@@ -49,15 +49,17 @@ public:
 	//Players only have 3 possible actions 
 	bool player_action_play_card(unsigned int card_my_hand);
 	void player_action_discard_card(unsigned int card_my_hand);
-	bool player_action_give_clue(char value_or_suit, TFTPCxn * cxn );
+	bool player_action_give_clue(unsigned char value_or_suit, TFTPCxn * cxn );
 #warning "Falta probar give clue"
 	
 	void receive_action_draw_card(Hanabi_Card card);
 	void receive_action_play_card(unsigned int card_other_hand);
 	void receive_action_discard_card(unsigned int card_other_hand);
-	void receive_action_get_clue(char value_or_suit);//player can only "receive" one action which is a clue
+	void receive_action_get_clue(unsigned char value_or_suit);//player can only "receive" one action which is a clue
 	
 	void print_my_hand(void);
+	
+	bool validate_give_clue(unsigned char value_or_suit);
     
 #warning "After testing switch to private"
 public://Public for testing functions

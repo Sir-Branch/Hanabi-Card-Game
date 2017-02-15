@@ -9,7 +9,7 @@
 #define EVENTS_H
 
 typedef enum{
-	NO_EVENT, EDA_BUTTON_PLAY_PRESSED, EDA_BUTTON_SETT_PRESSED, //Main_Menu
+	NO_EVENT = 0, EDA_BUTTON_PLAY_PRESSED, EDA_BUTTON_SETT_PRESSED, //Main_Menu
 	
 	// ********************* Game Menu ************************************
 	EDA_BUTTON_WHITE_PRESSED, EDA_BUTTON_BLUE_PRESSED, EDA_BUTTON_GREEN_PRESSED,
@@ -28,8 +28,15 @@ typedef enum{
 
 }event_button_t;
 
+
 typedef enum{
 	
+	EDA_EVENT_DESELECT_ALL_BUTTONS, 
+	EDA_EVENT_INVALID_GIVE_CLUE,EDA_EVENT_VALID_GIVE_CLUE,
+	EDA_EVENT_BAD_PLAY_CARD, EDA_EVENT_DISCARD_CARD,
+	
+	EDA_EVENT_GAME_QUIT
+		
 }event_software_t;
 
 typedef enum{

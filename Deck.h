@@ -30,6 +30,7 @@ public:
 	void addcard_front(const CARD_T& cardtoadd);
 	
 	bool draw(CARD_T& card_taken);
+	bool get_ncard(unsigned int place, CARD_T& card_taken);
 	bool draw_ncard(unsigned int place, CARD_T& card_taken); //starts from 0
 	bool draw_rand_card(CARD_T& card_taken);
     bool remove_ncard(unsigned int place);
@@ -114,8 +115,8 @@ bool Deck<CARD_T>::remove_specific_card(CARD_T card_to_remove)
 }
 
 /*
- * This function draws a card in a specific position from the deck, the card is stored by reference and 
- * the success of the action is returned with a boolean value. 
+ * This function draws(THE CARD IS REMOVED FROM THE DECK) a card in a specific position from the deck, 
+ * the card is stored by reference and the success of the action is returned with a boolean value. 
  * 
  * Input:
  *	-Unsigned int place: Place of the card which will be removed. Starts from 0 (zero being the first card)
@@ -136,6 +137,32 @@ bool Deck<CARD_T>::draw_ncard(unsigned int place, CARD_T& card_taken)
 		card_taken = *it;
 		grabbed_card = true;
 		it =  deck.erase(it++);
+	}
+	return grabbed_card;
+}
+
+/*
+ * This function gets(THE CARD IS NOT REMOVED FROM THE DECK) a card in a specific position from the deck, 
+ * the card is stored by reference and the success of the action is returned with a boolean value. 
+ * 
+ * Input:
+ *	-Unsigned int place: Place of the card which will be get. Starts from 0 (zero being the first card)
+ *	-CARD_T &card_taken: Reference to CARD_T in which the card taken will be stored.
+ * 
+ * Return:
+ *	-bool: Returns true if the card in the place was successfully drawn from the deck.
+ * 
+ */
+template <class CARD_T>
+bool Deck<CARD_T>::get_ncard(unsigned int place, CARD_T& card_taken)
+{
+	bool grabbed_card = false;
+	if( deck.size() > place) 
+	{
+		it = deck.begin();
+		std::advance(it,place);
+		card_taken = *it;
+		grabbed_card = true;
 	}
 	return grabbed_card;
 }

@@ -10,6 +10,7 @@
 #include "Hanabi_Board.h"
 #include <string>
 #include <allegro5/allegro_color.h>
+#include <allegro5/allegro_primitives.h>
 
 Eda_Menu_Game::Eda_Menu_Game(std::string theme)
 {
@@ -17,6 +18,8 @@ Eda_Menu_Game::Eda_Menu_Game(std::string theme)
 	give_clue = new Eda_Button(0.5, 0.737, 0.281, 0.08, CLUE_BUT_DIR "give_clue.png", CLUE_BUT_DIR "give_clue_hover.png", NULL, EDA_BUTTON_GIVE_CLUE_PRESSED);
 	discard_card = new Eda_Button(0.85, 0.9, 0.045 * 3.75, 0.08, CLUE_BUT_DIR "discard_card.png", CLUE_BUT_DIR "discard_card_hover.png", NULL, EDA_BUTTON_DISCARD_CARD_PRESSED);
 	play_card = new Eda_Button(0.15, 0.9, 0.045 * 3.75, 0.08, CLUE_BUT_DIR "play_card.png", CLUE_BUT_DIR "play_card_hover.png", NULL, EDA_BUTTON_PLAY_CARD_PRESSED);
+	graveyard_toggle = new Eda_Button(0.85, 0.78, 0.07, 0.07 * 16.0/9.0, CLUE_BUT_DIR "graveyard.png", CLUE_BUT_DIR "graveyard_hover.png", NULL, NO_EVENT);
+	hidden_graveyard = false;
 	
 	give_clue->hide();
 	discard_card->hide();
@@ -54,6 +57,8 @@ Eda_Menu_Game::~Eda_Menu_Game()
 		delete number_buttons[i];
 	}
 	delete give_clue; 
+	delete discard_card;
+	delete play_card;
 }
 
 void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board)
@@ -74,6 +79,7 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 	give_clue->draw(display);
 	discard_card->draw(display);
 	play_card->draw(display);
+	graveyard_toggle->draw(display);
 	
 	draw_clue_tokens(display, theme, game_board, 
 					0.1, 0.1,
@@ -100,13 +106,12 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 				0.065, 0.190);
 	al_draw_textf(theme->font, al_color_name("black"),
 					0.2 * al_get_display_width(display), 0.57 * al_get_display_height(display),ALLEGRO_ALIGN_CENTRE,
-					"%d",52);
-	/*/\
-	draw_cards(display,theme, //DRAW Other players hand repeated just for looks
-					0.5, 0.9,
-					0.063, 0.168, 0.005,
-					6 , game_board->otherplayers_hand);
-	*/
+					"%d", game_board->hanabi_game_deck.size());
+
+	if(!hidden_graveyard)
+		draw_graveyard(display,theme,
+						0.78,0.2,
+						0.063, 0.168,game_board);
 	al_flip_display();
 }
 
@@ -125,7 +130,7 @@ void Eda_Menu_Game::update_buttons(ALLEGRO_DISPLAY * display, float x_mouse, flo
 	give_clue->update_hovering(display, x_mouse, y_mouse);
 	discard_card->update_hovering(display, x_mouse, y_mouse);
 	play_card->update_hovering(display, x_mouse, y_mouse);
-
+	graveyard_toggle->update_hovering(display, x_mouse, y_mouse);
 
 }
 
@@ -152,6 +157,12 @@ bool Eda_Menu_Game::check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, fl
 		click_button = true;
 		button_event_queue.push( discard_card->get_click_event() );
 	}
+	else if( graveyard_toggle->check_mouse_over(display, x_mouse, y_mouse))
+	{
+		hidden_graveyard = !hidden_graveyard;
+	}
+	
+
 	
 	for(i = 0 ; i < 5 && !click_button && !click_color &&  !click_number; i++)
 	{
@@ -310,3 +321,78 @@ void Eda_Menu_Game::draw_deck(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme,float
 							0); //flags
 }
 
+#define XSPACE_GRAVE_CARD	0.018
+#define YSPACE_GRAVE_CARD	0.10
+
+#define BORDER_WIDTH	0.015
+void Eda_Menu_Game::draw_graveyard(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme,float x_center , float y_center ,float x_size_percent , float y_size_percent, Hanabi_Board * board)
+{
+	al_draw_filled_rounded_rectangle( (x_center - 0.5 * x_size_percent - BORDER_WIDTH) * al_get_display_width(display) , 
+							  (y_center - 0.5 * y_size_percent - BORDER_WIDTH * 16.0/9.0 ) * al_get_display_height(display),
+							  (x_center + 0.5 * x_size_percent + BORDER_WIDTH  +  XSPACE_GRAVE_CARD * 9)	* al_get_display_width(display), //9 and 4 one less than cards and suits
+							  (y_center + 0.5 * y_size_percent + BORDER_WIDTH  * 16.0/9.0 +  YSPACE_GRAVE_CARD * 4) * al_get_display_height(display),
+							  15, 15, al_map_rgba(0,0,0,125)
+							);
+	al_draw_rounded_rectangle( (x_center - 0.5 * x_size_percent - BORDER_WIDTH) * al_get_display_width(display) , 
+							  (y_center - 0.5 * y_size_percent - BORDER_WIDTH * 16.0/9.0 ) * al_get_display_height(display),
+							  (x_center + 0.5 * x_size_percent + BORDER_WIDTH  +  XSPACE_GRAVE_CARD * 9)	* al_get_display_width(display), //9 and 4 one less than cards and suits
+							  (y_center + 0.5 * y_size_percent + BORDER_WIDTH  * 16.0/9.0 +  YSPACE_GRAVE_CARD * 4) * al_get_display_height(display),
+							  15, 15, al_map_rgb(0,0,0), 2.0
+							);
+		
+	
+	Hanabi_Card card;
+	for(int i = 0; i < 5 ; i++)
+		for( int j = 0; j < board->grave_yard[i].size(); j++ )
+		{
+			
+			board->grave_yard[i].get_ncard(j,card);
+			
+			ALLEGRO_BITMAP * card_to_draw = theme->deck[card.get_suit_number()][card.get_value()-1];
+			al_draw_scaled_bitmap(card_to_draw, 
+							0.0, 0.0, al_get_bitmap_width(card_to_draw), al_get_bitmap_height(card_to_draw),
+							(x_center-0.5 * x_size_percent+ j * XSPACE_GRAVE_CARD) * al_get_display_width(display), //x_cord to draw
+							(y_center-0.5 * y_size_percent+ i * YSPACE_GRAVE_CARD) * al_get_display_height(display),  //y_cord to draw
+							x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
+							0); //flags
+		}
+	
+
+}
+
+unsigned int Eda_Menu_Game::get_selected_clue(void)
+{
+	bool button_selected = false;
+	unsigned int selected = 0;// 0 stands for no selected
+	for(int i = 0 ; !button_selected && i < 5 ; i++)
+	{
+		if( this->number_buttons[i]->is_selected() )
+		{
+			selected = i + 1;
+			button_selected = true;
+		}
+		else if( this->color_buttons[i]->is_selected() )
+		{
+			selected = i + 6; //Colors will be from 6 to 10 inclusive
+			button_selected = true;
+		}
+	}		
+	
+	return selected; 
+}
+
+unsigned int Eda_Menu_Game::get_selected_card(void)
+{
+	bool card_selected = false;
+	unsigned int selected = 0;// 0 stands for no selected
+	for(int i = 0 ; !card_selected && i < 6 ; i++)
+	{
+		if( this->my_cards_buttons[i]->is_selected() )
+		{
+			selected = i + 1;
+			card_selected = true;
+		}
+	}		
+	
+	return selected; 
+}

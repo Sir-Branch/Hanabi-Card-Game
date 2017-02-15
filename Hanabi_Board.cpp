@@ -229,7 +229,7 @@ bool Hanabi_Board::draw_card(unsigned int card_my_hand)
  *	-void
  *
  */
-void Hanabi_Board::receive_action_get_clue(char value_or_suit)
+void Hanabi_Board::receive_action_get_clue(unsigned char value_or_suit)
 {
 	if(value_or_suit >= 'A' && value_or_suit <= 'Z') //if its a suit/color hint
 	{
@@ -289,6 +289,7 @@ void Hanabi_Board::receive_action_discard_card(unsigned int card_other_hand)
 //	-Discard Card
 //	-Give hint
 
+#include <iostream>
 
 /*
  * This function carries out one of the three possible player actions: Play card
@@ -357,11 +358,35 @@ void  Hanabi_Board::player_action_discard_card(unsigned int card_my_hand)
  * Return:
  *	-bool: Returns true if the hint was sent successfully
  */
-bool Hanabi_Board::player_action_give_clue(char value_or_suit, TFTPCxn * cxn)
+bool Hanabi_Board::player_action_give_clue(unsigned char value_or_suit, TFTPCxn * cxn)
 {
 	Hanabi_You_Have_Packet * to_send = new Hanabi_You_Have_Packet(value_or_suit);
 	return (APR_SUCCESS == cxn->send_packet(to_send));
 }
+
+
+bool Hanabi_Board::validate_give_clue(unsigned char value_or_suit)
+{
+	bool valid = false;
+	bool value = (value_or_suit <= 5) ? true : false;
+	
+	for(int i = 0; !valid && i < 6 ; i++)
+	{
+		if(value)
+		{
+			otherplayers_hand[i].get_value() == value_or_suit; 
+			valid = true;
+		}
+		else
+		{
+			otherplayers_hand[i].get_suit() == value_or_suit; 
+			valid = true;
+		}
+
+	}
+	return valid;
+}
+
 
 #include <iostream>
 void Hanabi_Board::print_my_hand(void)
