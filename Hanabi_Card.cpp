@@ -31,6 +31,10 @@ bool Hanabi_Card::operator==(const Hanabi_Card& card2){
 	return value==card2.value && suit==card2.suit;
 }
 
+bool Hanabi_Card::operator!=(const Hanabi_Card& card2){
+	return value!=card2.value || suit!=card2.suit;
+}
+
 hanabi_suits_t Hanabi_Card::get_suit(void){
 	return suit;	
 }

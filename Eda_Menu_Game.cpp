@@ -73,6 +73,16 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 		color_buttons[i]->draw(display);
 		number_buttons[i]->draw(display);
 	}
+	Hanabi_Card empty_card;
+	
+	for(int i = 0; i <6 ; i++)
+	{
+		if( game_board->my_cards[i].playing_card == empty_card)
+			my_cards_buttons[i]->hide();
+		else
+			my_cards_buttons[i]->show();
+	}
+	
 	for(int i = 0 ; i < 6 ; i++)
 		my_cards_buttons[i]->draw(display);
 	
@@ -101,12 +111,10 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 					//0.0495, 0.132);
 					//0.045, 0.12);
 	
-	draw_deck(display, theme,
+	draw_deck(display, theme, game_board,
 				0.2, 0.6,
 				0.065, 0.190);
-	al_draw_textf(theme->font, al_color_name("black"),
-					0.2 * al_get_display_width(display), 0.57 * al_get_display_height(display),ALLEGRO_ALIGN_CENTRE,
-					"%d", game_board->hanabi_game_deck.size());
+	
 
 	if(!hidden_graveyard)
 		draw_graveyard(display,theme,
@@ -310,15 +318,35 @@ void Eda_Menu_Game::draw_cards(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme,
 	
 }
 
-void Eda_Menu_Game::draw_deck(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme,float x_center , float y_center ,float x_size_percent , float y_size_percent)
+void Eda_Menu_Game::draw_deck(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board, float x_center , float y_center ,float x_size_percent , float y_size_percent)
 {
 	//font with number of cards remaining
-	al_draw_scaled_bitmap(theme->deck_view, 
-							0.0, 0.0, al_get_bitmap_width(theme->deck_view), al_get_bitmap_height(theme->deck_view),
-							(x_center-0.5 * x_size_percent) * al_get_display_width(display), //x_cord to draw
-							(y_center-0.5 * y_size_percent) * al_get_display_height(display),  //y_cord to draw
-							x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
-							0); //flags
+	ALLEGRO_BITMAP * deck_to_draw = NULL;
+	if(game_board->hanabi_game_deck.size() >= HANABI_NUMBER_DECK_VIEWS)
+	{
+		deck_to_draw = theme->deck_view[HANABI_NUMBER_DECK_VIEWS-1];
+		al_draw_scaled_bitmap(deck_to_draw, 
+								0.0, 0.0, al_get_bitmap_width(deck_to_draw), al_get_bitmap_height(deck_to_draw),
+								(x_center-0.5 * x_size_percent) * al_get_display_width(display), //x_cord to draw
+								(y_center-0.5 * y_size_percent) * al_get_display_height(display),  //y_cord to draw
+								x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
+								0); //flags
+	}
+	else if (game_board->hanabi_game_deck.size())
+	{
+		deck_to_draw = theme->deck_view[game_board->hanabi_game_deck.size()-1];
+		al_draw_scaled_bitmap(deck_to_draw,
+								0.0, 0.0, al_get_bitmap_width(deck_to_draw), al_get_bitmap_height(deck_to_draw),
+								(x_center-0.5 * x_size_percent) * al_get_display_width(display), //x_cord to draw
+								(y_center-0.5 * y_size_percent) * al_get_display_height(display),  //y_cord to draw
+								x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
+								0);
+	}
+	
+	if(game_board->hanabi_game_deck.size())
+		al_draw_textf(theme->font, al_color_name("black"),
+					x_center * al_get_display_width(display), ( 0.95 * y_center) * al_get_display_height(display),ALLEGRO_ALIGN_CENTRE,
+					"%d", game_board->hanabi_game_deck.size());
 }
 
 #define XSPACE_GRAVE_CARD	0.018

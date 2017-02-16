@@ -26,11 +26,12 @@ static bool check_folder_exists(const char * folder_name);
  */
 Hanabi_Skin::Hanabi_Skin() 
 {
+	
+#warning "Update everything to NULL and update destructor"
 	main_menu = NULL;
 	connecting_background = NULL;
 	game_mat = NULL;
 	
-	deck_view = NULL;
 	cards_backside = NULL;
 	for(unsigned int i = 0 ; i < 5 ; i++)
 		for(unsigned int j = 0 ; j < 5 ; j++)
@@ -87,14 +88,16 @@ Hanabi_Skin::~Hanabi_Skin()
 		al_destroy_bitmap(this->token_lightning[1]);
 	if( this->cards_backside != NULL)
 		al_destroy_bitmap(this->cards_backside);
-	if( this->deck_view != NULL)
-		al_destroy_bitmap(this->deck_view);
 	
 	for(unsigned int i = 0 ; i < 5 ; i++)
 		for(unsigned int j = 0 ; j < 5 ; j++)
 				if( this->deck[i][j] != NULL)
 					al_destroy_bitmap(this->deck[i][j]);
-			
+	
+	for(unsigned int i = 0 ; i < HANABI_NUMBER_DECK_VIEWS ; i++)		
+		if( this->deck_view[i] != NULL)
+			al_destroy_bitmap(this->deck_view[i]);
+	
 	if(this->font != NULL)
 		al_destroy_font(this->font);
 	/*	
@@ -179,8 +182,6 @@ bool Hanabi_Skin::load_theme(std::string theme_name)
 			success = false;
 		else if( (this->cards_backside = al_load_bitmap( (deck + "back.png").c_str())) == NULL)
 			success = false;
-		else if( (this->deck_view = al_load_bitmap((deck + "deck_view.png").c_str())) == NULL)
-			success = false;
 		else if( (this->font = al_load_ttf_font((current_folder + "font.ttf").c_str(), HANABI_FONT_SIZE, 0)) == NULL)
 			success = false;
 		
@@ -226,6 +227,16 @@ bool Hanabi_Skin::load_theme(std::string theme_name)
 				if( (this->deck[4][i] = al_load_bitmap((toload+".png").c_str() ) ) == NULL)
 					success = false;
 			}
+			
+			toload = deck + "deck_view" + "0";
+			for(unsigned int i = 0 ; i < HANABI_NUMBER_DECK_VIEWS && success ; i++)
+			{
+				if( (this->deck_view[i] = al_load_bitmap((toload+".png").c_str() ) ) == NULL)
+					success = false;
+				
+				toload[toload.size()-1]++; //Increases number at end of string
+			}
+			
 			
 		}
 		

@@ -12,6 +12,8 @@
 #include "allegro5/allegro5.h"
 #include "allegro5/allegro_font.h"
 
+#define HANABI_NUMBER_DECK_VIEWS	5
+
 class Hanabi_Skin {
 public:
 	Hanabi_Skin();
@@ -24,7 +26,7 @@ public:
 	ALLEGRO_BITMAP * connecting_background;
 	ALLEGRO_BITMAP * setting_background;
 	
-	ALLEGRO_BITMAP * deck_view;
+	ALLEGRO_BITMAP * deck_view[HANABI_NUMBER_DECK_VIEWS];
 	ALLEGRO_BITMAP * cards_backside;
 	ALLEGRO_BITMAP * deck[5][5]; // Changed to this approach as it allows for easier management and avoiding if statements 
 	//Order will be like a rainbow White, blue, green , yellow , red

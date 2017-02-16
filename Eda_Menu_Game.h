@@ -39,7 +39,7 @@ private:
 	void draw_cards(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme,
 					float x_center , float y_center ,float x_size_percent , float y_size_percent, float space_between,
 					int number_cards, const Hanabi_Card * cards_to_draw);
-	void draw_deck(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme,float x_center , float y_center ,float x_size_percent , float y_size_percent);
+	void draw_deck(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board *gameboard, float x_center , float y_center ,float x_size_percent , float y_size_percent);
 
 	void draw_graveyard(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme,float x_center , float y_center ,float x_size_percent , float y_size_percent, Hanabi_Board * board);
 
