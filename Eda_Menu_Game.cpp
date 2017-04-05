@@ -64,7 +64,7 @@ Eda_Menu_Game::~Eda_Menu_Game()
 void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board)
 {
 	al_draw_scaled_bitmap(theme->game_mat, 
-							0.0, 0.0, al_get_bitmap_width(theme->main_menu), al_get_bitmap_height(theme->main_menu),
+							0.0, 0.0, al_get_bitmap_width(theme->game_mat), al_get_bitmap_height(theme->game_mat),
 							0.0, 0.0, al_get_display_width(display), al_get_display_height(display), //x , y cord to draw and width and height to draw
 							0); //flags	
 	
@@ -344,8 +344,8 @@ void Eda_Menu_Game::draw_deck(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hana
 	}
 	
 	if(game_board->hanabi_game_deck.size())
-		al_draw_textf(theme->font, al_color_name("black"),
-					x_center * al_get_display_width(display), ( 0.95 * y_center) * al_get_display_height(display),ALLEGRO_ALIGN_CENTRE,
+		al_draw_textf(theme->font, al_color_name("ghostwhite"),
+					x_center * al_get_display_width(display), (y_size_percent/2.0 + y_center) * al_get_display_height(display),ALLEGRO_ALIGN_CENTRE,
 					"%d", game_board->hanabi_game_deck.size());
 }
 
@@ -396,18 +396,42 @@ unsigned int Eda_Menu_Game::get_selected_clue(void)
 	{
 		if( this->number_buttons[i]->is_selected() )
 		{
-			selected = i + 1;
+			selected = i + '1';
 			button_selected = true;
 		}
 		else if( this->color_buttons[i]->is_selected() )
 		{
-			selected = i + 6; //Colors will be from 6 to 10 inclusive
+			switch(i)
+			{
+				case 0:
+					selected = 'W';
+					break;
+				case 1:
+					selected = 'B';
+					break;
+				case 2:
+					selected = 'G';
+					break;
+				case 3:
+					selected = 'Y';
+					break;
+				case 4:
+					selected = 'R';
+					break;
+				default:
+					selected = 0;
+					break;
+			}
+			
 			button_selected = true;
 		}
 	}		
 	
 	return selected; 
 }
+
+
+
 
 unsigned int Eda_Menu_Game::get_selected_card(void)
 {
