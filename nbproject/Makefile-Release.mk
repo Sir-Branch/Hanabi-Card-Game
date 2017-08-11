@@ -36,6 +36,13 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/Deck.o \
+	${OBJECTDIR}/Eda_Button.o \
+	${OBJECTDIR}/Eda_Menu.o \
+	${OBJECTDIR}/Eda_Menu_Game.o \
+	${OBJECTDIR}/Eda_Menu_Main.o \
+	${OBJECTDIR}/Eda_Menu_Network.o \
+	${OBJECTDIR}/Eda_Menu_Settings.o \
+	${OBJECTDIR}/Eda_Textbox.o \
 	${OBJECTDIR}/Hanabi_Ack_Packet.o \
 	${OBJECTDIR}/Hanabi_Board.o \
 	${OBJECTDIR}/Hanabi_Card.o \
@@ -51,6 +58,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Hanabi_Play_Again_Packet.o \
 	${OBJECTDIR}/Hanabi_Play_Packet.o \
 	${OBJECTDIR}/Hanabi_Quit_Packet.o \
+	${OBJECTDIR}/Hanabi_Skin.o \
 	${OBJECTDIR}/Hanabi_Start_Info_Packet.o \
 	${OBJECTDIR}/Hanabi_We_Lost_Packet.o \
 	${OBJECTDIR}/Hanabi_We_Won_Packet.o \
@@ -65,6 +73,13 @@ OBJECTFILES= \
 	${OBJECTDIR}/TFTP_Packet.o \
 	${OBJECTDIR}/TFTP_Rq_Packet.o \
 	${OBJECTDIR}/Token.o \
+	${OBJECTDIR}/allegro_start_shutdown.o \
+	${OBJECTDIR}/event_dispatcher.o \
+	${OBJECTDIR}/event_handler_allegro.o \
+	${OBJECTDIR}/event_handler_button_clicks.o \
+	${OBJECTDIR}/event_handler_network.o \
+	${OBJECTDIR}/event_handler_software.o \
+	${OBJECTDIR}/hanabi_game_fsm.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/my_sleep_ms.o \
 	${OBJECTDIR}/network_main_test.o
@@ -88,173 +103,248 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/red_management_tpfinal
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/hanabi_eda_tp_final
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/red_management_tpfinal: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/hanabi_eda_tp_final: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/red_management_tpfinal ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/hanabi_eda_tp_final ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/Deck.o: Deck.cpp 
+${OBJECTDIR}/Deck.o: Deck.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Deck.o Deck.cpp
 
-${OBJECTDIR}/Hanabi_Ack_Packet.o: Hanabi_Ack_Packet.cpp 
+${OBJECTDIR}/Eda_Button.o: Eda_Button.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Eda_Button.o Eda_Button.cpp
+
+${OBJECTDIR}/Eda_Menu.o: Eda_Menu.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Eda_Menu.o Eda_Menu.cpp
+
+${OBJECTDIR}/Eda_Menu_Game.o: Eda_Menu_Game.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Eda_Menu_Game.o Eda_Menu_Game.cpp
+
+${OBJECTDIR}/Eda_Menu_Main.o: Eda_Menu_Main.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Eda_Menu_Main.o Eda_Menu_Main.cpp
+
+${OBJECTDIR}/Eda_Menu_Network.o: Eda_Menu_Network.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Eda_Menu_Network.o Eda_Menu_Network.cpp
+
+${OBJECTDIR}/Eda_Menu_Settings.o: Eda_Menu_Settings.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Eda_Menu_Settings.o Eda_Menu_Settings.cpp
+
+${OBJECTDIR}/Eda_Textbox.o: Eda_Textbox.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Eda_Textbox.o Eda_Textbox.cpp
+
+${OBJECTDIR}/Hanabi_Ack_Packet.o: Hanabi_Ack_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Ack_Packet.o Hanabi_Ack_Packet.cpp
 
-${OBJECTDIR}/Hanabi_Board.o: Hanabi_Board.cpp 
+${OBJECTDIR}/Hanabi_Board.o: Hanabi_Board.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Board.o Hanabi_Board.cpp
 
-${OBJECTDIR}/Hanabi_Card.o: Hanabi_Card.cpp 
+${OBJECTDIR}/Hanabi_Card.o: Hanabi_Card.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Card.o Hanabi_Card.cpp
 
-${OBJECTDIR}/Hanabi_Deck.o: Hanabi_Deck.cpp 
+${OBJECTDIR}/Hanabi_Deck.o: Hanabi_Deck.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Deck.o Hanabi_Deck.cpp
 
-${OBJECTDIR}/Hanabi_Discard_Packet.o: Hanabi_Discard_Packet.cpp 
+${OBJECTDIR}/Hanabi_Discard_Packet.o: Hanabi_Discard_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Discard_Packet.o Hanabi_Discard_Packet.cpp
 
-${OBJECTDIR}/Hanabi_Draw_Packet.o: Hanabi_Draw_Packet.cpp 
+${OBJECTDIR}/Hanabi_Draw_Packet.o: Hanabi_Draw_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Draw_Packet.o Hanabi_Draw_Packet.cpp
 
-${OBJECTDIR}/Hanabi_Error_Packet.o: Hanabi_Error_Packet.cpp 
+${OBJECTDIR}/Hanabi_Error_Packet.o: Hanabi_Error_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Error_Packet.o Hanabi_Error_Packet.cpp
 
-${OBJECTDIR}/Hanabi_Game_Over_Packet.o: Hanabi_Game_Over_Packet.cpp 
+${OBJECTDIR}/Hanabi_Game_Over_Packet.o: Hanabi_Game_Over_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Game_Over_Packet.o Hanabi_Game_Over_Packet.cpp
 
-${OBJECTDIR}/Hanabi_IStart_Packet.o: Hanabi_IStart_Packet.cpp 
+${OBJECTDIR}/Hanabi_IStart_Packet.o: Hanabi_IStart_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_IStart_Packet.o Hanabi_IStart_Packet.cpp
 
-${OBJECTDIR}/Hanabi_Match_Over_Packet.o: Hanabi_Match_Over_Packet.cpp 
+${OBJECTDIR}/Hanabi_Match_Over_Packet.o: Hanabi_Match_Over_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Match_Over_Packet.o Hanabi_Match_Over_Packet.cpp
 
-${OBJECTDIR}/Hanabi_Name_Is_Packet.o: Hanabi_Name_Is_Packet.cpp 
+${OBJECTDIR}/Hanabi_Name_Is_Packet.o: Hanabi_Name_Is_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Name_Is_Packet.o Hanabi_Name_Is_Packet.cpp
 
-${OBJECTDIR}/Hanabi_Name_Packet.o: Hanabi_Name_Packet.cpp 
+${OBJECTDIR}/Hanabi_Name_Packet.o: Hanabi_Name_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Name_Packet.o Hanabi_Name_Packet.cpp
 
-${OBJECTDIR}/Hanabi_Play_Again_Packet.o: Hanabi_Play_Again_Packet.cpp 
+${OBJECTDIR}/Hanabi_Play_Again_Packet.o: Hanabi_Play_Again_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Play_Again_Packet.o Hanabi_Play_Again_Packet.cpp
 
-${OBJECTDIR}/Hanabi_Play_Packet.o: Hanabi_Play_Packet.cpp 
+${OBJECTDIR}/Hanabi_Play_Packet.o: Hanabi_Play_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Play_Packet.o Hanabi_Play_Packet.cpp
 
-${OBJECTDIR}/Hanabi_Quit_Packet.o: Hanabi_Quit_Packet.cpp 
+${OBJECTDIR}/Hanabi_Quit_Packet.o: Hanabi_Quit_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Quit_Packet.o Hanabi_Quit_Packet.cpp
 
-${OBJECTDIR}/Hanabi_Start_Info_Packet.o: Hanabi_Start_Info_Packet.cpp 
+${OBJECTDIR}/Hanabi_Skin.o: Hanabi_Skin.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Skin.o Hanabi_Skin.cpp
+
+${OBJECTDIR}/Hanabi_Start_Info_Packet.o: Hanabi_Start_Info_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_Start_Info_Packet.o Hanabi_Start_Info_Packet.cpp
 
-${OBJECTDIR}/Hanabi_We_Lost_Packet.o: Hanabi_We_Lost_Packet.cpp 
+${OBJECTDIR}/Hanabi_We_Lost_Packet.o: Hanabi_We_Lost_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_We_Lost_Packet.o Hanabi_We_Lost_Packet.cpp
 
-${OBJECTDIR}/Hanabi_We_Won_Packet.o: Hanabi_We_Won_Packet.cpp 
+${OBJECTDIR}/Hanabi_We_Won_Packet.o: Hanabi_We_Won_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_We_Won_Packet.o Hanabi_We_Won_Packet.cpp
 
-${OBJECTDIR}/Hanabi_You_Have_Packet.o: Hanabi_You_Have_Packet.cpp 
+${OBJECTDIR}/Hanabi_You_Have_Packet.o: Hanabi_You_Have_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_You_Have_Packet.o Hanabi_You_Have_Packet.cpp
 
-${OBJECTDIR}/Hanabi_You_Start_Packet.o: Hanabi_You_Start_Packet.cpp 
+${OBJECTDIR}/Hanabi_You_Start_Packet.o: Hanabi_You_Start_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_You_Start_Packet.o Hanabi_You_Start_Packet.cpp
 
-${OBJECTDIR}/TFTPClient.o: TFTPClient.cpp 
+${OBJECTDIR}/TFTPClient.o: TFTPClient.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TFTPClient.o TFTPClient.cpp
 
-${OBJECTDIR}/TFTPCxn.o: TFTPCxn.cpp 
+${OBJECTDIR}/TFTPCxn.o: TFTPCxn.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TFTPCxn.o TFTPCxn.cpp
 
-${OBJECTDIR}/TFTPServer.o: TFTPServer.cpp 
+${OBJECTDIR}/TFTPServer.o: TFTPServer.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TFTPServer.o TFTPServer.cpp
 
-${OBJECTDIR}/TFTP_Ack_Packet.o: TFTP_Ack_Packet.cpp 
+${OBJECTDIR}/TFTP_Ack_Packet.o: TFTP_Ack_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TFTP_Ack_Packet.o TFTP_Ack_Packet.cpp
 
-${OBJECTDIR}/TFTP_Data_Packet.o: TFTP_Data_Packet.cpp 
+${OBJECTDIR}/TFTP_Data_Packet.o: TFTP_Data_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TFTP_Data_Packet.o TFTP_Data_Packet.cpp
 
-${OBJECTDIR}/TFTP_Err_Packet.o: TFTP_Err_Packet.cpp 
+${OBJECTDIR}/TFTP_Err_Packet.o: TFTP_Err_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TFTP_Err_Packet.o TFTP_Err_Packet.cpp
 
-${OBJECTDIR}/TFTP_Packet.o: TFTP_Packet.cpp 
+${OBJECTDIR}/TFTP_Packet.o: TFTP_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TFTP_Packet.o TFTP_Packet.cpp
 
-${OBJECTDIR}/TFTP_Rq_Packet.o: TFTP_Rq_Packet.cpp 
+${OBJECTDIR}/TFTP_Rq_Packet.o: TFTP_Rq_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TFTP_Rq_Packet.o TFTP_Rq_Packet.cpp
 
-${OBJECTDIR}/Token.o: Token.cpp 
+${OBJECTDIR}/Token.o: Token.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Token.o Token.cpp
 
-${OBJECTDIR}/main.o: main.cpp 
+${OBJECTDIR}/allegro_start_shutdown.o: allegro_start_shutdown.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/allegro_start_shutdown.o allegro_start_shutdown.c
+
+${OBJECTDIR}/event_dispatcher.o: event_dispatcher.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/event_dispatcher.o event_dispatcher.cpp
+
+${OBJECTDIR}/event_handler_allegro.o: event_handler_allegro.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/event_handler_allegro.o event_handler_allegro.cpp
+
+${OBJECTDIR}/event_handler_button_clicks.o: event_handler_button_clicks.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/event_handler_button_clicks.o event_handler_button_clicks.cpp
+
+${OBJECTDIR}/event_handler_network.o: event_handler_network.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/event_handler_network.o event_handler_network.cpp
+
+${OBJECTDIR}/event_handler_software.o: event_handler_software.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/event_handler_software.o event_handler_software.cpp
+
+${OBJECTDIR}/hanabi_game_fsm.o: hanabi_game_fsm.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/hanabi_game_fsm.o hanabi_game_fsm.cpp
+
+${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
-${OBJECTDIR}/my_sleep_ms.o: my_sleep_ms.cpp 
+${OBJECTDIR}/my_sleep_ms.o: my_sleep_ms.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/my_sleep_ms.o my_sleep_ms.cpp
 
-${OBJECTDIR}/network_main_test.o: network_main_test.cpp 
+${OBJECTDIR}/network_main_test.o: network_main_test.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/network_main_test.o network_main_test.cpp
@@ -265,7 +355,6 @@ ${OBJECTDIR}/network_main_test.o: network_main_test.cpp
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/red_management_tpfinal
 
 # Subprojects
 .clean-subprojects:

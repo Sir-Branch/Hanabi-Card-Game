@@ -18,8 +18,10 @@
 
 //using namespace std;
 
-TFTP_Packet::TFTP_Packet(long unsigned int size) : size_pck(size) {
+TFTP_Packet::TFTP_Packet(long unsigned int size, const char * data) : size_pck(size) {
 	packet_data = new char [size];
+	if(data != NULL && size)
+		memcpy(packet_data, data, size);
 }
 
 TFTP_Packet::~TFTP_Packet() {
@@ -39,7 +41,7 @@ TFTP_Packet::TFTP_Packet(const TFTP_Packet& other)
     
 TFTP_Packet::TFTP_Packet()
 {
-	size_pck=0;
+	size_pck = 0;
 	packet_data=NULL;//NULL pero en c++ se usa 0 pq son ezzzpeciales 
 }
 

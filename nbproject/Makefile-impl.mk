@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Red_management_TpFInal
+PROJECTNAME=Hanabi Eda Tp Final
 
 # Active Configuration
 DEFAULTCONF=Debug

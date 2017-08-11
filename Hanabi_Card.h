@@ -27,6 +27,7 @@ public:
 
     Hanabi_Card(hanabi_suits_t suit = HANABI_CARD_SUIT_EMPTY, hanabi_values_t hanabi_values  = HANABI_CARD_VALUE_EMPTY);
     bool operator==(const Hanabi_Card& card);
+    bool operator!=(const Hanabi_Card& card);
     //operator= no need to overwrite 
 	hanabi_suits_t get_suit(void);
 	hanabi_values_t get_value(void);

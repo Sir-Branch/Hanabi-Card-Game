@@ -17,5 +17,8 @@ void event_handle_allegro(ALLEGRO_EVENT ev, hanabi_game_data_t * hanabi_game_dat
 		hanabi_game_data->active_menu->update_buttons(hanabi_game_data->display,ev.mouse.x, ev.mouse.y);
 	else if(ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_UP)
 		hanabi_game_data->active_menu->check_for_click(hanabi_game_data->display,ev.mouse.x, ev.mouse.y, *button_event_queue);
+	else if(ev.type == ALLEGRO_EVENT_KEY_UP)
+		;//EVENT_HANDLE_ALLEGRO_KEYBOARD???
+	
 #warning "Change event queue to pointer"
 }

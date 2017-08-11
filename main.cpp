@@ -24,6 +24,7 @@
 #include "hanabi_game_data.h"
 #include "event_dispatcher.h" 
 #include "event_handler_allegro.h"
+#include "Eda_Menu_Network.h"
 
 using namespace std;
 
@@ -39,6 +40,8 @@ int main(void)
 	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 	ALLEGRO_TIMER *timer = NULL;
   
+	hanabi_game_data.net_connection = NULL;
+	
 	std::queue<hanabi_game_event_t> button_event_queue, network_event_queue, software_event_queue;
 
  
@@ -100,7 +103,8 @@ int main(void)
 	hanabi_game_data.do_exit = false;
 	hanabi_game_data.redraw = false;
 
-	hanabi_game_data.active_menu = new Eda_Menu_Main(hanabi_game_data.theme_settings->theme);
+	//hanabi_game_data.active_menu = new Eda_Menu_Main(hanabi_game_data.theme_settings->theme);
+	hanabi_game_data.active_menu = new Eda_Menu_Network();
 
 	al_register_event_source(event_queue, al_get_display_event_source(hanabi_game_data.display));
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));

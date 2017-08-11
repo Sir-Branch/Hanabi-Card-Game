@@ -12,6 +12,7 @@
 #include "Eda_Menu_Settings.h"
 
 #include "event_handler_button_clicks.h"
+#include "Hanabi_Play_Packet.h"
 
 void event_handle_button(event_button_t button_event,hanabi_game_data_t * hanabi_game_data)
 {
@@ -45,20 +46,18 @@ void event_handle_button(event_button_t button_event,hanabi_game_data_t * hanabi
 	else if(button_event >= EDA_BUTTON_WHITE_PRESSED && button_event <= EDA_BUTTON_RED_PRESSED);//
 	else if(button_event >= EDA_BUTTON_GIVE_CARD_ONE && button_event <= EDA_BUTTON_GIVE_CARD_SIX);
 
-	
 	else if(button_event == EDA_BUTTON_GIVE_CLUE_PRESSED)
 	{
-		unsigned int selected_clue = ((Eda_Menu_Game *)hanabi_game_data->active_menu)->get_selected_card();
+		unsigned int selected_clue = ((Eda_Menu_Game *)hanabi_game_data->active_menu)->get_selected_clue();
 		if( selected_clue && hanabi_game_data->game_board->any_clues_left() )
 		{
-			if(selected_clue <= 5)
+			if( hanabi_game_data->net_connection == NULL || !hanabi_game_data->net_connection->connection_status_ok() )
 			{
-				//hanabi_game_data->game_board->player_action_give_clue(selected_clue);
+				//GENERATE NETWORK ERROR EVENT;
 			}
 			else
 			{
-				//transfor selected_clue to color
-				//hanabi_game_data->game_board->player_action_give_clue(selected_clue);
+				hanabi_game_data->game_board->player_action_give_clue(selected_clue,hanabi_game_data->net_connection);
 			}
 		}
 		else
@@ -70,14 +69,24 @@ void event_handle_button(event_button_t button_event,hanabi_game_data_t * hanabi
 	else if(button_event == EDA_BUTTON_PLAY_CARD_PRESSED)
 	{
 		unsigned int selected_card = ((Eda_Menu_Game *)hanabi_game_data->active_menu)->get_selected_card();
-		if( selected_card && hanabi_game_data->game_board->player_action_play_card(selected_card-1) )
+		TFTP_Packet * to_send = new Hanabi_Play_Packet(selected_card);
+		if( selected_card ) 
 		{
-			;//CARD SUCCESFULLY PLACED
+			hanabi_game_data->game_board->player_action_play_card(selected_card-1);
+			if( hanabi_game_data->net_connection == NULL || !hanabi_game_data->net_connection->connection_status_ok() )
+			{
+				//GENERATE NETWORK ERROR EVENT;
+			}
+			else
+			{
+				hanabi_game_data->net_connection->send_packet(to_send);
+			}
+			
 		}
-		else
-		{
-			;//COULDN'T PLACE CARD
-		}
+	
+		
+	
+		
 			
 	}
 	else if(button_event == EDA_BUTTON_DISCARD_CARD_PRESSED)

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="97">
+<configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -41,6 +41,7 @@
       <itemPath>Hanabi_Card.h</itemPath>
       <itemPath>Hanabi_Deck.h</itemPath>
       <itemPath>Token.h</itemPath>
+      <itemPath>hanabi_game_data.h</itemPath>
       <itemPath>my_sleep_ms.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -50,6 +51,46 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <logicalFolder name="f3" displayName="Back End" projectFiles="true">
+        <itemPath>Deck.cpp</itemPath>
+        <itemPath>Hanabi_Board.cpp</itemPath>
+        <itemPath>Hanabi_Card.cpp</itemPath>
+        <itemPath>Hanabi_Deck.cpp</itemPath>
+        <itemPath>Token.cpp</itemPath>
+        <itemPath>hanabi_game_fsm.cpp</itemPath>
+        <itemPath>my_sleep_ms.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f4" displayName="Event Management" projectFiles="true">
+        <itemPath>event_dispatcher.cpp</itemPath>
+        <itemPath>event_dispatcher.h</itemPath>
+        <itemPath>event_handler_allegro.cpp</itemPath>
+        <itemPath>event_handler_allegro.h</itemPath>
+        <itemPath>event_handler_button_clicks.cpp</itemPath>
+        <itemPath>event_handler_button_clicks.h</itemPath>
+        <itemPath>event_handler_network.cpp</itemPath>
+        <itemPath>event_handler_network.h</itemPath>
+        <itemPath>event_handler_software.cpp</itemPath>
+        <itemPath>event_handler_software.h</itemPath>
+        <itemPath>hanabi_events.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="Front_end" projectFiles="true">
+        <itemPath>Eda_Button.cpp</itemPath>
+        <itemPath>Eda_Button.h</itemPath>
+        <itemPath>Eda_Menu.cpp</itemPath>
+        <itemPath>Eda_Menu.h</itemPath>
+        <itemPath>Eda_Menu_Game.cpp</itemPath>
+        <itemPath>Eda_Menu_Game.h</itemPath>
+        <itemPath>Eda_Menu_Main.cpp</itemPath>
+        <itemPath>Eda_Menu_Main.h</itemPath>
+        <itemPath>Eda_Menu_Network.cpp</itemPath>
+        <itemPath>Eda_Menu_Network.h</itemPath>
+        <itemPath>Eda_Menu_Settings.cpp</itemPath>
+        <itemPath>Eda_Menu_Settings.h</itemPath>
+        <itemPath>Eda_Textbox.cpp</itemPath>
+        <itemPath>Eda_Textbox.h</itemPath>
+        <itemPath>Hanabi_Skin.cpp</itemPath>
+        <itemPath>Hanabi_Skin.h</itemPath>
+      </logicalFolder>
       <logicalFolder name="f1" displayName="Networking" projectFiles="true">
         <logicalFolder name="f2" displayName="Hanabi Game Packets" projectFiles="true">
           <itemPath>Hanabi_Ack_Packet.cpp</itemPath>
@@ -81,13 +122,9 @@
           <itemPath>TFTP_Rq_Packet.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
-      <itemPath>Deck.cpp</itemPath>
-      <itemPath>Hanabi_Board.cpp</itemPath>
-      <itemPath>Hanabi_Card.cpp</itemPath>
-      <itemPath>Hanabi_Deck.cpp</itemPath>
-      <itemPath>Token.cpp</itemPath>
+      <itemPath>allegro_start_shutdown.c</itemPath>
+      <itemPath>allegro_start_shutdown.h</itemPath>
       <itemPath>main.cpp</itemPath>
-      <itemPath>my_sleep_ms.cpp</itemPath>
       <itemPath>network_main_test.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -102,6 +139,9 @@
       <itemPath>Makefile</itemPath>
     </logicalFolder>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="Debug" type="1">
@@ -114,12 +154,48 @@
         <linkerTool>
           <linkerLibItems>
             <linkerOptionItem>`pkg-config --libs apr-1`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro-5.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_image-5.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_font-5.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_color-5.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_ttf-5.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_audio-5.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_acodec-5.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_primitives-5.0`</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
       <item path="Deck.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Deck.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eda_Button.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Eda_Button.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eda_Menu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Eda_Menu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eda_Menu_Game.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Eda_Menu_Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eda_Menu_Main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Eda_Menu_Main.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eda_Menu_Network.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Eda_Menu_Network.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eda_Menu_Settings.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Eda_Menu_Settings.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eda_Textbox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Eda_Textbox.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Hanabi_Ack_Packet.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -183,6 +259,10 @@
       </item>
       <item path="Hanabi_Quit_Packet.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Hanabi_Skin.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Skin.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Hanabi_Start_Info_Packet.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Hanabi_Start_Info_Packet.h" ex="false" tool="3" flavor2="0">
@@ -238,6 +318,36 @@
       <item path="Token.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Token.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="allegro_start_shutdown.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="allegro_start_shutdown.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="event_dispatcher.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="event_dispatcher.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="event_handler_allegro.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="event_handler_allegro.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="event_handler_button_clicks.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="event_handler_button_clicks.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="event_handler_network.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="event_handler_network.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="event_handler_software.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="event_handler_software.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="hanabi_events.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="hanabi_game_data.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="hanabi_game_fsm.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -272,6 +382,34 @@
       </item>
       <item path="Deck.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Eda_Button.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Eda_Button.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eda_Menu.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Eda_Menu.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eda_Menu_Game.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Eda_Menu_Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eda_Menu_Main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Eda_Menu_Main.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eda_Menu_Network.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Eda_Menu_Network.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eda_Menu_Settings.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Eda_Menu_Settings.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eda_Textbox.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Eda_Textbox.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Hanabi_Ack_Packet.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Hanabi_Ack_Packet.h" ex="false" tool="3" flavor2="0">
@@ -334,6 +472,10 @@
       </item>
       <item path="Hanabi_Quit_Packet.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Hanabi_Skin.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Hanabi_Skin.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Hanabi_Start_Info_Packet.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Hanabi_Start_Info_Packet.h" ex="false" tool="3" flavor2="0">
@@ -389,6 +531,36 @@
       <item path="Token.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Token.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="allegro_start_shutdown.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="allegro_start_shutdown.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="event_dispatcher.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="event_dispatcher.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="event_handler_allegro.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="event_handler_allegro.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="event_handler_button_clicks.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="event_handler_button_clicks.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="event_handler_network.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="event_handler_network.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="event_handler_software.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="event_handler_software.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="hanabi_events.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="hanabi_game_data.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="hanabi_game_fsm.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

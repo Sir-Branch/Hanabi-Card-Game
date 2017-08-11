@@ -11,6 +11,7 @@
 #include "Hanabi_Skin.h"
 #include "Hanabi_Board.h"
 #include "Eda_Menu.h"
+#include "TFTPCxn.h"
 
 typedef struct
 {
@@ -28,6 +29,7 @@ typedef struct
 	ALLEGRO_DISPLAY * display;
 	Eda_Menu * active_menu;
 	bool do_exit, redraw;
+	TFTPCxn * net_connection;
 	
 }hanabi_game_data_t;
 

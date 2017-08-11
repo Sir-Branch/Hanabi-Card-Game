@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   TFTPCxn.h
  * Author: r2d2
@@ -32,8 +26,11 @@ class TFTPCxn
 public:
 	TFTPCxn();
 	virtual ~TFTPCxn();
-	apr_socket_t * get_cxn_socket(); //Shouldn't be necessary ....
-	apr_status_t send_packet(TFTP_Packet * pck_to_send);
+	//apr_socket_t * get_cxn_socket(); //Shouldn't be necessary ....
+	bool send_packet(TFTP_Packet * pck_to_send);
+	bool receive_packet(TFTP_Packet ** pck_to_recieve);
+	bool connection_status_ok(void);
+	
     //apr_status_t get_connection_status();
         
 protected:

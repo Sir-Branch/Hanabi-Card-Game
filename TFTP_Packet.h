@@ -31,7 +31,7 @@ class TFTP_Packet {
 	
 public:
 		
-    TFTP_Packet(long unsigned int); //rule of zero/3/5
+    TFTP_Packet(long unsigned int size,  const char * data = NULL); //rule of zero/3/5
     TFTP_Packet(const TFTP_Packet& other);
     TFTP_Packet();
     ~TFTP_Packet();

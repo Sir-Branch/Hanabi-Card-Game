@@ -24,30 +24,61 @@ TFTPCxn::~TFTPCxn()
 	 
 }
 
+/*
 //SOCKET IS READ ONLY ain't want those commies touching our sockets...
 apr_socket_t * TFTPCxn::get_cxn_socket()
 {
 	return socket;
-}
+}*/
 
 #include <iostream>
 
 //apr_status_t TFTPCxn::send_packet(const char * const pck_to_send, unsigned long int size_pck)
-apr_status_t TFTPCxn::send_packet(TFTP_Packet * pck_to_send)
+bool TFTPCxn::send_packet(TFTP_Packet * pck_to_send)
 {
-	apr_status_t rv;
+	bool sent = false;
 	unsigned long int len_send = pck_to_send->size();
 	
 	std::cout << "sending packet length "<<len_send<<std::endl;//Debugging
 	
-	rv = apr_socket_send(this->socket, pck_to_send->get_data_pck() , &len_send); //simplemente mandamos al socket "sock" el string "req_hdr" del largo len. Es an�logo para cualquier bloque de bytes que queramos mandar.
-	if (rv != APR_SUCCESS)
+	this->cxn_status = apr_socket_send(this->socket, pck_to_send->get_data_pck() , &len_send); //simplemente mandamos al socket "sock" el string "req_hdr" del largo len. Es an�logo para cualquier bloque de bytes que queramos mandar.
+	
+	if (this->cxn_status != APR_SUCCESS)
 		std::cout << "CANNOT send info\n" ;
 	else if(len_send != pck_to_send->size()) // nose si podria pasar 
 		std::cout << "Incomplete packet sent(like your birth) D:\n";
 	else
+	{
 		std::cout <<"Packet has been sent \n";
-	return rv;
-	
+		sent = true;
+	}
+	return sent;
 }
 
+#define TFTPCXN_MAX_PCK_SIZE 256
+bool TFTPCxn::receive_packet(TFTP_Packet ** pck_to_receive)
+{
+	bool received_packet = false;
+	char buffer[TFTPCXN_MAX_PCK_SIZE];
+	size_t max_bytes_receive = TFTPCXN_MAX_PCK_SIZE;
+	TFTP_Packet * received = NULL;
+	
+	this->cxn_status = apr_socket_recv(this->socket, buffer, &max_bytes_receive);
+	if( this->cxn_status == APR_SUCCESS || this->cxn_status != APR_EOF )
+	{
+		received_packet = true;
+		*pck_to_receive = new TFTP_Packet( max_bytes_receive, buffer);
+	}
+	return received_packet;
+  
+}
+
+//bool TFTPCxn::receive_data(char * data)
+
+
+bool TFTPCxn::connection_status_ok(void)
+{
+	size_t empty_test = 0;
+	char buffer[20];
+	return (this->cxn_status = apr_socket_send( this->socket, buffer, &empty_test)) == APR_SUCCESS;
+}
