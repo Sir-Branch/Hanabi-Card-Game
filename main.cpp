@@ -5,6 +5,8 @@
  * Created on October 12, 2016, 8:29 PM
  */
 
+
+/*
 #include <cstdlib>
 #include <iostream>
 #include <allegro5/allegro5.h>
@@ -139,5 +141,58 @@ int main(void)
 	al_destroy_event_queue(event_queue);
 	allegro_shut_down();
 
+	return 0;
+}
+*/
+
+
+#include <cstdlib>
+#include <iostream>
+#include "TFTPServer.h"
+#include "TFTPClient.h"
+#include "TFTP_Packet.h"
+#include "Hanabi_Name_Is_Packet.h"
+using namespace std;
+
+int main(int argc, char** argv) {
+	apr_initialize();
+
+	TFTPCxn * cxn = new TFTPClient();
+	std::cout << "Will search for server for 5 seconds \n";
+	if(!((TFTPClient *)cxn)->try_connect_server(5.0,HOME_ADRESS, DEF_REMOTE_PORT, DEF_IPMODE ))
+	{
+		delete cxn;
+		cxn = new TFTPServer(HOME_ADRESS, DEF_REMOTE_PORT, DEF_IPMODE );
+		std::cout << "Server will now try listening for client for 600secs \n";
+		if (((TFTPServer*)cxn)->listen_for_client(600.0) )
+		{
+			std::cout << "Able to connect to client \n";
+		
+			std::cout << "Server press character to send name packet \n";
+			getchar();
+			TFTP_Packet * tosend = new Hanabi_Name_Is_Packet( "Rama Merello" );
+			tosend->print_packet();
+			if (cxn->send_packet(tosend) == APR_SUCCESS )
+				std::cout << "Able to send packet \n";
+			else
+				std::cout << "Unable to send packet \n";
+		}
+	}
+	else
+	{
+		std::cout << "ABLE TO CONNECT TO SERVER YEAH BITCHES \n";
+		std::cout << "Server press character to receive packet WAIT FOR SERVER TO SEND \n";
+		getchar();
+		TFTP_Packet * toreceive;
+		if(cxn->receive_packet(&toreceive))
+		{
+			std::cout << "Packet receive correctly \n" ;
+			toreceive->print_packet();
+		}
+		else 
+			std::cout << "Packet not receive correctly \n" ;
+	}
+	printf("END PROGRAM \n");
+	while(1);
 	return 0;
 }

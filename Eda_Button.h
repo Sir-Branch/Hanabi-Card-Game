@@ -34,7 +34,7 @@ public:
 	hanabi_game_event_t get_click_event(void);
 	//void set_hovering(bool hovering);
 	
-private:
+protected:
 	Eda_Button(const Eda_Button& orig);
 	//This must be from 0 to 1.0 and represents the percentage of screen, this allows for correct placement on various resolutions
 	float x_center , y_center; 

@@ -15,7 +15,6 @@
           <itemPath>Hanabi_Match_Over_Packet.h</itemPath>
           <itemPath>Hanabi_Name_Is_Packet.h</itemPath>
           <itemPath>Hanabi_Name_Packet.h</itemPath>
-          <itemPath>Hanabi_Network_Defines.h</itemPath>
           <itemPath>Hanabi_Play_Again_Packet.h</itemPath>
           <itemPath>Hanabi_Play_Packet.h</itemPath>
           <itemPath>Hanabi_Quit_Packet.h</itemPath>
@@ -35,6 +34,7 @@
           <itemPath>TFTP_Packet.h</itemPath>
           <itemPath>TFTP_Rq_Packet.h</itemPath>
         </logicalFolder>
+        <itemPath>Hanabi_Network_Defines.h</itemPath>
       </logicalFolder>
       <itemPath>Deck.h</itemPath>
       <itemPath>Hanabi_Board.h</itemPath>
