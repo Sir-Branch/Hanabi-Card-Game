@@ -22,7 +22,7 @@
 class TFTPServer: public TFTPCxn
 {
 public:
-    TFTPServer(const char * server_adress = HOME_ADRESS, unsigned int port = DEF_REMOTE_PORT,unsigned int ip_mode = DEF_IPMODE );
+    TFTPServer(unsigned int port = DEF_REMOTE_PORT,unsigned int ip_mode = DEF_IPMODE );
     virtual ~TFTPServer();
 
     bool listen_for_client( double timeout_time); //in seconds double (supports miliseconds)

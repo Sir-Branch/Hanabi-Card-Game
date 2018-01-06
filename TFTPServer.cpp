@@ -9,13 +9,13 @@
 #include <ctime>
 
 
-TFTPServer::TFTPServer(const char* server_adress, unsigned int port ,unsigned int ip_mode )
+TFTPServer::TFTPServer(unsigned int port ,unsigned int ip_mode )
 {
 	temp_server_socket = NULL;
 	apr_sockaddr_t *sa; //esta variable vendria a ser la referencia a nuestro "socket" universal. la usamos para dirigirnos al socket.
 	apr_socket_t *s;//socket de nuestro server
 
-	if( (cxn_status = apr_sockaddr_info_get(&sa, server_adress,ip_mode, port, 0, mem_pool))==APR_SUCCESS)
+	if( (cxn_status = apr_sockaddr_info_get(&sa, NULL,ip_mode, port, 0, mem_pool))==APR_SUCCESS)
 	{
 		if( (cxn_status = apr_socket_create(&s,APR_UNSPEC, SOCK_STREAM, APR_PROTO_TCP, mem_pool))==APR_SUCCESS)
 		{
