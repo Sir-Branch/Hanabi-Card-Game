@@ -269,3 +269,8 @@ void Eda_Button::hide(void)
 {
 	hidden = true;
 }
+
+bool Eda_Button::is_hidden(void)
+{
+	return hidden;
+}

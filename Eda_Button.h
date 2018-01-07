@@ -29,6 +29,7 @@ public:
 	void deselect(void);
 	bool is_selected(void);
 
+	bool is_hidden(void);
 	void hide(void);
 	void show(void);
 	hanabi_game_event_t get_click_event(void);
