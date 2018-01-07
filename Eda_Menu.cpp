@@ -16,3 +16,7 @@ Eda_Menu::Eda_Menu(const Eda_Menu& orig) {
 Eda_Menu::~Eda_Menu() {
 }
 
+void Eda_Menu::manage_keyboard_stroge(unsigned int allegro_key)
+{
+	
+}

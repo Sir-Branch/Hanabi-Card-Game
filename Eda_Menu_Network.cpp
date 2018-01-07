@@ -7,16 +7,29 @@
 
 #include "Eda_Menu_Network.h"
 #include "Eda_Button.h"
+#include "Eda_Textbox.h"
 
 //Para eda Menu game
 #include "Eda_Menu_Game.h"
 
 
-Eda_Menu_Network::Eda_Menu_Network() {
+Eda_Menu_Network::Eda_Menu_Network(ALLEGRO_DISPLAY * display, char * path) {
 	
-	connect =  new Eda_Button( 0.7, 0.9, 0.045 * 3.75, 0.08, "connect.png", "connect_hover.png", NULL, EDA_BUTTON_CANCEL_PRESSED);
-	cancel = new Eda_Button(0.9, 0.9, 0.045 * 3.75, 0.08, "cancel.png", "cancel_hover.png", NULL, EDA_BUTTON_CANCEL_PRESSED );
+#warning "Connect and cancel deleted for join and host"
+	
+//	connect =  new Eda_Button( 0.7, 0.9, 0.045 * 3.75, 0.08, "connect.png", "connect_hover.png", NULL, EDA_BUTTON_CANCEL_PRESSED);
+//	cancel = new Eda_Button(0.9, 0.9, 0.045 * 3.75, 0.08, "cancel.png", "cancel_hover.png", NULL, EDA_BUTTON_CANCEL_PRESSED );
 
+	connect =  new Eda_Button( 0.7, 0.9, 0.045 * 3.75, 0.08, "join.png", "join_hover.png", NULL, EDA_BUTTON_CANCEL_PRESSED);
+	cancel = new Eda_Button(0.9, 0.9, 0.045 * 3.75, 0.08, "host.png", "host_hover.png", NULL, EDA_BUTTON_HOST_PRESSED );
+	ip_input = new Eda_Textbox(0.5,0.5, 0.35, 0.15, "text_box.png",
+						NULL, NULL,NO_EVENT,
+						20);
+	if(display != NULL && path != NULL)
+		ip_input->load_mono_font(display, path);
+	
+	ip_input->select();
+	
 }
 
 Eda_Menu_Network::Eda_Menu_Network(const Eda_Menu_Network& orig) {
@@ -37,7 +50,7 @@ void Eda_Menu_Network::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi
 
 	connect->draw(display);
 	cancel->draw(display);
-	
+	ip_input->draw(display);
 	al_flip_display();
 
 	
@@ -62,6 +75,12 @@ bool Eda_Menu_Network::check_for_click(ALLEGRO_DISPLAY * display, float x_mouse,
 		click_button = true;
 		button_event_queue.push( cancel->get_click_event() );
 	}
-
+	
 	return click_button;
+}
+
+void Eda_Menu_Network::manage_keyboard_stroge(unsigned int allegro_key)
+{
+	if( ip_input->is_selected() )
+		ip_input->add_char_allegro(allegro_key,true);
 }

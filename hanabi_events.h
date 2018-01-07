@@ -25,6 +25,8 @@ typedef enum{
 	// ********************* Settings Menu ************************************
 			
 	EDA_BUTTON_APPLY_PRESSED, EDA_BUTTON_CANCEL_PRESSED, //Settings
+	EDA_BUTTON_JOIN_PRESSED, EDA_BUTTON_HOST_PRESSED, //Settings
+
 		
 	//********************** CONNECTION MENU************************************
 		

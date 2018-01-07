@@ -5,8 +5,12 @@
  * Created on October 12, 2016, 8:29 PM
  */
 
+#define NETWORK_TEST 1
 
-/*
+
+
+#if !NETWORK_TEST 
+
 #include <cstdlib>
 #include <iostream>
 #include <allegro5/allegro5.h>
@@ -28,24 +32,23 @@
 #include "event_handler_allegro.h"
 #include "Eda_Menu_Network.h"
 
-using namespace std;
-
 #define FPS				30.0
 #define SCREEN_W		1152 
 #define SCREEN_H		648
 //16:9 1280×720 1024x576
+
+#define MONO_FONT_PATH "DroidSansMono.ttf"
  
 int main(void)
 {
+
+						
 	hanabi_game_data_t hanabi_game_data;
 	ALLEGRO_EVENT ev;
 	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 	ALLEGRO_TIMER *timer = NULL;
-  
-	hanabi_game_data.net_connection = NULL;
-	
+  	
 	std::queue<hanabi_game_event_t> button_event_queue, network_event_queue, software_event_queue;
-
  
 	if(allegro_startup() == AL_STARTUP_ERROR) {
 		fprintf(stderr, "failed to initialize allegro!\n");
@@ -76,7 +79,11 @@ int main(void)
 		allegro_shut_down();
 		return -1;
 	}
-   
+	al_register_event_source(event_queue, al_get_display_event_source(hanabi_game_data.display));
+	al_register_event_source(event_queue, al_get_timer_event_source(timer));
+	al_register_event_source(event_queue, al_get_mouse_event_source());
+	al_register_event_source(event_queue, al_get_keyboard_event_source());
+	
 	hanabi_game_data.game_configuration.memory_help = false;
 	hanabi_game_data.game_configuration.sound_mute = false;
 	hanabi_game_data.game_configuration.selected_resolution = 1;
@@ -106,12 +113,7 @@ int main(void)
 	hanabi_game_data.redraw = false;
 
 	//hanabi_game_data.active_menu = new Eda_Menu_Main(hanabi_game_data.theme_settings->theme);
-	hanabi_game_data.active_menu = new Eda_Menu_Network();
-
-	al_register_event_source(event_queue, al_get_display_event_source(hanabi_game_data.display));
-	al_register_event_source(event_queue, al_get_timer_event_source(timer));
-	al_register_event_source(event_queue, al_get_mouse_event_source());
-
+	hanabi_game_data.active_menu = new Eda_Menu_Network(hanabi_game_data.display, MONO_FONT_PATH );
 	hanabi_game_data.active_menu->draw(hanabi_game_data.display,hanabi_game_data.theme_settings, hanabi_game_data.game_board);
 	al_start_timer(timer);
 
@@ -143,7 +145,8 @@ int main(void)
 
 	return 0;
 }
-*/
+
+#else
 
 
 #include <cstdlib>
@@ -159,12 +162,12 @@ int main(int argc, char** argv) {
 
 	TFTPCxn * cxn = new TFTPClient();
 	std::cout << "Will search for server for 5 seconds \n";
-	if(!((TFTPClient *)cxn)->try_connect_server(5.0,HOME_ADRESS, DEF_REMOTE_PORT, DEF_IPMODE ))
+	if(!((TFTPClient *)cxn)->try_connect_server(1.0,HOME_ADRESS, DEF_REMOTE_PORT, DEF_IPMODE ) )
 	{
 		delete cxn;
-		cxn = new TFTPServer(HOME_ADRESS, DEF_REMOTE_PORT, DEF_IPMODE );
-		std::cout << "Server will now try listening for client for 600secs \n";
-		if (((TFTPServer*)cxn)->listen_for_client(600.0) )
+		cxn = new TFTPServer(DEF_REMOTE_PORT, DEF_IPMODE );
+		std::cout << "Server will now try listening for client for 500secs \n";
+		if (((TFTPServer*)cxn)->listen_for_client(500.0) )
 		{
 			std::cout << "Able to connect to client \n";
 		
@@ -196,3 +199,5 @@ int main(int argc, char** argv) {
 	while(1);
 	return 0;
 }
+
+#endif 

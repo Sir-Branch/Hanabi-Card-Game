@@ -10,21 +10,24 @@
 
 #include "Eda_Button.h"
 #include "Eda_Menu.h"
+#include "Eda_Textbox.h"
 
 class Eda_Menu_Network : public Eda_Menu{
 public:
-	Eda_Menu_Network();
+	Eda_Menu_Network(ALLEGRO_DISPLAY * display = NULL, char * path = NULL);
 	Eda_Menu_Network(const Eda_Menu_Network& orig);
 	virtual ~Eda_Menu_Network();
 	
 	void draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board);
 	void update_buttons(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse);
 	bool check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse, std::queue<hanabi_game_event_t> &button_event_queue);
-	
+	void manage_keyboard_stroge(unsigned int allegro_key);
+
 private:
 	
 	Eda_Button * connect;
 	Eda_Button * cancel;
+	Eda_Textbox * ip_input;
 
 };
 
