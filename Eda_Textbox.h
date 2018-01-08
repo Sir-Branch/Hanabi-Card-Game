@@ -31,6 +31,7 @@ public:
 	void add_char_allegro(unsigned int allegro_key, bool only_numbers);
 	bool load_mono_font(ALLEGRO_DISPLAY * display, char * path);
 	void draw(ALLEGRO_DISPLAY * display);
+        const char* get_text_buffer (void);
 
 private:
 	void blink_input_char(unsigned int on_fps_rate, unsigned int on_fps_length);

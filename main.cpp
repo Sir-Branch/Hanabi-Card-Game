@@ -5,7 +5,7 @@
  * Created on October 12, 2016, 8:29 PM
  */
 
-#define NETWORK_TEST 1
+#define NETWORK_TEST 0
 
 
 

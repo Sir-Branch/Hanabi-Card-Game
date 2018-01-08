@@ -84,3 +84,9 @@ void Eda_Menu_Network::manage_keyboard_stroge(unsigned int allegro_key)
 	if( ip_input->is_selected() )
 		ip_input->add_char_allegro(allegro_key,true);
 }
+
+
+const char* Eda_Menu_Network::read_ip_input(void)
+{
+    return ip_input->get_text_buffer();
+}

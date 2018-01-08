@@ -171,4 +171,7 @@ void Eda_Textbox::blink_input_char(unsigned int on_fps_rate, unsigned int on_fps
 	
 }
 
-
+const char* Eda_Textbox::get_text_buffer (void)
+{
+    return text_buffer;
+}
