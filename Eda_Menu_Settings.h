@@ -34,7 +34,8 @@ private:
 	
 	Eda_Button * resolution_arrows[2];
 	Eda_Button * theme_arrows[2];
-	Eda_Button * memory_help; 
+	Eda_Button * memory_help;
+	Eda_Button * full_screen; 
 	Eda_Button * apply;
 	Eda_Button * cancel;
 	
@@ -43,6 +44,7 @@ private:
 	
 	unsigned int selected_resolution; //0 to number of resolutions
 	unsigned int selected_theme; //0 to number of themes
+	bool enable_full_screen;
 	bool enable_mem_help;
 };
 

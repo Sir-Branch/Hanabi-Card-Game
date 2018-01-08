@@ -19,6 +19,7 @@ typedef struct
 	unsigned int selected_theme;
 	bool memory_help;
 	bool sound_mute;
+	bool full_screen;
 }game_configuration_t;
 
 typedef struct

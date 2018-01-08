@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Hanabi-Card-Game
+PROJECTNAME=Hanabi Eda Tp Final
 
 # Active Configuration
 DEFAULTCONF=Debug

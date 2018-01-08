@@ -5,7 +5,7 @@
  * Created on October 12, 2016, 8:29 PM
  */
 
-#define NETWORK_TEST 1
+#define NETWORK_TEST 0
 
 
 
@@ -47,7 +47,7 @@ int main(void)
 	ALLEGRO_EVENT ev;
 	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 	ALLEGRO_TIMER *timer = NULL;
-  	
+	
 	std::queue<hanabi_game_event_t> button_event_queue, network_event_queue, software_event_queue;
  
 	if(allegro_startup() == AL_STARTUP_ERROR) {
@@ -55,6 +55,10 @@ int main(void)
 		allegro_shut_down();
 		return -1;
 	}
+	
+		//ALLEGRO_MONITOR_INFO info;
+	//al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
+	//al_get_monitor_info(0, &info);
  
 	timer = al_create_timer(1.0 / FPS);
 	if(!timer) {
@@ -63,13 +67,14 @@ int main(void)
 		return -1;
 	}
 
-	hanabi_game_data.display = create_display(SCREEN_W, SCREEN_H);
+	hanabi_game_data.display = create_display(SCREEN_W, SCREEN_H);//SCREEN_W, SCREEN_H);
 	if(!hanabi_game_data.display) {
 		fprintf(stderr, "failed to create display!\n");
 		al_destroy_timer(timer);
 		allegro_shut_down();
 		return -1;
 	}
+	//al_resize_display(hanabi_game_data.display,disp_data.width * 0.99, disp_data.height  * 0.8);
  
 	event_queue = al_create_event_queue();
 	if(!event_queue) {
@@ -85,6 +90,7 @@ int main(void)
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	
 	hanabi_game_data.game_configuration.memory_help = false;
+	hanabi_game_data.game_configuration.full_screen = false;
 	hanabi_game_data.game_configuration.sound_mute = false;
 	hanabi_game_data.game_configuration.selected_resolution = 1;
 	hanabi_game_data.game_configuration.selected_theme = 0;
