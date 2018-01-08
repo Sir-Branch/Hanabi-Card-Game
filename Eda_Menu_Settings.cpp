@@ -71,14 +71,14 @@ void Eda_Menu_Settings::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanab
 	theme_arrows[0]->draw(display);
 	theme_arrows[1]->draw(display);
 	
-	draw_font(display,"AlexBrush-Regular.ttf", 0.5, 0.10 , 0.2, "Resolution", al_color_name("black") );
-	draw_font(display,"OpenSans-Regular.ttf", 0.5, 0.23 , 0.1, available_resolutions[selected_resolution], al_color_name("grey") );
-	draw_font(display,"OpenSans-Regular.ttf", 0.5, 0.23 , 0.1, available_resolutions[selected_resolution], al_color_name("grey") );
+	draw_font(display,"Alien-Encounters-Solid-Regular.ttf", 0.5, 0.10 , 0.12, "Resolution", al_color_name("black") );
+	draw_font(display,"OpenSans-Regular.ttf", 0.5, 0.23 , 0.1, available_resolutions[selected_resolution], al_color_name("black") );
+	draw_font(display,"OpenSans-Regular.ttf", 0.5, 0.23 , 0.1, available_resolutions[selected_resolution], al_color_name("black") );
 	
-	draw_font(display,"AlexBrush-Regular.ttf", 0.5, 0.415 , 0.2, "Theme", al_color_name("black") );
-	draw_font(display,"OpenSans-Regular.ttf", 0.5, 0.53 , 0.1, available_themes[selected_theme], al_color_name("grey") );
+	draw_font(display,"Alien-Encounters-Solid-Regular.ttf", 0.5, 0.415 , 0.12, "Theme", al_color_name("black") );
+	draw_font(display,"OpenSans-Regular.ttf", 0.5, 0.53 , 0.1, available_themes[selected_theme], al_color_name("black") );
 	
-	draw_font(display,"AlexBrush-Regular.ttf", 0.5, 0.7 , 0.2, "Memory Help", al_color_name("black") );
+	draw_font(display,"Alien-Encounters-Solid-Regular.ttf", 0.5, 0.7 , 0.12, "Memory Help", al_color_name("black") );
 	//draw_font(display,"AlexBrush-Regular.ttf", 0.35, 0.78 , 0.2, "Memory Help", al_color_name("black") );
 	al_flip_display();
 }

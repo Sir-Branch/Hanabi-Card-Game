@@ -158,7 +158,7 @@ bool Hanabi_Skin::load_theme(std::string theme_name)
 		main_menu = current_folder + "main_menu.png";
 		game_mat = current_folder + "game_mat.png";
 		connecting_background = current_folder + "connecting_background.png"; 
-		setting_background = current_folder + "setting_background.png"; 
+		setting_background = current_folder + "setting_background3.jpg"; 
 		
 		token_clue = current_folder + "Token Clue/";
 		token_lightning = current_folder + "Token Lightning/";
