@@ -16,7 +16,7 @@
 
 #define DEF_REMOTE_PORT		13796					// default connect port number 13796
 #define DEF_SOCK_TIMEOUT	(APR_USEC_PER_SEC * 5)	//TIMEOUT DE TODAS LAS OPERACIONES (ENVIAR, RECIBIR, CONECTAR) EN SEGUNDOS
-#define HOME_ADRESS			"192.168.1.81"					//aca escribimos el ip de esta pc, es decir, del host.
+#define HOME_ADRESS			"192.168.43.187"					//aca escribimos el ip de esta pc, es decir, del host.
 #define DEF_SOCKET_BACKLOG	SOMAXCONN				// cantidad maxima que el sistema operativo pone para aceptar.
 #define DEF_IPMODE			AF_INET
 
