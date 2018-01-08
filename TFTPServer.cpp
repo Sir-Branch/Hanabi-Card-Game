@@ -23,7 +23,7 @@ TFTPServer::TFTPServer(unsigned int port ,unsigned int ip_mode )
 			apr_socket_opt_set(s, APR_SO_NONBLOCK, 1);//aqui definimos que las operaciones son no_bloqueantes
 			apr_socket_timeout_set(s, 0);//El 0 va con la condicion de no bloqueante. Hace que el intento de aceptar conexiones sea puntual.
 			apr_socket_opt_set(s, APR_SO_REUSEADDR, 1);//si en el futuro matamos la conexion, podemos reusar el socket
-			if( (cxn_status = apr_socket_bind(s, sa))==APR_SUCCESS && (cxn_status = apr_socket_listen(s,SOMAXCONN)) ==APR_SUCCESS)
+			if( (cxn_status = apr_socket_bind(s, sa))== APR_SUCCESS && (cxn_status = apr_socket_listen(s,SOMAXCONN)) == APR_SUCCESS)
 				temp_server_socket = s;
 		}
 	}

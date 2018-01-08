@@ -148,6 +148,45 @@ int main(void)
 
 #else
 
+#include <cstdlib>
+#include <iostream>
+#include "TFTPServer.h"
+#include "TFTPClient.h"
+#include "TFTP_Packet.h"
+#include "Hanabi_Name_Is_Packet.h"
+#include "Client.h"
+using namespace std;
+
+int main(int argc, char** argv) {
+	apr_initialize();
+
+	Net_connection * cxn = new Client();
+	std::cout << "Will search for server for 5 seconds \n";
+	if(!((Client *)cxn)->connect_to_server(HOME_ADRESS,DEF_REMOTE_PORT,1000) )
+	{
+		delete cxn;
+		cxn = new Server(DEF_REMOTE_PORT);
+		std::cout << "Server will now try listening for client for 500secs \n";
+		while (!((Server*)cxn)->listen_for_connection(500* 1000) )
+		{
+			getchar();
+		}
+	}
+	else
+	{
+		std::cout << "ABLE TO CONNECT TO SERVER YEAH BITCHES \n";
+		std::cout << "Server press character to receive packet WAIT FOR SERVER TO SEND \n";
+		getchar();
+	}
+	printf("END PROGRAM \n");
+	while(1);
+	return 0;
+}
+
+#endif 
+
+
+#if 0
 
 #include <cstdlib>
 #include <iostream>
@@ -200,4 +239,4 @@ int main(int argc, char** argv) {
 	return 0;
 }
 
-#endif 
+#endif
