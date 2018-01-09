@@ -9,7 +9,7 @@
 #define EVENT_HANDLER_NETWORK_H
 
 #include "hanabi_events.h"
-#include "hanabi_game_data.h"
+#include "setting_management.h"
 
 void event_handle_network(event_network_t network_event, hanabi_game_data_t * hanabi_game_data);
 

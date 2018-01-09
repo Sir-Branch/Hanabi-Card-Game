@@ -5,7 +5,7 @@
  * Created on February 12, 2017, 6:10 AM
  */
 #include "hanabi_events.h"
-#include "hanabi_game_data.h"
+#include "setting_management.h"
 #include "event_handler_button_clicks.h"
 #include "event_handler_network.h"
 #include "event_handler_software.h"

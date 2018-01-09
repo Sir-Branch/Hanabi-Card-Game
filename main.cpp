@@ -27,10 +27,11 @@
 #include "allegro5/allegro_ttf.h"
 #include "allegro_start_shutdown.h"
 #include "hanabi_events.h"
-#include "hanabi_game_data.h"
+#include "setting_management.h"
 #include "event_dispatcher.h" 
 #include "event_handler_allegro.h"
 #include "Eda_Menu_Network.h"
+#include "setting_management.h"
 
 #define FPS				30.0
 #define SCREEN_W		1152 
@@ -47,18 +48,17 @@ int main(void)
 	ALLEGRO_EVENT ev;
 	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 	ALLEGRO_TIMER *timer = NULL;
-	
+	unsigned int height, width;
 	std::queue<hanabi_game_event_t> button_event_queue, network_event_queue, software_event_queue;
+
+	load_configuration(&hanabi_game_data);
+	sscanf(get_resolution(hanabi_game_data.game_configuration.selected_resolution), "%dx%d",&width, &height);
  
 	if(allegro_startup() == AL_STARTUP_ERROR) {
 		fprintf(stderr, "failed to initialize allegro!\n");
 		allegro_shut_down();
 		return -1;
 	}
-	
-		//ALLEGRO_MONITOR_INFO info;
-	//al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
-	//al_get_monitor_info(0, &info);
  
 	timer = al_create_timer(1.0 / FPS);
 	if(!timer) {
@@ -67,14 +67,17 @@ int main(void)
 		return -1;
 	}
 
-	hanabi_game_data.display = create_display(SCREEN_W, SCREEN_H);//SCREEN_W, SCREEN_H);
+	if(hanabi_game_data.game_configuration.full_screen)
+		al_set_new_display_flags( ALLEGRO_FULLSCREEN_WINDOW);
+	
+	
+	hanabi_game_data.display = create_display(width, height);//SCREEN_W, SCREEN_H);
 	if(!hanabi_game_data.display) {
 		fprintf(stderr, "failed to create display!\n");
 		al_destroy_timer(timer);
 		allegro_shut_down();
 		return -1;
 	}
-	//al_resize_display(hanabi_game_data.display,disp_data.width * 0.99, disp_data.height  * 0.8);
  
 	event_queue = al_create_event_queue();
 	if(!event_queue) {
@@ -89,16 +92,12 @@ int main(void)
 	al_register_event_source(event_queue, al_get_mouse_event_source());
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	
-	hanabi_game_data.game_configuration.memory_help = false;
-	hanabi_game_data.game_configuration.full_screen = false;
-	hanabi_game_data.game_configuration.sound_mute = false;
-	hanabi_game_data.game_configuration.selected_resolution = 1;
-	hanabi_game_data.game_configuration.selected_theme = 0;
 	hanabi_game_data.theme_settings = new Hanabi_Skin();
-	hanabi_game_data.theme_settings->load_theme("Classic");
+	hanabi_game_data.theme_settings->load_theme(get_theme(hanabi_game_data.game_configuration.selected_theme));
+	
+	
+	
 	hanabi_game_data.game_board = new Hanabi_Board();
-
-
 	hanabi_game_data.game_board->lose_live();
 	hanabi_game_data.game_board->remove_clue_token();
 	hanabi_game_data.game_board->otherplayers_hand[0] = Hanabi_Card(HANABI_CARD_WHITE, HANABI_CARD_TWO); 
@@ -144,11 +143,12 @@ int main(void)
 
 	}
 
+	save_configuration(&hanabi_game_data);
+	
 	al_destroy_timer(timer);
 	al_destroy_display(hanabi_game_data.display);
 	al_destroy_event_queue(event_queue);
 	allegro_shut_down();
-
 	return 0;
 }
 

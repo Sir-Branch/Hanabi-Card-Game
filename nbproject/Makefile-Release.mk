@@ -85,7 +85,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/hanabi_game_fsm.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/my_sleep_ms.o \
-	${OBJECTDIR}/network_main_test.o
+	${OBJECTDIR}/network_main_test.o \
+	${OBJECTDIR}/setting_management.o
 
 
 # C Compiler Flags
@@ -366,6 +367,11 @@ ${OBJECTDIR}/network_main_test.o: network_main_test.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/network_main_test.o network_main_test.cpp
+
+${OBJECTDIR}/setting_management.o: setting_management.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/setting_management.o setting_management.cpp
 
 # Subprojects
 .build-subprojects:

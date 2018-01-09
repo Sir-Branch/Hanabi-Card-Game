@@ -5,6 +5,7 @@
  * Created on January 23, 2017, 6:59 PM
  */
 
+#include "setting_management.h"
 #include "Eda_Menu_Settings.h"
 #include "Eda_Menu.h"
 #include "Hanabi_Skin.h"
@@ -17,11 +18,8 @@ static void draw_font(ALLEGRO_DISPLAY * display, const char * font_name, float x
 
 Eda_Menu_Settings::Eda_Menu_Settings(game_configuration_t game_configuration)
 {
-	static const char * themes[HANABI_NUMBER_THEMES] = {"Classic" , "Pokemon" };
-	static const char * resolutions[HANABI_NUMBER_RESOLUTIONS] = {"1024x576", "1152x648", "1280x720", "1366x768", "1600x900", "1920x1080" };
 	
-	this->available_themes = themes;
-	this->available_resolutions = resolutions;
+	get_static_themes_resolutions(&this->available_themes, &this->available_resolutions);
 	
 	apply = new Eda_Button(0.9, 0.8, 0.045 * 3.75, 0.08, CLUE_BUT_DIR "apply.png", CLUE_BUT_DIR "apply_hover.png", NULL, EDA_BUTTON_APPLY_PRESSED);
 	cancel = new Eda_Button(0.9, 0.9, 0.045 * 3.75, 0.08, CLUE_BUT_DIR "cancel.png",CLUE_BUT_DIR "cancel_hover.png", NULL, EDA_BUTTON_CANCEL_PRESSED );

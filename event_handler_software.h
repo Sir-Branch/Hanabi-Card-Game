@@ -9,7 +9,7 @@
 #define EVENT_HANDLER_SOFTWARE_H
 
 #include "hanabi_events.h"
-#include "hanabi_game_data.h"
+#include "setting_management.h"
 
 void event_handle_software(event_software_t software_event, hanabi_game_data_t * hanabi_game_data);
 

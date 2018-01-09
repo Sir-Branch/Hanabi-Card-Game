@@ -9,7 +9,7 @@
 #define EVENT_HANDLER_BUTTON_CLICKS_H
 
 #include "hanabi_events.h"
-#include "hanabi_game_data.h"
+#include "setting_management.h"
 
 void event_handle_button(event_button_t button_event, hanabi_game_data_t * hanabi_game_data);
 
