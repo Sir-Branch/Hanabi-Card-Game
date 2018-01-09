@@ -78,6 +78,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Token.o \
 	${OBJECTDIR}/allegro_start_shutdown.o \
 	${OBJECTDIR}/event_dispatcher.o \
+	${OBJECTDIR}/event_generator.o \
 	${OBJECTDIR}/event_handler_allegro.o \
 	${OBJECTDIR}/event_handler_button_clicks.o \
 	${OBJECTDIR}/event_handler_network.o \
@@ -107,11 +108,11 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/hanabi_eda_tp_final
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/hanabi-card-game
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/hanabi_eda_tp_final: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/hanabi-card-game: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/hanabi_eda_tp_final ${OBJECTFILES} ${LDLIBSOPTIONS}
+	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/hanabi-card-game ${OBJECTFILES} ${LDLIBSOPTIONS}
 
 ${OBJECTDIR}/Client.o: Client.cpp
 	${MKDIR} -p ${OBJECTDIR}
@@ -327,6 +328,11 @@ ${OBJECTDIR}/event_dispatcher.o: event_dispatcher.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/event_dispatcher.o event_dispatcher.cpp
+
+${OBJECTDIR}/event_generator.o: event_generator.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/event_generator.o event_generator.cpp
 
 ${OBJECTDIR}/event_handler_allegro.o: event_handler_allegro.cpp
 	${MKDIR} -p ${OBJECTDIR}

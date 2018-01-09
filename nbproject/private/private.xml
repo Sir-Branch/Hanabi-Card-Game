@@ -16,20 +16,8 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi%20Eda%20Tp%20Final/main.cpp</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi%20Eda%20Tp%20Final/Server.cpp</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi%20Eda%20Tp%20Final/Eda_Menu.h</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi%20Eda%20Tp%20Final/event_handler_button_clicks.cpp</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi%20Eda%20Tp%20Final/Eda_Textbox.cpp</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi%20Eda%20Tp%20Final/Eda_Menu_Settings.cpp</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi%20Eda%20Tp%20Final/Server.h</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi%20Eda%20Tp%20Final/TFTPCxn.h</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi%20Eda%20Tp%20Final/Net_connection.cpp</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi%20Eda%20Tp%20Final/Client.cpp</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi%20Eda%20Tp%20Final/event_dispatcher.cpp</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi%20Eda%20Tp%20Final/Client.h</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi%20Eda%20Tp%20Final/Eda_Menu_Main.cpp</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi%20Eda%20Tp%20Final/hanabi_game_data.h</file>
+            <file>file:/home/parallels/NetBeansProjects/Hanabi-Card-Game/hanabi_game_fsm.cpp</file>
+            <file>file:/home/parallels/NetBeansProjects/Hanabi-Card-Game/event_generator.cpp</file>
         </group>
     </open-files>
 </project-private>
