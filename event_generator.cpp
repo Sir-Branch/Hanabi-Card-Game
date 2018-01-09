@@ -126,7 +126,7 @@ unsigned int event_generator (TFTP_Packet* packet)
         }
     }
     return event_name; //After searching all the packets, I return the corresponding event
-    #warning ("Warning: no se que poner en default")
+    #warning ("Warning: no se que poner en default ")
     
 }
 
