@@ -23,14 +23,11 @@ typedef enum{
 	
 	EDA_BUTTON_GIVE_CLUE_PRESSED, EDA_BUTTON_PLAY_CARD_PRESSED , EDA_BUTTON_DISCARD_CARD_PRESSED,
 	// ********************* Settings Menu ************************************
-			
 	EDA_BUTTON_APPLY_PRESSED, EDA_BUTTON_CANCEL_PRESSED, //Settings
-	EDA_BUTTON_JOIN_PRESSED, EDA_BUTTON_HOST_PRESSED, //Settings
 
 		
-	//********************** CONNECTION MENU************************************
-		
-		EDA_BUTTON_CONNECT_PRESSED 
+	//**********************NETWORK MENU************************************
+	EDA_BUTTON_JOIN_PRESSED, EDA_BUTTON_HOST_PRESSED, //Settings
 
 }event_button_t;
 

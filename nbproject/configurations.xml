@@ -60,6 +60,8 @@
         <itemPath>Token.cpp</itemPath>
         <itemPath>event_generator.cpp</itemPath>
         <itemPath>hanabi_game_fsm.cpp</itemPath>
+        <itemPath>hanabi_game_fsm_callbacks.cpp</itemPath>
+        <itemPath>hanabi_game_fsm_callbacks.h</itemPath>
         <itemPath>my_sleep_ms.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f4" displayName="Event Management" projectFiles="true">
@@ -404,6 +406,10 @@
       </item>
       <item path="hanabi_game_fsm.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="hanabi_game_fsm_callbacks.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="hanabi_game_fsm_callbacks.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="my_sleep_ms.cpp" ex="false" tool="1" flavor2="0">
@@ -636,6 +642,10 @@
       <item path="hanabi_game_fsm.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="hanabi_game_fsm.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="hanabi_game_fsm_callbacks.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="hanabi_game_fsm_callbacks.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

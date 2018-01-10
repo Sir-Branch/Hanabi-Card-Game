@@ -10,6 +10,7 @@
 
 #define HANABI_NUMBER_RESOLUTIONS	6	//1024×576, 1152×648, 1280×720, 1366×768, 1600×900, 1920×1080
 #define HANABI_NUMBER_THEMES		2
+#define MONO_FONT_PATH "DroidSansMono.ttf"
 
 #include "Hanabi_Skin.h"
 #include "Hanabi_Board.h"

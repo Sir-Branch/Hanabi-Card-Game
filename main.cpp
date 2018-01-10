@@ -38,7 +38,6 @@
 #define SCREEN_H		648
 //16:9 1280×720 1024x576
 
-#define MONO_FONT_PATH "DroidSansMono.ttf"
  
 int main(void)
 {
@@ -117,8 +116,8 @@ int main(void)
 	hanabi_game_data.do_exit = false;
 	hanabi_game_data.redraw = false;
 
-	//hanabi_game_data.active_menu = new Eda_Menu_Main(hanabi_game_data.theme_settings->theme);
-	hanabi_game_data.active_menu = new Eda_Menu_Network(hanabi_game_data.display, MONO_FONT_PATH );
+	hanabi_game_data.active_menu = new Eda_Menu_Main(hanabi_game_data.theme_settings->theme);
+	//hanabi_game_data.active_menu = new Eda_Menu_Network(hanabi_game_data.display, MONO_FONT_PATH );
 	hanabi_game_data.active_menu->draw(hanabi_game_data.display,hanabi_game_data.theme_settings, hanabi_game_data.game_board);
 	al_start_timer(timer);
 
