@@ -30,6 +30,7 @@ public:
 	bool send_packet(TFTP_Packet * pck_to_send);
 	bool receive_packet(TFTP_Packet ** pck_to_recieve);
 	bool connection_status_ok(void);
+        apr_socket_t* get_cxn_socket (void);
 	
     //apr_status_t get_connection_status();
         

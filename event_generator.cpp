@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+/*
 
 #include "TFTP_Packet.h"
 #include "hanabi_game_fsm.h"
@@ -118,7 +119,7 @@ unsigned int event_generator (TFTP_Packet* packet)
             event_name = ;
             break;
         }
-        */
+        
         case HANABI_ERROR_OP:
         {
             event_name = RECEIVE_ERROR;
@@ -130,3 +131,4 @@ unsigned int event_generator (TFTP_Packet* packet)
     
 }
 
+*/

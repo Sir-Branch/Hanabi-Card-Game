@@ -24,12 +24,12 @@ TFTPCxn::~TFTPCxn()
 	 
 }
 
-/*
+
 //SOCKET IS READ ONLY ain't want those commies touching our sockets...
 apr_socket_t * TFTPCxn::get_cxn_socket()
 {
 	return socket;
-}*/
+}
 
 #include <iostream>
 
@@ -82,3 +82,4 @@ bool TFTPCxn::connection_status_ok(void)
 	char buffer[20];
 	return (this->cxn_status = apr_socket_send( this->socket, buffer, &empty_test)) == APR_SUCCESS;
 }
+ 
