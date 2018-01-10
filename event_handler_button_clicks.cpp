@@ -27,6 +27,10 @@ void event_handle_button(event_button_t button_event,hanabi_game_data_t * hanabi
 		delete hanabi_game_data->active_menu;
 		hanabi_game_data->active_menu = new Eda_Menu_Settings(hanabi_game_data->game_configuration);
 	}
+	else if(button_event == EDA_BUTTON_QUIT_PRESSED)
+	{
+		hanabi_game_data->do_exit = true;
+	}
 	//*************************SETTINGS MENU***************************
 	else if(button_event == EDA_BUTTON_CANCEL_PRESSED)
 	{

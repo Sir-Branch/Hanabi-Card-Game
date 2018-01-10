@@ -24,8 +24,10 @@ public:
 	bool check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse, std::queue<hanabi_game_event_t> &button_event_queue);
 
 private:
+
+	#warning "Eda menu has Eda_button rest Eda_button * make them match"
 	Eda_Menu_Main(const Eda_Menu_Main& orig);
-	Eda_Button play,settings;
+	Eda_Button play,settings,quit;
 };
 
 #endif /* EDA_MENU_MAIN_H */
