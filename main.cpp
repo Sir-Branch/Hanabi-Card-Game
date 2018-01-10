@@ -45,9 +45,9 @@ int main(void)
 						
 	hanabi_game_data_t hanabi_game_data;
 	ALLEGRO_EVENT ev;
-	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
-	ALLEGRO_TIMER *timer = NULL;
-	unsigned int height, width;
+	ALLEGRO_EVENT_QUEUE *event_queue = NULL; //Declaration of allegro event queue
+	ALLEGRO_TIMER *timer = NULL; //Declaration of allegro timer
+	unsigned int height, width; //Variables used for screen height and width
 	std::queue<hanabi_game_event_t> button_event_queue, network_event_queue, software_event_queue;
 
 	load_configuration(&hanabi_game_data);
@@ -66,11 +66,11 @@ int main(void)
 		return -1;
 	}
 
-	if(hanabi_game_data.game_configuration.full_screen)
+	if(hanabi_game_data.game_configuration.full_screen) //Set of fullscreen window mode
 		al_set_new_display_flags( ALLEGRO_FULLSCREEN_WINDOW);
 	
 	
-	hanabi_game_data.display = create_display(width, height);//SCREEN_W, SCREEN_H);
+	hanabi_game_data.display = create_display(width, height);//Creation of allegro display
 	if(!hanabi_game_data.display) {
 		fprintf(stderr, "failed to create display!\n");
 		al_destroy_timer(timer);
@@ -78,7 +78,7 @@ int main(void)
 		return -1;
 	}
  
-	event_queue = al_create_event_queue();
+	event_queue = al_create_event_queue(); //Creation of allegro event queue, if an error is found, the display, timer and allegro are destroy and the program is terminated
 	if(!event_queue) {
 		fprintf(stderr, "failed to create event_queue!\n");
 		al_destroy_display(hanabi_game_data.display);
@@ -86,6 +86,8 @@ int main(void)
 		allegro_shut_down();
 		return -1;
 	}
+        
+        //Registration of display, timer, mouse and keyboard
 	al_register_event_source(event_queue, al_get_display_event_source(hanabi_game_data.display));
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
 	al_register_event_source(event_queue, al_get_mouse_event_source());

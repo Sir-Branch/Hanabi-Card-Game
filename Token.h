@@ -13,21 +13,19 @@
  * Puede parecer medio innecesario el uso de una clase para tokens, pero esta bueno dejar abierta la posibilidad de modificar
  * cosa que no se puede lograr en un arreglo de bools
  * 
- * Token basico solamente puede tener dos lados 
- *      -Cara
- *      -Cruz  
- * 
+ * @Tokens class. A token can only have two sides, head or cross.
+ * The class has two methods. It was decided to use a class in case we want to add more options in the future
  */
 class Token {
 public:
     Token();
     
-    void flip_token(void);
-    bool token_heads(); //true si esta en heads/cara
+    void flip_token(void); 
+    bool token_heads(); 
     
     
 protected:
-    bool pos_heads; //true or false segun el lado
+    bool pos_heads; //Depending on the side, pos_heads is true or false
 };
 
 #endif /* TOKEN_H */

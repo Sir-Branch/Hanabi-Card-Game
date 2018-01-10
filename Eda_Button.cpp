@@ -195,7 +195,7 @@ bool Eda_Button::check_mouse_over_click(ALLEGRO_DISPLAY * display, float x_mouse
 		&& y_mouse >= ((y_center-0.5 * y_size_percent) * al_get_display_height(display))
 		&& y_mouse <= ((y_center+0.5 * y_size_percent) * al_get_display_height(display)) )
 	{
-		selected = true;
+		this->select();
 		mouse_over = true;
 	}
 	return mouse_over;
@@ -220,7 +220,10 @@ bool Eda_Button::check_mouse_over_toggle(ALLEGRO_DISPLAY * display, float x_mous
 		&& y_mouse >= ((y_center-0.5 * y_size_percent) * al_get_display_height(display))
 		&& y_mouse <= ((y_center+0.5 * y_size_percent) * al_get_display_height(display)) )
 	{
-		selected = !selected;
+		if(selected)
+			this->deselect();
+		else
+			this->select();
 		mouse_over = true;
 	}
 	return mouse_over;

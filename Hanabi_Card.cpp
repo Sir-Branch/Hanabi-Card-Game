@@ -15,6 +15,10 @@
 
 //Hanabi_Card::Hanabi_Card(){}
 
+/*
+ * Constructor. A card is initialized with value = empty and suit = empty
+ *
+ */
 Hanabi_Card::Hanabi_Card(hanabi_suits_t suit , hanabi_values_t value){
 	this->suit=suit;
 	this->value=value;
@@ -35,10 +39,28 @@ bool Hanabi_Card::operator!=(const Hanabi_Card& card2){
 	return value!=card2.value || suit!=card2.suit;
 }
 
+/*
+ * This getter function returns the suit of a card. 
+ *
+ * Input:
+ *	-void
+ * 
+ * Return:
+ *	-hanabi_suits_t: Returns the suit of a card. Can go from 0 to 5.
+ */
 hanabi_suits_t Hanabi_Card::get_suit(void){
 	return suit;	
 }
 
+/*
+ * This getter function returns the value of a card. 
+ *
+ * Input:
+ *	-void
+ * 
+ * Return:
+ *	-hanabi_values_t: Returns the value of a card. Can go from 0 to 5.
+ */
 hanabi_values_t Hanabi_Card::get_value(void){
 	return value;
 }
