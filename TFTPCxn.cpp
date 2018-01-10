@@ -73,7 +73,7 @@ bool TFTPCxn::receive_packet(TFTP_Packet ** pck_to_receive)
   
 }
 
-//bool TFTPCxn::receive_data(char * data)
+
 
 
 bool TFTPCxn::connection_status_ok(void)

@@ -38,7 +38,7 @@
 #define SCREEN_H		648
 //16:9 1280×720 1024x576
 
-#define MONO_FONT_PATH "DroidSansMono.ttf"
+#define MONO_FONT_PATH "Fonts/DroidSansMono.ttf"
  
 int main(void)
 {

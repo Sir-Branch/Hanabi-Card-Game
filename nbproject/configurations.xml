@@ -139,10 +139,7 @@
       <itemPath>main.cpp</itemPath>
       <itemPath>network_main_test.cpp</itemPath>
     </logicalFolder>
-    <logicalFolder name="f1"
-                   displayName="Test Files"
-                   projectFiles="true"
-                   kind="ROOT">
+    <logicalFolder name="f1" displayName="Test Files" projectFiles="true">
       <logicalFolder name="TestFiles" displayName="Test Files" projectFiles="true">
       </logicalFolder>
     </logicalFolder>
@@ -188,19 +185,21 @@
       <compileType>
         <linkerTool>
           <linkerLibItems>
-            <linkerOptionItem>`pkg-config --libs allegro-5.0`</linkerOptionItem>
-            <linkerOptionItem>`pkg-config --libs allegro_acodec-5.0`</linkerOptionItem>
-            <linkerOptionItem>`pkg-config --libs allegro_audio-5.0`</linkerOptionItem>
-            <linkerOptionItem>`pkg-config --libs allegro_color-5.0`</linkerOptionItem>
-            <linkerOptionItem>`pkg-config --libs allegro_dialog-5.0`</linkerOptionItem>
-            <linkerOptionItem>`pkg-config --libs allegro_font-5.0`</linkerOptionItem>
-            <linkerOptionItem>`pkg-config --libs allegro_image-5.0`</linkerOptionItem>
-            <linkerOptionItem>`pkg-config --libs allegro_main-5.0`</linkerOptionItem>
-            <linkerOptionItem>`pkg-config --libs allegro_memfile-5.0`</linkerOptionItem>
-            <linkerOptionItem>`pkg-config --libs allegro_physfs-5.0`</linkerOptionItem>
-            <linkerOptionItem>`pkg-config --libs allegro_primitives-5.0`</linkerOptionItem>
-            <linkerOptionItem>`pkg-config --libs allegro_ttf-5.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro-5`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_acodec-5`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_audio-5`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_color-5`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_dialog-5`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_font-5`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_image-5`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_main-5`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_memfile-5`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_physfs-5`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_primitives-5`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_ttf-5`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_video-5`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs apr-1`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs apr-util-1`</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
