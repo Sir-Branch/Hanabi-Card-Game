@@ -2,7 +2,7 @@
 #if 0
 
 
-typedef void (*action_t) (HANABI_INFO *user_data); 
+typedef void (*action_t) (hanabi_game_data_t *user_data); 
 
 typedef struct state_table
 {
@@ -15,7 +15,8 @@ typedef struct state_table
 //***************FOWARD DECLARATIONs******************
 // Server
 extern STATE main_menu[];
-extern STATE config_settings[];
+extern STATE connection_menu[];
+extern STATE settings_menu[];
 extern STATE searching_for_game[];
 extern STATE waiting_for_client[];
 extern STATE asking_client_name[];
@@ -41,15 +42,24 @@ extern STATE waiting_draw_ack[];
 	
 STATE main_menu[]=
 {													
-	{PLAY_CLICKED,searching_for_game,&},
-    {SETTINGS_CLICK, config_settings,&}, //change resolution music, etc
+	{PLAY_CLICKED, connection_menu,&do_nothing},
+    {SETTINGS_CLICK, settings_menu,&do_nothing}, //change resolution music, etc
   
 };
 
-
-STATE config_settings[]=
+STATE connection_menu[]=
 {
+	{JOIN_CLICKED, searching_for_game,&do_nothing},
+	{HOST_CLICKED, waiting_for_client,&do_nothings}
 	
+};
+
+
+STATE settings_menu[]=
+{
+	{APPLY_CLICKED, main_menu,&do_nothings},
+	{CANCEL_CLICKED, main_menu,&do_nothings}
+
 };
 
 //****************************************CONNECTION START****************************************************
@@ -58,7 +68,7 @@ STATE searching_for_game[]=
 {
 	
 	{TIMEOUT,waiting_for_client,&},
-	{FIND_SERVER,connected_to_server,&}
+	{FOUND_SERVER,connected_to_server,&}
 };
 
 //****************************************SERVER STATES****************************************************
