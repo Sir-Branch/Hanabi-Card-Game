@@ -10,6 +10,7 @@
 #include "Eda_Menu_Main.h"
 #include "Eda_Menu_Game.h"
 #include "Eda_Menu_Settings.h"
+#include "Eda_Menu_Network.h"
 
 #include "event_handler_button_clicks.h"
 #include "Hanabi_Play_Packet.h"
@@ -20,12 +21,16 @@ void event_handle_button(event_button_t button_event,hanabi_game_data_t * hanabi
 	if( button_event == EDA_BUTTON_PLAY_PRESSED )
 	{
 		delete hanabi_game_data->active_menu;
-		hanabi_game_data->active_menu = new Eda_Menu_Game(hanabi_game_data->theme_settings->theme);
+		hanabi_game_data->active_menu =new Eda_Menu_Network(hanabi_game_data->display, MONO_FONT_PATH);
 	}
 	else if(button_event == EDA_BUTTON_SETT_PRESSED)
 	{
 		delete hanabi_game_data->active_menu;
 		hanabi_game_data->active_menu = new Eda_Menu_Settings(hanabi_game_data->game_configuration);
+	}
+	else if(button_event == EDA_BUTTON_QUIT_PRESSED)
+	{
+		hanabi_game_data->do_exit = true;
 	}
 	//*************************SETTINGS MENU***************************
 	else if(button_event == EDA_BUTTON_CANCEL_PRESSED)
@@ -39,6 +44,18 @@ void event_handle_button(event_button_t button_event,hanabi_game_data_t * hanabi
 		((Eda_Menu_Settings *)hanabi_game_data->active_menu)->update_game_settings(*hanabi_game_data);
 		delete hanabi_game_data->active_menu;
 		hanabi_game_data->active_menu = new Eda_Menu_Main(hanabi_game_data->theme_settings->theme);
+	}
+	//**********************NETWORK MENU***************************
+	else if(button_event == EDA_BUTTON_JOIN_PRESSED)
+	{
+		delete hanabi_game_data->active_menu;
+		hanabi_game_data->active_menu = new Eda_Menu_Game(hanabi_game_data->theme_settings->theme);
+
+	}
+	else if(button_event == EDA_BUTTON_HOST_PRESSED)
+	{
+		delete hanabi_game_data->active_menu;
+		hanabi_game_data->active_menu = new Eda_Menu_Game(hanabi_game_data->theme_settings->theme);
 	}
 	//*************************GAME MENU***************************
 	

@@ -84,6 +84,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/event_handler_network.o \
 	${OBJECTDIR}/event_handler_software.o \
 	${OBJECTDIR}/hanabi_game_fsm.o \
+	${OBJECTDIR}/hanabi_game_fsm_callbacks.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/my_sleep_ms.o \
 	${OBJECTDIR}/network_main_test.o \
@@ -358,6 +359,11 @@ ${OBJECTDIR}/hanabi_game_fsm.o: hanabi_game_fsm.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/hanabi_game_fsm.o hanabi_game_fsm.cpp
+
+${OBJECTDIR}/hanabi_game_fsm_callbacks.o: hanabi_game_fsm_callbacks.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/hanabi_game_fsm_callbacks.o hanabi_game_fsm_callbacks.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}

@@ -18,7 +18,7 @@ extern "C" {
     #define AL_STARTUP_ERROR -1
     #define AL_STARTUP_SUCCESS 0
 
-    #define EDA_DISPLAY_ICON                "hanabi_icon.png"
+    #define EDA_DISPLAY_ICON                "Common Images Files/hanabi_icon.png"
 	#define EDA_DISPLAY_TITLE				"Hanabi Card Game"
     #define BACKGROUND_MUSIC				"resources/sounds/imperial_march.wav"
 
