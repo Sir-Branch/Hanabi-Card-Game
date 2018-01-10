@@ -13,8 +13,10 @@
 
 #ifndef CARD_H
 #define CARD_H
-
-//Hanabi_Card class for Hanabi Board 
+/*
+ *@Hanabi_Card class for Hanabi Board. Saves the suit and value of a card. 
+ *Has getters to know this information and operator to change these values.
+ */
 
 #define HANABI_CARD_NUM_SUITS 5
 #define HANABI_CARD_NUM_VALUES 5
@@ -25,14 +27,14 @@ typedef enum hanabi_values{HANABI_CARD_VALUE_EMPTY = 0 ,HANABI_CARD_ONE = 1, HAN
 class Hanabi_Card {
 public:
 
-    Hanabi_Card(hanabi_suits_t suit = HANABI_CARD_SUIT_EMPTY, hanabi_values_t hanabi_values  = HANABI_CARD_VALUE_EMPTY);
+    Hanabi_Card(hanabi_suits_t suit = HANABI_CARD_SUIT_EMPTY, hanabi_values_t hanabi_values  = HANABI_CARD_VALUE_EMPTY); 
     bool operator==(const Hanabi_Card& card);
     bool operator!=(const Hanabi_Card& card);
     //operator= no need to overwrite 
-	hanabi_suits_t get_suit(void);
-	hanabi_values_t get_value(void);
-	int get_suit_number(void);
-	void print_card(void);
+	hanabi_suits_t get_suit(void); //Getter 
+	hanabi_values_t get_value(void); //Getter
+	int get_suit_number(void); //Getter
+	void print_card(void); //Debugging method
 	
 private:
     hanabi_suits_t suit;

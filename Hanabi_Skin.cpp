@@ -28,11 +28,11 @@ Hanabi_Skin::Hanabi_Skin()
 {
 	
 #warning "Update everything to NULL and update destructor"
-	main_menu = NULL;
-	connecting_background = NULL;
+    main_menu = NULL;
+    connecting_background = NULL;
 	game_mat = NULL;
 	
-	cards_backside = NULL;
+    cards_backside = NULL;
 	for(unsigned int i = 0 ; i < 5 ; i++)
 		for(unsigned int j = 0 ; j < 5 ; j++)
 			deck[i][j] = NULL;
