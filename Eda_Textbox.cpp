@@ -134,7 +134,9 @@ void Eda_Textbox::draw(ALLEGRO_DISPLAY * display)
 									(y_center-0.5 * y_size_percent) * al_get_display_height(display),  //y_cord to draw
 									x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
 									0); //flags 
-		blink_input_char(BLINK_FPS_RATE, BLINK_ON_FPS_RATE);
+		if(selected)
+			blink_input_char(BLINK_FPS_RATE, BLINK_ON_FPS_RATE);
+		
 		al_draw_text(this->font, al_color_name("white"), 
 					x_center * al_get_display_width(display) - x_size_percent * al_get_display_width(display) *0.45, 
 					y_center * al_get_display_height(display) - al_get_font_line_height(this->font)/2, 
@@ -161,7 +163,7 @@ void Eda_Textbox::blink_input_char(unsigned int on_fps_rate, unsigned int on_fps
 		this->text_buffer[num_in_buffer] = '\0';
 		
 	}
-	else if( blink_placed == true && ++on_count % on_fps_length == 0)
+	else if( blink_placed && ++on_count % on_fps_length == 0)
 	{
 		on_count = 0;
 		count = 0;
@@ -171,7 +173,18 @@ void Eda_Textbox::blink_input_char(unsigned int on_fps_rate, unsigned int on_fps
 	
 }
 
-const char* Eda_Textbox::get_text_buffer (void)
+void Eda_Textbox::deselect()
+{
+	this->selected = false;
+	if(blink_placed)
+	{
+		this->blink_placed = false;
+		this->text_buffer[--num_in_buffer] = '\0';
+	}
+
+}
+
+const char* Eda_Textbox::get_text_buffer(void)
 {
     return text_buffer;
 }

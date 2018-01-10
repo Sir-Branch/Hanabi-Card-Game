@@ -22,14 +22,13 @@ Eda_Menu_Network::Eda_Menu_Network(ALLEGRO_DISPLAY * display, char * path) {
 
 	connect =  new Eda_Button( 0.7, 0.9, 0.045 * 3.75, 0.08, "join.png", "join_hover.png", NULL, EDA_BUTTON_JOIN_PRESSED);
 	cancel = new Eda_Button(0.9, 0.9, 0.045 * 3.75, 0.08, "host.png", "host_hover.png", NULL, EDA_BUTTON_HOST_PRESSED );
-	ip_input = new Eda_Textbox(0.5,0.5, 0.35, 0.15, "text_box.png",
-						NULL, NULL,NO_EVENT,
-						20);
+	ip_input = new Eda_Textbox(0.5,0.5, 0.35, 0.15, "text_box.png",NULL,"text_box_selected.png",NO_EVENT, 20);
+	name_input = new Eda_Textbox(0.5,0.7, 0.35, 0.15, "text_box.png",NULL, "text_box_selected.png",NO_EVENT, 20);
 	if(display != NULL && path != NULL)
+	{
 		ip_input->load_mono_font(display, path);
-	
-	ip_input->select();
-	
+		name_input->load_mono_font(display, path);
+	}	
 }
 
 Eda_Menu_Network::Eda_Menu_Network(const Eda_Menu_Network& orig) {
@@ -51,6 +50,7 @@ void Eda_Menu_Network::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi
 	connect->draw(display);
 	cancel->draw(display);
 	ip_input->draw(display);
+	name_input->draw(display);
 	al_flip_display();
 
 	
@@ -75,7 +75,18 @@ bool Eda_Menu_Network::check_for_click(ALLEGRO_DISPLAY * display, float x_mouse,
 		click_button = true;
 		button_event_queue.push( cancel->get_click_event() );
 	}
-	
+	else if( ip_input->check_mouse_over_toggle(display, x_mouse, y_mouse))
+	{
+		click_button = true;
+		if(name_input->is_selected())
+			name_input->deselect();
+	}
+	else if( name_input->check_mouse_over_toggle(display, x_mouse, y_mouse) )
+	{
+		click_button = true;
+		if(ip_input->is_selected())
+			ip_input->deselect();
+	}
 	return click_button;
 }
 
@@ -83,10 +94,18 @@ void Eda_Menu_Network::manage_keyboard_stroge(unsigned int allegro_key)
 {
 	if( ip_input->is_selected() )
 		ip_input->add_char_allegro(allegro_key,true);
+	else if(name_input->is_selected())
+		name_input->add_char_allegro(allegro_key,false);
 }
 
 
 const char* Eda_Menu_Network::read_ip_input(void)
 {
     return ip_input->get_text_buffer();
+}
+
+const char* Eda_Menu_Network::read_name_input(void)
+{
+	return name_input->get_text_buffer();
+
 }

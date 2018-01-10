@@ -25,8 +25,8 @@ public:
 	bool check_mouse_over_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse);
 	bool check_mouse_over_toggle(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse);
 	
-	void select(void);
-	void deselect(void);
+	virtual void select(void);
+	virtual void deselect(void);
 	bool is_selected(void);
 
 	bool is_hidden(void);
