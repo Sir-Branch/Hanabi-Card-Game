@@ -10,6 +10,7 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include "Hanabi_Skin.h"
+#include "setting_management.h"
 
 #define HANABI_FONT_SIZE	32
 
@@ -182,7 +183,7 @@ bool Hanabi_Skin::load_theme(std::string theme_name)
 			success = false;
 		else if( (this->cards_backside = al_load_bitmap( (deck + "back.png").c_str())) == NULL)
 			success = false;
-		else if( (this->font = al_load_ttf_font((current_folder + "font.ttf").c_str(), HANABI_FONT_SIZE, 0)) == NULL)
+		else if( (this->font = al_load_ttf_font((FONT_PATH "/font.ttf"), HANABI_FONT_SIZE, 0)) == NULL)
 			success = false;
 		
 		else

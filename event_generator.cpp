@@ -5,7 +5,6 @@
  */
 
 
-
 #include "TFTP_Packet.h"
 #include "hanabi_game_fsm.h"
 #include "Hanabi_Network_Defines.h"

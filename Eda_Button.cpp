@@ -11,7 +11,7 @@
 /*
  * Default Constructor
  * To be able to use arrays inside classes and avoid dynamic allocation  
- * Input:
+ * Input:"Fonts
  *	-No Input default constructor
  * 
  * Return:

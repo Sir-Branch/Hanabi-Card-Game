@@ -7,12 +7,13 @@
 
 #include "Eda_Menu_Main.h"
 #include "Eda_Button.h"
+#include "setting_management.h"
 
-#define FONT_FOLDER "Fonts"
+
 Eda_Menu_Main::Eda_Menu_Main(std::string theme): 
-	play(0.5, 0.6, 0.10, 0.08 ,("Hanabi Themes/" + theme + "/play.png").c_str(), ("Hanabi Themes/" + theme + "/play_glow.png").c_str(), NULL, EDA_BUTTON_PLAY_PRESSED),
-	settings(0.5, 0.70, 0.20, 0.08 ,("Hanabi Themes/" + theme + "/settings.png").c_str(),("Hanabi Themes/" + theme + "/settings_glow.png").c_str(), NULL, EDA_BUTTON_SETT_PRESSED ),
-	quit(0.5, 0.80, 0.10, 0.08 ,("Hanabi Themes/" + theme + "/quit.png").c_str(),("Hanabi Themes/" + theme + "/quit_glow.png").c_str(), NULL, EDA_BUTTON_QUIT_PRESSED )
+	play(0.5, 0.6, 0.10, 0.08 ,(COMMON_FILE_PATH "/play.png"), (COMMON_FILE_PATH "/play_glow.png"), NULL, EDA_BUTTON_PLAY_PRESSED),
+	settings(0.5, 0.70, 0.20, 0.08 ,(COMMON_FILE_PATH "/settings.png"),(COMMON_FILE_PATH "/settings_glow.png"), NULL, EDA_BUTTON_SETT_PRESSED ),
+	quit(0.5, 0.80, 0.10, 0.08 ,(COMMON_FILE_PATH "/quit.png"),(COMMON_FILE_PATH "/quit_glow.png"), NULL, EDA_BUTTON_QUIT_PRESSED )
 
 {
 	
