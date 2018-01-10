@@ -365,11 +365,6 @@ ${OBJECTDIR}/hanabi_game_fsm_callbacks.o: hanabi_game_fsm_callbacks.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g `pkg-config --cflags allegro-5` `pkg-config --cflags allegro_acodec-5` `pkg-config --cflags allegro_audio-5` `pkg-config --cflags allegro_color-5` `pkg-config --cflags allegro_dialog-5` `pkg-config --cflags allegro_font-5` `pkg-config --cflags allegro_image-5` `pkg-config --cflags allegro_main-5` `pkg-config --cflags allegro_memfile-5` `pkg-config --cflags allegro_physfs-5` `pkg-config --cflags allegro_primitives-5` `pkg-config --cflags allegro_ttf-5` `pkg-config --cflags allegro_video-5` `pkg-config --cflags apr-1` `pkg-config --cflags apr-util-1`   -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/hanabi_game_fsm_callbacks.o hanabi_game_fsm_callbacks.cpp
 
-${OBJECTDIR}/hanabi_game_fsm_callbacks.o: hanabi_game_fsm_callbacks.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -g `pkg-config --cflags allegro-5.0` `pkg-config --cflags allegro_acodec-5.0` `pkg-config --cflags allegro_audio-5.0` `pkg-config --cflags allegro_color-5.0` `pkg-config --cflags allegro_dialog-5.0` `pkg-config --cflags allegro_font-5.0` `pkg-config --cflags allegro_image-5.0` `pkg-config --cflags allegro_main-5.0` `pkg-config --cflags allegro_memfile-5.0` `pkg-config --cflags allegro_physfs-5.0` `pkg-config --cflags allegro_primitives-5.0` `pkg-config --cflags allegro_ttf-5.0` `pkg-config --cflags apr-1`   -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/hanabi_game_fsm_callbacks.o hanabi_game_fsm_callbacks.cpp
-
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"

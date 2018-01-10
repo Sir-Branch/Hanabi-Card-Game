@@ -8,6 +8,7 @@
 #include "Eda_Menu_Network.h"
 #include "Eda_Button.h"
 #include "Eda_Textbox.h"
+#include "setting_management.h"
 
 //Para eda Menu game
 #include "Eda_Menu_Game.h"
@@ -20,9 +21,9 @@ Eda_Menu_Network::Eda_Menu_Network(ALLEGRO_DISPLAY * display, char * path) {
 //	connect =  new Eda_Button( 0.7, 0.9, 0.045 * 3.75, 0.08, "connect.png", "connect_hover.png", NULL, EDA_BUTTON_CANCEL_PRESSED);
 //	cancel = new Eda_Button(0.9, 0.9, 0.045 * 3.75, 0.08, "cancel.png", "cancel_hover.png", NULL, EDA_BUTTON_CANCEL_PRESSED );
 
-	connect =  new Eda_Button( 0.7, 0.9, 0.045 * 3.75, 0.08, "Common Images Files/join.png", "Common Images Files/join_hover.png", NULL, EDA_BUTTON_CANCEL_PRESSED);
-	cancel = new Eda_Button(0.9, 0.9, 0.045 * 3.75, 0.08, "Common Images Files/host.png", "Common Images Files/host_hover.png", NULL, EDA_BUTTON_HOST_PRESSED );
-	ip_input = new Eda_Textbox(0.5,0.5, 0.35, 0.15, "Common Images Files/text_box.png",
+	connect =  new Eda_Button( 0.7, 0.9, 0.045 * 3.75, 0.08, COMMON_FILE_PATH "/join.png", COMMON_FILE_PATH "/join_hover.png", NULL, EDA_BUTTON_CANCEL_PRESSED);
+	cancel = new Eda_Button(0.9, 0.9, 0.045 * 3.75, 0.08, COMMON_FILE_PATH "/host.png", COMMON_FILE_PATH "/host_hover.png", NULL, EDA_BUTTON_HOST_PRESSED );
+	ip_input = new Eda_Textbox(0.5,0.5, 0.35, 0.15, COMMON_FILE_PATH "/text_box.png",
 						NULL, NULL,NO_EVENT,
 						20);
 	if(display != NULL && path != NULL)
