@@ -4,14 +4,16 @@
  * and open the template in the editor.
  */
 
-/*
+
 
 #include "TFTP_Packet.h"
 #include "hanabi_game_fsm.h"
+#include "Hanabi_Network_Defines.h"
+
 
 unsigned int event_generator (TFTP_Packet* packet)
 {
-    events_type event_name; 
+    events_type_t event_name; 
     
     //I use switch to look all the packets and generate the correct event
     switch ((packet->get_data_pck())[0]){
@@ -80,43 +82,43 @@ unsigned int event_generator (TFTP_Packet* packet)
         }
         
 #warning ("Warning: los siguientes paquetes no se que eventos generan. Ademas ver la diferencia entre, RECEIVE_USTART, RECEIVE_ISTART y RECEIVE_YOU_HAVE, RECEIVE_DISCARD")
-        /*
+        
         //Match End cases
         case HANABI_WE_WON_OP:
         {
-            event_name = ;
+           // event_name = ;
             break;
         }
             
         case HANABI_WE_LOST_OP:
         {
-            event_name = ;
+           // event_name = ;
             break;
         }
             
         case HANABI_MATCH_OVER_OP:
         {
-            event_name = ;
+            //event_name = ;
             break;
         }
         
         //Game finished cases
         case HANABI_PLAY_AGAIN_OP:
         {
-            event_name = ;
+           // event_name = ;
             break;
         }
         
         case HANABI_GAME_OVER_OP:
         {
-            event_name = ;
+           // event_name = ;
             break;
         }
             
-        //Quit and errir handling
+        //Quit and error handling
         case HANABI_QUIT_OP:
         {
-            event_name = ;
+            //event_name = ;
             break;
         }
         
@@ -131,4 +133,4 @@ unsigned int event_generator (TFTP_Packet* packet)
     
 }
 
-*/
+
