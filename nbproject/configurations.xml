@@ -97,14 +97,6 @@
         <itemPath>setting_management.cpp</itemPath>
         <itemPath>setting_management.h</itemPath>
       </logicalFolder>
-      <logicalFolder name="f5" displayName="Net De Gonza" projectFiles="true">
-        <itemPath>Client.cpp</itemPath>
-        <itemPath>Client.h</itemPath>
-        <itemPath>Net_connection.cpp</itemPath>
-        <itemPath>Net_connection.h</itemPath>
-        <itemPath>Server.cpp</itemPath>
-        <itemPath>Server.h</itemPath>
-      </logicalFolder>
       <logicalFolder name="f1" displayName="Networking" projectFiles="true">
         <logicalFolder name="f2" displayName="Hanabi Game Packets" projectFiles="true">
           <itemPath>Hanabi_Ack_Packet.cpp</itemPath>
@@ -235,36 +227,22 @@
       <compileType>
         <linkerTool>
           <linkerLibItems>
-            <linkerOptionItem>`pkg-config --libs allegro-5`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs allegro-5.0`</linkerOptionItem>
-            <linkerOptionItem>`pkg-config --libs allegro_acodec-5`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs allegro_acodec-5.0`</linkerOptionItem>
-            <linkerOptionItem>`pkg-config --libs allegro_audio-5`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs allegro_audio-5.0`</linkerOptionItem>
-            <linkerOptionItem>`pkg-config --libs allegro_color-5`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs allegro_color-5.0`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs allegro_dialog-5.0`</linkerOptionItem>
-            <linkerOptionItem>`pkg-config --libs allegro_font-5`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs allegro_font-5.0`</linkerOptionItem>
-            <linkerOptionItem>`pkg-config --libs allegro_image-5`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs allegro_image-5.0`</linkerOptionItem>
-            <linkerOptionItem>`pkg-config --libs allegro_main-5`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs allegro_main-5.0`</linkerOptionItem>
-            <linkerOptionItem>`pkg-config --libs allegro_memfile-5`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs allegro_memfile-5.0`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs allegro_physfs-5.0`</linkerOptionItem>
-            <linkerOptionItem>`pkg-config --libs allegro_primitives-5`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs allegro_primitives-5.0`</linkerOptionItem>
-            <linkerOptionItem>`pkg-config --libs allegro_ttf-5`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs allegro_ttf-5.0`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs apr-1`</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="Client.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Client.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Deck.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Deck.h" ex="false" tool="3" flavor2="0">
@@ -382,14 +360,6 @@
       <item path="Hanabi_You_Start_Packet.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Hanabi_You_Start_Packet.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Net_connection.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Net_connection.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Server.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Server.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TFTPClient.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -498,10 +468,6 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="Client.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Client.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="Deck.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Deck.h" ex="false" tool="3" flavor2="0">
@@ -619,14 +585,6 @@
       <item path="Hanabi_You_Start_Packet.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Hanabi_You_Start_Packet.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Net_connection.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Net_connection.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Server.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="Server.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="TFTPClient.cpp" ex="false" tool="1" flavor2="0">
       </item>
