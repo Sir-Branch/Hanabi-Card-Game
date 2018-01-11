@@ -37,6 +37,7 @@ typedef struct
 	Eda_Menu * active_menu;
 	bool do_exit, redraw;
 	TFTPCxn * net_connection;
+        TFTP_Packet * last_received_pck;
 	
 }hanabi_game_data_t;
 

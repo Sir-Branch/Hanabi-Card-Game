@@ -1,6 +1,6 @@
 
 #if 0
-
+#include "hanabi_game_fsm_callbacks.h"
 
 typedef void (*action_t) (hanabi_game_data_t *user_data); 
 
@@ -50,15 +50,15 @@ STATE main_menu[]=
 STATE connection_menu[]=
 {
 	{JOIN_CLICKED, searching_for_game,&do_nothing},
-	{HOST_CLICKED, waiting_for_client,&do_nothings}
+	{HOST_CLICKED, waiting_for_client,&do_nothing}
 	
 };
 
 
 STATE settings_menu[]=
 {
-	{APPLY_CLICKED, main_menu,&do_nothings},
-	{CANCEL_CLICKED, main_menu,&do_nothings}
+	{APPLY_CLICKED, main_menu,&do_nothing},
+	{CANCEL_CLICKED, main_menu,&do_nothing}
 
 };
 
@@ -83,7 +83,7 @@ STATE waiting_for_client[]=
 STATE asking_client_name[]=
 {
 	{RECEIVE_NAME_IS,ack_client_name_is,&send_ack_pck},
-	{TIMEOUT,asking_client_name,&send_name_pck},
+	//{TIMEOUT,asking_client_name,&send_name_pck},
 	
 	
 };
@@ -91,13 +91,13 @@ STATE asking_client_name[]=
 STATE ack_client_name_is[]=
 {
 	{RECEIVE_NAME , sending_server_name_is, &send_name_is_pck},
-	{TIMEOUT, ack_client_name_is, &send_ack_pck}
+//	{TIMEOUT, ack_client_name_is, &send_ack_pck}
 };
 
 STATE sending_server_name_is[]=
 {
-	{RECEIVE_ACK , sending_start_info_client,&create_send_start_info},
-	{TIMEOUT, sending_server_name_is, &send_name_is_pck}
+	{RECEIVE_ACK , sending_start_info_client,&send_start_info_pck},
+	//{TIMEOUT, sending_server_name_is, &send_name_is_pck}
 
 };
 
@@ -106,7 +106,7 @@ STATE sending_start_info_client[]=
 	{RECEIVE_ACK, defining_start_player, &create_send_random_start},//Will send YOU_START or I_START 
 	{RECEIVE_ERROR, manage_error_pck, &do_nothing},
 	
-	{TIMEOUT, sending_server_name_is, &create_send_start_info}
+	//{TIMEOUT, sending_server_name_is, &send_start_info_pck}
 
 	
 };
@@ -117,11 +117,11 @@ STATE defining_start_player[]=//SERVER
 	{RECEIVE_ACK, playing	, &do_nothing}, // Fue mandado un I start
 	
 	//Fue mandado un U_START
-	{RECEIVE_PLAY, waiting_other_player_draw	, &manage_play_send_ack	},
+	{RECEIVE_PLAY, waiting_other_player_draw, &manage_play_send_ack	},
 	{RECEIVE_YOU_HAVE, playing	, &manage_you_have_send_ack	}, //Si se llega a perder unos de estos paquetes me parece que se cuelga
 	{RECEIVE_DISCARD, waiting_other_player_draw,&manage_discard_send_ack  },
 	
-	{TIMEOUT,defining_start_player, &resend_random_start}
+	//{TIMEOUT,defining_start_player, &resend_random_start}
 	
 };
 
@@ -129,7 +129,7 @@ STATE defining_start_player[]=//SERVER
 STATE waiting_starting_player[]=//CLIENT
 {
 	{RECEIVE_USTART,playing ,&do_nothing},
-	{RECEIVE_ISTART,waiting_other_player,&do_nothing},
+	{RECEIVE_ISTART,waiting_other_player,&send_ack_pck},
 		
 };
 
@@ -137,7 +137,7 @@ STATE waiting_starting_player[]=//CLIENT
 // ************************ CLIENT STATES ********************************
 STATE connected_to_server[]=
 {
-	{RECEIVE_NAME, sending_name_to_server,&send_name_is},
+	{RECEIVE_NAME, sending_name_to_server,&send_name_is_pck},
 	
 	
 
@@ -145,8 +145,8 @@ STATE connected_to_server[]=
 
 STATE sending_name_to_server[]=
 {
-	{RECEIVE_ACK, waiting_name_server ,&send_name},
-	{TIMEOUT, sending_name_to_server ,&send_name_is}
+	{RECEIVE_ACK, waiting_name_server ,&send_name_pck},
+	//{TIMEOUT, sending_name_to_server ,&send_name_is_pck}
 	
 	
 
@@ -154,8 +154,8 @@ STATE sending_name_to_server[]=
 
 STATE waiting_name_server[]=
 {
-	{RECEIVE_NAME_IS, waiting_start_info,&send_ack},
-	{TIMEOUT, waiting_name_server ,&send_name}
+	{RECEIVE_NAME_IS, waiting_start_info,&send_ack_pck},
+//	{TIMEOUT, waiting_name_server ,&send_name_pck}
 
 	
 
@@ -169,7 +169,7 @@ STATE waiting_start_info[]=
 
 STATE validating_start_info[]=
 {
-	{START_INFO_OK, waiting_starting_player, &send_ack},
+	{START_INFO_OK, waiting_starting_player, &send_ack_pck},
 	{START_INFO_ERROR, manage_error ,&send_error}, //generated events
 
 };
@@ -177,7 +177,7 @@ STATE validating_start_info[]=
 STATE waiting_starting_player[]=
 {
 	{RECEIVE_YOU_START, playing ,&do_nothing},
-	{RECEIVE_I_START, waiting_other_player,&send_ack}
+	{RECEIVE_I_START, waiting_other_player,&send_ack_pck}
 
 };
 
@@ -219,7 +219,7 @@ STATE waiting_other_player[]=
 STATE waiting_action_ack[]=
 {
 	{RECEIVE_ACK,waiting_draw_ack,&draw_send_card},
-	{TIMEOUT,waiting_action_ack,&resend_action}
+	//{TIMEOUT,waiting_action_ack,&resend_action}
 	
 	
 };
@@ -227,7 +227,7 @@ STATE waiting_action_ack[]=
 STATE waiting_draw_ack[]=
 {
 	{RECEIVE_ACK,waiting_other_player,&do_nothing},
-	{TIMEOUT,waiting_action_ack,&resend_draw}
+	//{TIMEOUT,waiting_action_ack,&resend_draw}
 
 	
 };
