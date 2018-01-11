@@ -16,6 +16,7 @@
 #include "Hanabi_Board.h"
 
 #define CLUE_BUT_DIR "Clue Buttons/" //Clue button Directory path
+#define NAME_SIZE 10
 
 class Eda_Menu_Game : public Eda_Menu
 {
@@ -42,6 +43,7 @@ private:
 	void draw_deck(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board *gameboard, float x_center , float y_center ,float x_size_percent , float y_size_percent);
 
 	void draw_graveyard(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme,float x_center , float y_center ,float x_size_percent , float y_size_percent, Hanabi_Board * board);
+	void draw_player_box_name (ALLEGRO_DISPLAY *display,const char* player_name,float x_center , float y_center ,float x_size_percent , float y_size_percent, char * path);
 
 	bool hidden_graveyard;
 	Eda_Button * graveyard_toggle;
