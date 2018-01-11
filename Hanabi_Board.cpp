@@ -496,9 +496,6 @@ void Hanabi_Board::lose_live(void)
 	
 }
 
-
-
-
 /*
  * This function calculates the score checking the central cards
  *
@@ -515,6 +512,32 @@ unsigned int Hanabi_Board::calculate_score()
 	for( int i = 0 ; i < HANABI_NUMBER_COLORS ; i++)
 		score += central_cards[i].get_value();
 	return score; 
+}
+
+/*
+ * This function starts the game, will draw card for both players
+ *
+ * Input:
+ *	-void 
+ * 
+ * Return:
+ *	-bool: Returns true on successful start 
+ *	
+ */
+bool Hanabi_Board::start_game(void)
+{
+	bool start_success = true;
+	Hanabi_Card other_ply_card;
+	for(int i = 0; i < HANABI_CARDS_PER_HAND && start_success; i++)
+	{	
+		if(!draw_card(i))
+			start_success = false;//Failed to draw cards to start
+		if(!hanabi_game_deck.draw_rand_card(other_ply_card))
+			start_success = false;
+		else
+			otherplayers_hand[i] = other_ply_card;
+	}
+	return start_success;
 }
 
 

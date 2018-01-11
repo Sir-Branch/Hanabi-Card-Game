@@ -71,6 +71,7 @@ public:
 #warning "After testing switch to private"
 public://Public for testing functions
 	
+	bool start_game(void);
     void lose_live(void);
     bool can_place_card(unsigned int card_my_hand);
     bool draw_card(unsigned int card_my_hand);
