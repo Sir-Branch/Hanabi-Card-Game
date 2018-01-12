@@ -9,10 +9,11 @@
 #include "Hanabi_Network_Defines.h"
 #include "TFTP_Packet.h"
 #include "Hanabi_Card.h"
+#include "Hanabi_Board.h"
 
 
 
-Hanabi_Start_Info_Packet::Hanabi_Start_Info_Packet(Hanabi_Card client_hand[HANABI_HAND_SIZE], Hanabi_Card server_hand[HANABI_HAND_SIZE]) 
+Hanabi_Start_Info_Packet::Hanabi_Start_Info_Packet(Hanabi_Card client_hand[HANABI_HAND_SIZE], in_game_hanabi_Card_t server_hand[HANABI_HAND_SIZE]) 
 : TFTP_Packet(HANABI_PCKS_OP_SIZE+ 2 * HANABI_HAND_SIZE  * HANABI_CARD_SIZE_PCK) 
 {
 	packet_data[0] = HANABI_START_INFO_OP;	
@@ -20,8 +21,8 @@ Hanabi_Start_Info_Packet::Hanabi_Start_Info_Packet(Hanabi_Card client_hand[HANAB
 	{
 		packet_data[1+i] = (unsigned char)client_hand[j].get_value() + '0'; //Value in number convert to ascii
 		packet_data[2+i] = (unsigned char)client_hand[j].get_suit();
-		packet_data[1+i+HANABI_HAND_SIZE * HANABI_CARD_SIZE_PCK]= (unsigned char)server_hand[j].get_value() + '0'; //Value in number convert to ascii
-		packet_data[2+i+HANABI_HAND_SIZE * HANABI_CARD_SIZE_PCK]= (unsigned char)server_hand[j].get_suit();
+		packet_data[1+i+HANABI_HAND_SIZE * HANABI_CARD_SIZE_PCK]= (unsigned char)server_hand[j].playing_card.get_value() + '0'; //Value in number convert to ascii
+		packet_data[2+i+HANABI_HAND_SIZE * HANABI_CARD_SIZE_PCK]= (unsigned char)server_hand[j].playing_card.get_suit();
 	}
 }
 

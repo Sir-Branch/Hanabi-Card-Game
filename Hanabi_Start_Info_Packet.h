@@ -14,7 +14,7 @@
 
 class Hanabi_Start_Info_Packet : public TFTP_Packet{
 public:
-   Hanabi_Start_Info_Packet( Hanabi_Card client_hand[HANABI_HAND_SIZE], Hanabi_Card server_hand[HANABI_HAND_SIZE] );
+   Hanabi_Start_Info_Packet( Hanabi_Card client_hand[HANABI_HAND_SIZE], in_game_hanabi_Card_t server_hand[HANABI_HAND_SIZE] );
 
 private:
 

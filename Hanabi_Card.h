@@ -21,6 +21,7 @@
 #define HANABI_CARD_NUM_SUITS 5
 #define HANABI_CARD_NUM_VALUES 5
 
+
 typedef enum hanabi_suits{HANABI_CARD_SUIT_EMPTY = 0, HANABI_CARD_YELLOW='Y', HANABI_CARD_RED='R', HANABI_CARD_BLUE ='B', HANABI_CARD_WHITE='W', HANABI_CARD_GREEN='G'}hanabi_suits_t;
 typedef enum hanabi_values{HANABI_CARD_VALUE_EMPTY = 0 ,HANABI_CARD_ONE = 1, HANABI_CARD_TWO, HANABI_CARD_THREE, HANABI_CARD_FOUR, HANABI_CARD_FIVE}hanabi_values_t;
 	
@@ -40,6 +41,18 @@ private:
     hanabi_suits_t suit;
     hanabi_values_t value;
 };
+
+/*
+ *Para optimizacion de memoria y velocidad no vale la pena que las cartas que no esten en mano
+ *tengan este formato, razon por la cual solamente se utilizaran para la mano del jugador que no ve sus cartas(mano propia).
+ *(Esto deja emplementar la opcion de poder tener ayuda de memoria, sin un sacrificio de optimizacion)
+ */
+typedef struct
+{
+    bool color_hint;
+    bool num_hint;
+	Hanabi_Card playing_card;
+}in_game_hanabi_Card_t;
 
 #endif /* CARD_H */
 

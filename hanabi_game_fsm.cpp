@@ -96,7 +96,7 @@ STATE ack_client_name_is[]=
 
 STATE sending_server_name_is[]=
 {
-	{RECEIVE_ACK , sending_start_info_client,&send_start_info_pck},
+	{RECEIVE_ACK , sending_start_info_client,&start_game_send_start_info_pck},
 	//{TIMEOUT, sending_server_name_is, &send_name_is_pck}
 
 };
@@ -163,7 +163,8 @@ STATE waiting_name_server[]=
 
 STATE waiting_start_info[]=
 {
-	{RECEIVE_START_INFO, validating_start_info ,&generate_event_start_info}, //Will generate an Error event or ack 
+	//{RECEIVE_START_INFO, validating_start_info ,&manage_receive_start_info}, //Will generate an Error event or ack 
+	{RECEIVE_START_INFO, waiting_starting_player ,&manage_receive_start_info}, //Will generate an Error event or ack 
 
 };
 
@@ -201,8 +202,8 @@ STATE waiting_other_player_draw[]=
 	{RECEIVE_DRAW, playing, &remove_card},
 
 	//Se perdio el ack si llega una de estas 
-	{RECEIVE_PLAY, waiting_other_player_draw	, &send_ack_pck	},
-	{RECEIVE_DISCARD, waiting_other_player_draw,&send_ack_pck  },
+	//{RECEIVE_PLAY, waiting_other_player_draw	, &send_ack_pck	},
+	//{RECEIVE_DISCARD, waiting_other_player_draw,&send_ack_pck  },
 
 };
 

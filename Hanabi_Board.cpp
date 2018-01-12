@@ -540,6 +540,25 @@ bool Hanabi_Board::start_game(void)
 	return start_success;
 }
 
+void Hanabi_Board::receive_start_game(const char * start_pck)
+{
+	hanabi_values_t card_value;
+	hanabi_suits_t card_suit;
+	for(int i = 0; i < HANABI_CARDS_PER_HAND ; i++)
+	{	
+		//Client cards
+		card_value = (hanabi_values_t)( start_pck[1 + i*2]-'0' );
+		card_suit = (hanabi_suits_t) (start_pck[2 + i*2] );
+		my_cards[i].playing_card = Hanabi_Card(card_suit, card_value);
+		
+		//Server cards
+		card_value = (hanabi_values_t)( start_pck[1 + i*2 + HANABI_CARDS_PER_HAND*2]-'0' );
+		card_suit = (hanabi_suits_t) (start_pck[2 + i*2 + HANABI_CARDS_PER_HAND*2] );
+		otherplayers_hand[i] = Hanabi_Card(card_suit, card_value);
+	}
+	
+}
+
 
 /*
  * Debugging  functions.  

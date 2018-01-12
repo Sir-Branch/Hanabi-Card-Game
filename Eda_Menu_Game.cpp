@@ -123,8 +123,8 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 		draw_graveyard(display,theme,
 						0.78,0.2,
 						0.063, 0.168,game_board);
-	draw_player_box_name(display, "manuaaaaaa", 0.5, 0.25, 0.3, 0.025, "Fonts/Alien-Encounters-Solid-Regular.ttf" );
-	draw_player_box_name(display, "manu", 0.5, 1-0.25, 0.3, 0.025, "Fonts/Alien-Encounters-Solid-Regular.ttf" );
+	draw_player_box_name(display, "manuaaaaaa", 0.5, 0.25, 0.2, 0.025, "Fonts/Alien-Encounters-Solid-Regular.ttf" );
+	draw_player_box_name(display, "manu", 0.5, 1-0.25, 0.2, 0.025, "Fonts/Alien-Encounters-Solid-Regular.ttf" );
 
 	al_flip_display();
 }
@@ -486,7 +486,7 @@ void Eda_Menu_Game::draw_player_box_name (ALLEGRO_DISPLAY *display,const char* p
 							  (x_center + 0.5 * x_size_percent + BORDER_WIDTH )	* al_get_display_width(display),
 							  (y_center + 0.5 * y_size_percent + BORDER_WIDTH * 16.0/9.0 ) * al_get_display_height(display),
 							   al_map_rgba(0,0,0,125));	
-	al_draw_text(font, al_map_rgb(255,255,255),x_center * al_get_display_width(display),
+	al_draw_text(font, al_color_name("white"),x_center * al_get_display_width(display),
 				y_center * al_get_display_height(display) - al_get_font_line_height(font)*0.5,
 				 ALLEGRO_ALIGN_CENTRE, player_name );
 	
