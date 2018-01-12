@@ -18,7 +18,7 @@
 Eda_Menu_Game::Eda_Menu_Game(std::string theme)
 {
 	//give clue could be a Button and not a pointer and construct during call but I rather everything be the same in this menu
-	give_clue = new Eda_Button(0.5, 0.737, 0.281, 0.08, CLUE_BUT_DIR "give_clue.png", CLUE_BUT_DIR "give_clue_hover.png", NULL, EDA_BUTTON_GIVE_CLUE_PRESSED);
+	give_clue = new Eda_Button(0.5, 0.75, 0.281, 0.08, CLUE_BUT_DIR "give_clue.png", CLUE_BUT_DIR "give_clue_hover.png", NULL, EDA_BUTTON_GIVE_CLUE_PRESSED);
 	discard_card = new Eda_Button(0.85, 0.9, 0.045 * 3.75, 0.08, CLUE_BUT_DIR "discard_card.png", CLUE_BUT_DIR "discard_card_hover.png", NULL, EDA_BUTTON_DISCARD_CARD_PRESSED);
 	play_card = new Eda_Button(0.15, 0.9, 0.045 * 3.75, 0.08, CLUE_BUT_DIR "play_card.png", CLUE_BUT_DIR "play_card_hover.png", NULL, EDA_BUTTON_PLAY_CARD_PRESSED);
 	graveyard_toggle = new Eda_Button(0.85, 0.78, 0.07, 0.07 * 16.0/9.0, CLUE_BUT_DIR "graveyard.png", CLUE_BUT_DIR "graveyard_hover.png", NULL, NO_EVENT);
@@ -123,8 +123,8 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 		draw_graveyard(display,theme,
 						0.78,0.2,
 						0.063, 0.168,game_board);
-	draw_player_box_name(display, "manuaaaaaa", 0.5, 0.25, 0.2, 0.025, "Fonts/Alien-Encounters-Solid-Regular.ttf" );
-	draw_player_box_name(display, "manu", 0.5, 1-0.25, 0.2, 0.025, "Fonts/Alien-Encounters-Solid-Regular.ttf" );
+	draw_player_box_name(display, "manuaaaaaa12345", 0.5, 0.25, 0.2, 0.025, "Fonts/Alien-Encounters-Solid-Regular.ttf" );
+	//draw_player_box_name(display, "manu", 0.5, 1-0.25, 0.2, 0.025, "Fonts/Alien-Encounters-Solid-Regular.ttf" );
 
 	al_flip_display();
 }
@@ -481,11 +481,12 @@ void Eda_Menu_Game::draw_player_box_name (ALLEGRO_DISPLAY *display,const char* p
 	else
 		font = al_load_ttf_font(path,i,0); //The font is loaded 
 	
-	al_draw_filled_rectangle( (x_center - 0.5 * x_size_percent - BORDER_WIDTH) * al_get_display_width(display) , 
+	al_draw_filled_rounded_rectangle( (x_center - 0.5 * x_size_percent - BORDER_WIDTH) * al_get_display_width(display) , 
 							  (y_center - 0.5 * y_size_percent - BORDER_WIDTH  * 16.0/9.0 ) * al_get_display_height(display),
 							  (x_center + 0.5 * x_size_percent + BORDER_WIDTH )	* al_get_display_width(display),
 							  (y_center + 0.5 * y_size_percent + BORDER_WIDTH * 16.0/9.0 ) * al_get_display_height(display),
-							   al_map_rgba(0,0,0,125));	
+							   10.0,10.0,
+								al_map_rgba(0,0,0,125));	
 	al_draw_text(font, al_color_name("white"),x_center * al_get_display_width(display),
 				y_center * al_get_display_height(display) - al_get_font_line_height(font)*0.5,
 				 ALLEGRO_ALIGN_CENTRE, player_name );

@@ -33,13 +33,17 @@ Eda_Textbox::Eda_Textbox(float x_center , float y_center ,float x_size_percent ,
 	this->num_in_buffer = 0;
 	this->text_buffer[this->num_in_buffer] = '\0';
 	this->font = NULL;
+	
+	this->count = 0;
+	this->on_count = 0;
 		
 }
 
-void Eda_Textbox::add_char_allegro(unsigned int allegro_key, bool only_numbers)
+void Eda_Textbox::add_char_allegro(unsigned int allegro_key, textbox_modes_t textbox_mode)
 {
 	bool add_char = false;
 	char char_to_add ='\0';
+	
 	
 	if(allegro_key == ALLEGRO_KEY_BACKSPACE && 
 		(this->num_in_buffer > 0 && !blink_placed || this->num_in_buffer > 1 && blink_placed)
@@ -51,22 +55,48 @@ void Eda_Textbox::add_char_allegro(unsigned int allegro_key, bool only_numbers)
 	{
 		;//Unable to add char because it's full
 	}
-	else if(!only_numbers && allegro_key >= ALLEGRO_KEY_A && allegro_key <= ALLEGRO_KEY_Z)
-	{
-		add_char = true;
-		char_to_add = allegro_key - ALLEGRO_KEY_A + 'A';
-	}
-	else if( allegro_key >= ALLEGRO_KEY_0 && allegro_key <= ALLEGRO_KEY_9 )
-	{
-		add_char = true;
-		char_to_add = allegro_key - ALLEGRO_KEY_0 + '0';
-	}
-	else if( allegro_key == ALLEGRO_KEY_FULLSTOP)
-	{
-		add_char = true;
-		char_to_add  = '.';
-	}
-	
+	else
+		switch( textbox_mode )
+		{
+			case NICKNAME_MODE:
+				if(allegro_key >= ALLEGRO_KEY_A && allegro_key <= ALLEGRO_KEY_Z)
+				{
+					add_char = true;
+					char_to_add = allegro_key - ALLEGRO_KEY_A + 'A';
+				}
+				else if( allegro_key >= ALLEGRO_KEY_0 && allegro_key <= ALLEGRO_KEY_9 )
+				{
+					add_char = true;
+					char_to_add = allegro_key - ALLEGRO_KEY_0 + '0';
+				}
+				else if(allegro_key == ALLEGRO_KEY_SPACE)
+				{
+					add_char = true;
+					char_to_add = ' ';
+				}
+				break;
+				
+			case IP_MODE:
+				if( allegro_key == ALLEGRO_KEY_FULLSTOP)
+				{
+					add_char = true;
+					char_to_add  = '.';
+				}
+				else if(allegro_key == ALLEGRO_KEY_COLON2)
+				{
+					add_char = true;
+					char_to_add  = ':';
+				}
+			//fall through ip mode
+			case NUMBERS_ONLY_MODE:
+				if( allegro_key >= ALLEGRO_KEY_0 && allegro_key <= ALLEGRO_KEY_9 )
+				{
+					add_char = true;
+					char_to_add = allegro_key - ALLEGRO_KEY_0 + '0';
+				}
+				break;
+		}
+		
 	if(add_char)
 	{
 		if(blink_placed)
@@ -80,7 +110,6 @@ void Eda_Textbox::add_char_allegro(unsigned int allegro_key, bool only_numbers)
 			text_buffer[num_in_buffer++] = char_to_add;
 		}
 	}
-
 	text_buffer[num_in_buffer] = '\0';
 }
 
@@ -151,8 +180,8 @@ void Eda_Textbox::draw(ALLEGRO_DISPLAY * display)
 
 void Eda_Textbox::blink_input_char(unsigned int on_fps_rate, unsigned int on_fps_length)
 {
-	static int count = 0;
-	static int on_count = 0;
+	//static int count = 0;
+	//static int on_count = 0;
 	count++;
 	
 	if( this->blink_placed == false && count % on_fps_rate == 0)
@@ -176,6 +205,8 @@ void Eda_Textbox::blink_input_char(unsigned int on_fps_rate, unsigned int on_fps
 void Eda_Textbox::deselect()
 {
 	this->selected = false;
+	this->count = 0;
+	this->on_count = 0;
 	if(blink_placed)
 	{
 		this->blink_placed = false;
