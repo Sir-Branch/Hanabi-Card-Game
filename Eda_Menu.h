@@ -22,6 +22,8 @@ public:
 	virtual void update_buttons(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse) = 0;
 	virtual bool check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse, std::queue<hanabi_game_event_t> &button_event_queue) = 0;
 	virtual void manage_keyboard_stroge(unsigned int allegro_key);
+	void draw_font(ALLEGRO_DISPLAY * display, const char * font_name, float x_center , float y_center, 
+					float y_size_percent, const char * text, ALLEGRO_COLOR color);
 private:
 	Eda_Menu(const Eda_Menu& orig);
 	

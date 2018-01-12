@@ -34,8 +34,8 @@
 #include "setting_management.h"
 
 #define FPS				30.0
-#define SCREEN_W		1152 
-#define SCREEN_H		648
+//#define SCREEN_W		1152 
+//#define SCREEN_H		648
 //16:9 1280×720 1024x576
 
  
@@ -98,8 +98,6 @@ int main(void)
 	
 	hanabi_game_data.theme_settings = new Hanabi_Skin();
 	hanabi_game_data.theme_settings->load_theme(get_theme(hanabi_game_data.game_configuration.selected_theme));
-	
-	
 	
 	hanabi_game_data.game_board = new Hanabi_Board();
 	hanabi_game_data.game_board->lose_live();

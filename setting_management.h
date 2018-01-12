@@ -20,6 +20,7 @@
 #include "TFTPCxn.h"
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
+#include <string>
 
 typedef struct
 {
@@ -40,9 +41,8 @@ typedef struct
 	bool do_exit, redraw;
 	TFTPCxn * net_connection;
     TFTP_Packet * last_received_pck;
-	char * player_name;
 	ALLEGRO_SAMPLE *main_music;
-	
+	std::string player_name;	
 }hanabi_game_data_t;
 
 void load_configuration(hanabi_game_data_t * hanabi_game_data);

@@ -48,6 +48,7 @@ void event_handle_button(event_button_t button_event,hanabi_game_data_t * hanabi
 	//**********************NETWORK MENU***************************
 	else if(button_event == EDA_BUTTON_JOIN_PRESSED)
 	{
+//		hanabi_game_data->player_name = 
 		delete hanabi_game_data->active_menu;
 		hanabi_game_data->active_menu = new Eda_Menu_Game(hanabi_game_data->theme_settings->theme);
 

@@ -14,6 +14,10 @@
 
 #include "Eda_Button.h"
 
+typedef enum{ NICKNAME_MODE, NUMBERS_ONLY_MODE, IP_MODE}textbox_modes_t;
+
+
+
 #define	FONT_TEXTBOX	"DroidSansMono.tff"
 #define BLINK_CHAR	'>'
 #define BLINK_FPS_RATE		15	
@@ -28,7 +32,7 @@ public:
 				unsigned int max_characters);
 	Eda_Textbox(const Eda_Textbox& orig);
 	virtual ~Eda_Textbox();
-	void add_char_allegro(unsigned int allegro_key, bool only_numbers);
+	void add_char_allegro(unsigned int allegro_key, textbox_modes_t textbox_mode);
 	bool load_mono_font(ALLEGRO_DISPLAY * display, char * path);
 	void draw(ALLEGRO_DISPLAY * display);
     const char* get_text_buffer (void);
@@ -41,6 +45,10 @@ private:
 	unsigned int text_buffer_size;
 	unsigned int num_in_buffer;
 	bool blink_placed;
+	
+	unsigned int count;
+	unsigned int on_count;
+
 	
 
 };
