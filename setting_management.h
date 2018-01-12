@@ -18,6 +18,7 @@
 #include "Hanabi_Board.h"
 #include "Eda_Menu.h"
 #include "TFTPCxn.h"
+#include <string>
 
 typedef struct
 {
@@ -38,7 +39,7 @@ typedef struct
 	bool do_exit, redraw;
 	TFTPCxn * net_connection;
     TFTP_Packet * last_received_pck;
-	char * player_name;
+	std::string player_name;
 	
 }hanabi_game_data_t;
 
