@@ -9,6 +9,9 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_font.h>
 
 
 
@@ -110,4 +113,47 @@ void save_configuration(hanabi_game_data_t * hanabi_game_data)
 		
 		al_save_config_file("settings.ini",config_file);
 	}
+}
+
+
+/*
+ * This function calculates the font size.
+ * 
+ * Input:
+ *	-ALLEGRO_DISPLAY *display: The display.
+ *	
+ *	-float x_size_percent, y_size_percent: "box" where the text has to enter, in percent. 
+	-char * path: path to the font 
+ *	-unsigned int max_size: max number of characters to fit in the "box". Ex: NAME_SIZE
+ *	
+ * 
+ * Return:
+ *	-unsigned int: size of the font to use
+ */
+unsigned int calculate_font_size (ALLEGRO_DISPLAY *display, float x_size_percent , float y_size_percent,char * path, unsigned int max_size)
+{
+	ALLEGRO_FONT * font;
+	unsigned int i;
+	unsigned int max_height = 0.8 * al_get_display_height(display) * y_size_percent;
+	unsigned int max_width  = al_get_display_width(display) * x_size_percent;
+	for(i = 2; ; i = i + 2 ) //Counter tills it founds the correct size 
+	{
+		font = al_load_ttf_font(path,i,0); //Load font to check if the font fits 
+		if( 0.50 * al_get_font_line_height(font) > max_height || 0.5 * al_get_text_width(font, "a") * max_size > max_width)
+		{
+			al_destroy_font(font);
+			break;
+		}
+		al_destroy_font(font);
+	}
+	i = i - 2;
+	
+	if(i < 2)
+	{
+		std::cerr << "Could not find the correct font size." << std::endl;
+		return 2; //Returns the min font size
+	}
+
+	else
+		return i; //Returns the font size 
 }

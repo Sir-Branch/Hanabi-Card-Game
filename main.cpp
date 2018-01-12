@@ -50,6 +50,10 @@ int main(void)
 	std::queue<hanabi_game_event_t> button_event_queue, network_event_queue, software_event_queue;
 
 	load_configuration(&hanabi_game_data);
+	hanabi_game_data.main_music = loadPlayMusic(); //Loads and play music.
+	//stopMusic(hanabi_game_data.main_music); //Stops background music. 
+	
+	
 	sscanf(get_resolution(hanabi_game_data.game_configuration.selected_resolution), "%dx%d",&width, &height);
  
 	if(allegro_startup() == AL_STARTUP_ERROR) {

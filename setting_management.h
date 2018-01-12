@@ -18,6 +18,8 @@
 #include "Hanabi_Board.h"
 #include "Eda_Menu.h"
 #include "TFTPCxn.h"
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 
 typedef struct
 {
@@ -39,6 +41,7 @@ typedef struct
 	TFTPCxn * net_connection;
     TFTP_Packet * last_received_pck;
 	char * player_name;
+	ALLEGRO_SAMPLE *main_music;
 	
 }hanabi_game_data_t;
 
@@ -47,6 +50,7 @@ void save_configuration(hanabi_game_data_t * hanabi_game_data);
 void get_static_themes_resolutions(const char *** available_themes ,  const char *** available_resolutions);
 const char * get_resolution(unsigned int num_resol);
 const char * get_theme(unsigned int num_theme);
+unsigned int calculate_font_size (ALLEGRO_DISPLAY *display, float x_size_percent , float y_size_percent,char * path, unsigned int max_size);
 
 #endif /* SETTING_MANAGEMENT_H */
 

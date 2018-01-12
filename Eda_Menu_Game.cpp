@@ -8,6 +8,7 @@
 #include "Eda_Menu_Game.h"
 #include "Eda_Button.h"
 #include "Hanabi_Board.h"
+#include "setting_management.h"
 #include <string>
 #include <iostream>
 #include <allegro5/allegro_color.h>
@@ -123,8 +124,11 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 		draw_graveyard(display,theme,
 						0.78,0.2,
 						0.063, 0.168,game_board);
-	draw_player_box_name(display, "manuaaaaaa", 0.5, 0.25, 0.2, 0.025, "Fonts/Alien-Encounters-Solid-Regular.ttf" );
-	draw_player_box_name(display, "manu", 0.5, 1-0.25, 0.2, 0.025, "Fonts/Alien-Encounters-Solid-Regular.ttf" );
+	draw_player_box_name(display, "el_terminador", 0.5, 0.25, 0.2, 0.025 );
+	draw_player_box_name(display, "gonza_puto", 0.5, 1-0.25, 0.2, 0.025);
+	//draw_clue(display, theme, 
+				//	0.325, 0.9, 0.063, 0.168,0.005,
+				//	6,  cards_to_draw, )
 
 	al_flip_display();
 }
@@ -297,10 +301,10 @@ void Eda_Menu_Game::draw_cards(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme,
 					int number_cards, const Hanabi_Card * cards_to_draw)
 {
 	Hanabi_Card empty_card;	
-	for(int i = 0 ; i < number_cards ; i++)
+	for(int i = 0 ; i < number_cards ; i++) //Checks all the cards
 	{
 		Hanabi_Card temp_copy = cards_to_draw[i];
-		if( empty_card == cards_to_draw[i] )
+		if( empty_card == cards_to_draw[i] ) //Checks if it is an empty card, if is true draws the card backside
 			al_draw_scaled_bitmap(theme->cards_backside, 
 									0.0, 0.0, al_get_bitmap_width(theme->cards_backside), al_get_bitmap_height(theme->cards_backside),
 									(x_center + (space_between+x_size_percent) * (i-number_cards/2.0)) * al_get_display_width(display), //x_cord to draw
@@ -456,31 +460,13 @@ unsigned int Eda_Menu_Game::get_selected_card(void)
 }
 
 
-void Eda_Menu_Game::draw_player_box_name (ALLEGRO_DISPLAY *display,const char* player_name,float x_center , float y_center ,float x_size_percent , float y_size_percent, char * path)
+void Eda_Menu_Game::draw_player_box_name (ALLEGRO_DISPLAY *display,const char* player_name,float x_center , float y_center ,float x_size_percent , float y_size_percent)
 
 {
 	ALLEGRO_FONT * font;
-	unsigned int i;
-	unsigned int max_height = 0.8 * al_get_display_height(display) * y_size_percent;
-	unsigned int max_width  = al_get_display_width(display) * x_size_percent;
-	for(i = 2; ; i = i + 2 )
-	{
-		font = al_load_ttf_font(path,i,0); //Arguments are, path to font, size, flags
-		if( 0.50 * al_get_font_line_height(font) > max_height || 0.5 * al_get_text_width(font, "a") * NAME_SIZE > max_width)
-		{
-			al_destroy_font(font);
-			break;
-		}
-		al_destroy_font(font);
-	}
-	i = i - 2;
+	font = al_load_ttf_font(MONO_FONT_PATH,calculate_font_size(display, x_size_percent, y_size_percent, MONO_FONT_PATH, NAME_SIZE),0);
 	
-	if(i < 2)
-		std::cerr << "Could not find the correct font size." << std::endl;
-
-	else
-		font = al_load_ttf_font(path,i,0); //The font is loaded 
-	
+		
 	al_draw_filled_rectangle( (x_center - 0.5 * x_size_percent - BORDER_WIDTH) * al_get_display_width(display) , 
 							  (y_center - 0.5 * y_size_percent - BORDER_WIDTH  * 16.0/9.0 ) * al_get_display_height(display),
 							  (x_center + 0.5 * x_size_percent + BORDER_WIDTH )	* al_get_display_width(display),
@@ -493,3 +479,66 @@ void Eda_Menu_Game::draw_player_box_name (ALLEGRO_DISPLAY *display,const char* p
 	al_destroy_font(font);
 }
 
+
+
+/*
+ * This function draws a clue. Checks if it is a suit or a value. If it is a value, draws the value in the given clue in all the
+ * cards. If the clue is a suit, all the cards borders change thier color. 
+ * 
+ * Input:
+ *	-ALLEGRO_DISPLAY *display: The display.
+ *	-Hanabi_Skin *theme
+ *	-float x_center , float y_center ,float x_size_percent , float y_size_percent, float space_between: floats to draw the elements in the correct place.
+	-int number_cards: number of cards to be drawn. 
+ *	-const Hanabi_Card * cards_to_draw: array of Hanabi Cards	
+ * 
+ * Return:
+ *	-void.
+ */
+
+void Eda_Menu_Game::draw_clue(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, 
+					float x_center , float y_center ,float x_size_percent , float y_size_percent, float space_between,
+					int number_cards, const in_game_hanabi_Card_t * cards, unsigned char value_or_suit)
+{
+	ALLEGRO_FONT * font;
+	font = al_load_ttf_font(MONO_FONT_PATH,calculate_font_size(display, x_size_percent, y_size_percent, MONO_FONT_PATH, 1),0);
+	
+    bool value = (value_or_suit <= 5) ? true : false; //Check if is value or suit
+	if(value) //The clue is a value
+	{
+		for (int i=0; i<= number_cards ; i++) //Checks all the hand. 
+		{
+			
+			if (cards->playing_card.get_value() == value_or_suit)
+			{		
+				std::string number2draw(1,value_or_suit+'0');
+				al_draw_text(font, al_color_name("white"),
+						((x_center + (space_between+x_size_percent) * (i-number_cards/2.0)) * al_get_display_width(display))+ (x_size_percent * (al_get_display_width(display))/2),
+						((y_center - 0.5 * y_size_percent) * al_get_display_height(display)) + ((y_size_percent * al_get_display_height(display))/2),
+						0, number2draw.c_str());	
+			}
+		}
+	}
+	else //The clue is a suit
+	{
+		for (int i=0; i<= number_cards; i++) //Checks all the hand
+		{
+			if ((int)cards->playing_card.get_suit() == value_or_suit)
+			{
+				//Draws a border 
+				al_draw_scaled_bitmap(theme->cards_backside, 
+									0.0, 0.0, al_get_bitmap_width(theme->cards_backside), al_get_bitmap_height(theme->cards_backside),
+									(x_center + (space_between+x_size_percent) * (i-number_cards/2.0)) * al_get_display_width(display), //x_cord to draw
+									(y_center - 0.5 * y_size_percent) * al_get_display_height(display),  //y_cord to draw
+									x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
+									0);
+			}
+		}
+
+
+	}
+	
+	al_destroy_font(font);
+	 
+	
+}

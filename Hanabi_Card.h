@@ -32,8 +32,8 @@ public:
     bool operator==(const Hanabi_Card& card);
     bool operator!=(const Hanabi_Card& card);
     //operator= no need to overwrite 
-	hanabi_suits_t get_suit(void); //Getter 
-	hanabi_values_t get_value(void); //Getter
+	hanabi_suits_t get_suit(void) const; //Getter 
+	hanabi_values_t get_value(void) const; //Getter
 	int get_suit_number(void); //Getter
 	void print_card(void); //Debugging method
 	

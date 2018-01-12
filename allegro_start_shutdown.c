@@ -126,6 +126,7 @@ ALLEGRO_SAMPLE * loadPlayMusic(void)
 	ALLEGRO_SAMPLE * music=al_load_sample(BACKGROUND_MUSIC);
 	if(music)
 		al_play_sample(music, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL); 
+		
 	else
 		fprintf(stderr,"Unable to load background music\n");
 	

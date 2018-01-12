@@ -48,7 +48,7 @@ bool Hanabi_Card::operator!=(const Hanabi_Card& card2){
  * Return:
  *	-hanabi_suits_t: Returns the suit of a card. Can go from 0 to 5.
  */
-hanabi_suits_t Hanabi_Card::get_suit(void){
+hanabi_suits_t Hanabi_Card::get_suit(void)const{
 	return suit;	
 }
 
@@ -61,7 +61,8 @@ hanabi_suits_t Hanabi_Card::get_suit(void){
  * Return:
  *	-hanabi_values_t: Returns the value of a card. Can go from 0 to 5.
  */
-hanabi_values_t Hanabi_Card::get_value(void){
+hanabi_values_t Hanabi_Card::get_value(void) const{
+	
 	return value;
 }
 	
