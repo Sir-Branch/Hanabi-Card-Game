@@ -13,6 +13,7 @@
 #include "Token.h"
 #include "Hanabi_Deck.h"
 #include "TFTPCxn.h"
+#include "Hanabi_Start_Info_Packet.h"
 
 
 #define HANABI_LIGHT_TOKENS		3	//Numb of "lifes" 
@@ -20,17 +21,7 @@
 #define HANABI_NUMBER_COLORS	5	//Yeah colors, the u is only if u are British 
 #define HANABI_CARDS_PER_HAND	6	//Numb cards per hand
 
-/*
- *Para optimizacion de memoria y velocidad no vale la pena que las cartas que no esten en mano
- *tengan este formato, razon por la cual solamente se utilizaran para la mano del jugador que no ve sus cartas(mano propia).
- *(Esto deja emplementar la opcion de poder tener ayuda de memoria, sin un sacrificio de optimizacion)
- */
-typedef struct
-{
-    bool color_hint;
-    bool num_hint;
-	Hanabi_Card playing_card;
-}in_game_hanabi_Card_t;
+
 
 //The suit of each card has a position for the central array use get_suit_number_array
 
@@ -71,7 +62,10 @@ public:
 #warning "After testing switch to private"
 public://Public for testing functions
 	
-    void lose_live(void);
+	bool start_game(void);
+	void receive_start_game(const char * start_pck);
+    
+	void lose_live(void);
     bool can_place_card(unsigned int card_my_hand);
     bool draw_card(unsigned int card_my_hand);
     void discard_card(unsigned int card_my_hand);
@@ -79,7 +73,6 @@ public://Public for testing functions
 
 	
     Hanabi_Deck hanabi_game_deck;
-#warning "Hanabi_deck graveyard starting with all cards"
     Deck<Hanabi_Card> grave_yard[HANABI_NUMBER_COLORS]; // Uno por color
     Token light_tokens[HANABI_LIGHT_TOKENS];//Representan las vidas 
     Token clue_tokens[HANABI_CLUE_TOKENS];//Maxima numero de pistas que se pueden dar sin tomar carta

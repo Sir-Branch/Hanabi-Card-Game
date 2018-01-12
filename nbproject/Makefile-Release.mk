@@ -35,7 +35,6 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/Client.o \
 	${OBJECTDIR}/Deck.o \
 	${OBJECTDIR}/Eda_Button.o \
 	${OBJECTDIR}/Eda_Menu.o \
@@ -65,8 +64,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/Hanabi_We_Won_Packet.o \
 	${OBJECTDIR}/Hanabi_You_Have_Packet.o \
 	${OBJECTDIR}/Hanabi_You_Start_Packet.o \
-	${OBJECTDIR}/Net_connection.o \
-	${OBJECTDIR}/Server.o \
 	${OBJECTDIR}/TFTPClient.o \
 	${OBJECTDIR}/TFTPCxn.o \
 	${OBJECTDIR}/TFTPServer.o \
@@ -114,11 +111,6 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/hanabi-card-game: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/hanabi-card-game ${OBJECTFILES} ${LDLIBSOPTIONS}
-
-${OBJECTDIR}/Client.o: Client.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Client.o Client.cpp
 
 ${OBJECTDIR}/Deck.o: Deck.cpp
 	${MKDIR} -p ${OBJECTDIR}
@@ -264,16 +256,6 @@ ${OBJECTDIR}/Hanabi_You_Start_Packet.o: Hanabi_You_Start_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_You_Start_Packet.o Hanabi_You_Start_Packet.cpp
-
-${OBJECTDIR}/Net_connection.o: Net_connection.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Net_connection.o Net_connection.cpp
-
-${OBJECTDIR}/Server.o: Server.cpp
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Server.o Server.cpp
 
 ${OBJECTDIR}/TFTPClient.o: TFTPClient.cpp
 	${MKDIR} -p ${OBJECTDIR}

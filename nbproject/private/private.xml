@@ -4,7 +4,7 @@
         <activeConfTypeElem>1</activeConfTypeElem>
         <activeConfIndexElem>0</activeConfIndexElem>
     </data>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="3">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="4">
         <file>
             <url>Eda_Menu_Game.h</url>
             <bookmark id="3">
@@ -13,21 +13,22 @@
                 <key/>
             </bookmark>
         </file>
+        <file>
+            <url>Hanabi_Board.cpp</url>
+            <bookmark id="4">
+                <name/>
+                <line>542</line>
+                <key/>
+            </bookmark>
+        </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/parallels/NetBeansProjects/Hanabi-Card-Game/Deck.h</file>
-            <file>file:/home/parallels/NetBeansProjects/Hanabi-Card-Game/Hanabi_Board.cpp</file>
-            <file>file:/home/parallels/NetBeansProjects/Hanabi-Card-Game/Hanabi_Play_Packet.cpp</file>
-            <file>file:/home/parallels/NetBeansProjects/Hanabi-Card-Game/setting_management.h</file>
-            <file>file:/home/parallels/NetBeansProjects/Hanabi-Card-Game/Hanabi_Deck.h</file>
-            <file>file:/home/parallels/NetBeansProjects/Hanabi-Card-Game/Hanabi_Board.h</file>
-            <file>file:/home/parallels/NetBeansProjects/Hanabi-Card-Game/hanabi_game_fsm.cpp</file>
-            <file>file:/home/parallels/NetBeansProjects/Hanabi-Card-Game/Hanabi_Card.h</file>
-            <file>file:/home/parallels/NetBeansProjects/Hanabi-Card-Game/hanabi_game_fsm_callbacks.h</file>
-            <file>file:/home/parallels/NetBeansProjects/Hanabi-Card-Game/hanabi_game_fsm_callbacks.cpp</file>
-            <file>file:/home/parallels/NetBeansProjects/Hanabi-Card-Game/Hanabi_Ack_Packet.cpp</file>
-            <file>file:/home/parallels/NetBeansProjects/Hanabi-Card-Game/TFTP_Ack_Packet.cpp</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/main.cpp</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/event_handler_allegro.cpp</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/Eda_Menu_Network.cpp</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/Eda_Menu_Game.h</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/Eda_Menu_Game.cpp</file>
         </group>
     </open-files>
 </project-private>

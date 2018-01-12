@@ -41,7 +41,6 @@
  
 int main(void)
 {
-
 						
 	hanabi_game_data_t hanabi_game_data;
 	ALLEGRO_EVENT ev;
@@ -101,25 +100,12 @@ int main(void)
 	hanabi_game_data.game_board = new Hanabi_Board();
 	hanabi_game_data.game_board->lose_live();
 	hanabi_game_data.game_board->remove_clue_token();
-	hanabi_game_data.game_board->otherplayers_hand[0] = Hanabi_Card(HANABI_CARD_WHITE, HANABI_CARD_TWO); 
-	hanabi_game_data.game_board->otherplayers_hand[1] = Hanabi_Card(HANABI_CARD_BLUE, HANABI_CARD_ONE); 
-	hanabi_game_data.game_board->otherplayers_hand[2] = Hanabi_Card(HANABI_CARD_GREEN, HANABI_CARD_ONE); 
-	hanabi_game_data.game_board->otherplayers_hand[3] = Hanabi_Card(HANABI_CARD_YELLOW, HANABI_CARD_ONE); 
-	hanabi_game_data.game_board->otherplayers_hand[4] = Hanabi_Card(HANABI_CARD_RED, HANABI_CARD_ONE); 
-	hanabi_game_data.game_board->otherplayers_hand[5] = Hanabi_Card(HANABI_CARD_WHITE, HANABI_CARD_TWO); 
-
-	hanabi_game_data.game_board->draw_card(0);
-	hanabi_game_data.game_board->draw_card(1);
-	hanabi_game_data.game_board->draw_card(2);
-	hanabi_game_data.game_board->draw_card(3);
-	hanabi_game_data.game_board->draw_card(4);
-	hanabi_game_data.game_board->draw_card(5);
+	hanabi_game_data.game_board->start_game();
 	
 	hanabi_game_data.do_exit = false;
 	hanabi_game_data.redraw = false;
 
 	hanabi_game_data.active_menu = new Eda_Menu_Main(hanabi_game_data.theme_settings->theme);
-	//hanabi_game_data.active_menu = new Eda_Menu_Network(hanabi_game_data.display, MONO_FONT_PATH );
 	hanabi_game_data.active_menu->draw(hanabi_game_data.display,hanabi_game_data.theme_settings, hanabi_game_data.game_board);
 	al_start_timer(timer);
 

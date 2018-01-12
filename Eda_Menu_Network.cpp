@@ -20,9 +20,9 @@ Eda_Menu_Network::Eda_Menu_Network(ALLEGRO_DISPLAY * display, char * path) {
 	
 	connect =  new Eda_Button( 0.7, 0.9, 0.045 * 3.75, 0.08, COMMON_FILE_PATH "/join.png", COMMON_FILE_PATH "/join_hover.png", NULL, EDA_BUTTON_JOIN_PRESSED);
 	cancel = new Eda_Button(0.9, 0.9, 0.045 * 3.75, 0.08, COMMON_FILE_PATH "/host.png", COMMON_FILE_PATH "/host_hover.png", NULL, EDA_BUTTON_HOST_PRESSED );
-	ip_input = new Eda_Textbox(0.5,0.5, 0.35, 0.15, COMMON_FILE_PATH"/text_box.png",NULL,COMMON_FILE_PATH "/text_box_selected.png",NO_EVENT, 20);
-	name_input = new Eda_Textbox(0.5,0.7, 0.35, 0.15, COMMON_FILE_PATH "/text_box.png",NULL,COMMON_FILE_PATH "/text_box_selected.png",NO_EVENT, 20);
-
+	ip_input = new Eda_Textbox(0.5,0.3, 0.35, 0.15, COMMON_FILE_PATH"/text_box.png",NULL,COMMON_FILE_PATH "/text_box_selected.png",NO_EVENT, 20);
+	name_input = new Eda_Textbox(0.5,0.5, 0.35, 0.15, COMMON_FILE_PATH "/text_box.png",NULL,COMMON_FILE_PATH "/text_box_selected.png",NO_EVENT, 20);
+	
 	if(display != NULL && path != NULL)
 	{
 		ip_input->load_mono_font(display, path);

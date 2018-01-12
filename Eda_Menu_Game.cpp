@@ -9,8 +9,11 @@
 #include "Eda_Button.h"
 #include "Hanabi_Board.h"
 #include <string>
+#include <iostream>
 #include <allegro5/allegro_color.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 
 Eda_Menu_Game::Eda_Menu_Game(std::string theme)
 {
@@ -120,6 +123,9 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 		draw_graveyard(display,theme,
 						0.78,0.2,
 						0.063, 0.168,game_board);
+	draw_player_box_name(display, "manuaaaaaa", 0.5, 0.25, 0.2, 0.025, "Fonts/Alien-Encounters-Solid-Regular.ttf" );
+	draw_player_box_name(display, "manu", 0.5, 1-0.25, 0.2, 0.025, "Fonts/Alien-Encounters-Solid-Regular.ttf" );
+
 	al_flip_display();
 }
 
@@ -387,7 +393,7 @@ void Eda_Menu_Game::draw_graveyard(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme,
 	
 
 }
-
+#warning "puede que sea char, Hanabi_You_Have_Packet, tambien puede ser asi el get card"
 unsigned int Eda_Menu_Game::get_selected_clue(void)
 {
 	bool button_selected = false;
@@ -432,7 +438,7 @@ unsigned int Eda_Menu_Game::get_selected_clue(void)
 
 
 
-
+#warning "agregar comentario"
 unsigned int Eda_Menu_Game::get_selected_card(void)
 {
 	bool card_selected = false;
@@ -448,3 +454,42 @@ unsigned int Eda_Menu_Game::get_selected_card(void)
 	
 	return selected; 
 }
+
+
+void Eda_Menu_Game::draw_player_box_name (ALLEGRO_DISPLAY *display,const char* player_name,float x_center , float y_center ,float x_size_percent , float y_size_percent, char * path)
+
+{
+	ALLEGRO_FONT * font;
+	unsigned int i;
+	unsigned int max_height = 0.8 * al_get_display_height(display) * y_size_percent;
+	unsigned int max_width  = al_get_display_width(display) * x_size_percent;
+	for(i = 2; ; i = i + 2 )
+	{
+		font = al_load_ttf_font(path,i,0); //Arguments are, path to font, size, flags
+		if( 0.50 * al_get_font_line_height(font) > max_height || 0.5 * al_get_text_width(font, "a") * NAME_SIZE > max_width)
+		{
+			al_destroy_font(font);
+			break;
+		}
+		al_destroy_font(font);
+	}
+	i = i - 2;
+	
+	if(i < 2)
+		std::cerr << "Could not find the correct font size." << std::endl;
+
+	else
+		font = al_load_ttf_font(path,i,0); //The font is loaded 
+	
+	al_draw_filled_rectangle( (x_center - 0.5 * x_size_percent - BORDER_WIDTH) * al_get_display_width(display) , 
+							  (y_center - 0.5 * y_size_percent - BORDER_WIDTH  * 16.0/9.0 ) * al_get_display_height(display),
+							  (x_center + 0.5 * x_size_percent + BORDER_WIDTH )	* al_get_display_width(display),
+							  (y_center + 0.5 * y_size_percent + BORDER_WIDTH * 16.0/9.0 ) * al_get_display_height(display),
+							   al_map_rgba(0,0,0,125));	
+	al_draw_text(font, al_color_name("white"),x_center * al_get_display_width(display),
+				y_center * al_get_display_height(display) - al_get_font_line_height(font)*0.5,
+				 ALLEGRO_ALIGN_CENTRE, player_name );
+	
+	al_destroy_font(font);
+}
+
