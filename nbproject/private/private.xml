@@ -4,7 +4,7 @@
         <activeConfTypeElem>1</activeConfTypeElem>
         <activeConfIndexElem>0</activeConfIndexElem>
     </data>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="4">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="5">
         <file>
             <url>Eda_Menu_Game.h</url>
             <bookmark id="3">
@@ -21,13 +21,22 @@
                 <key/>
             </bookmark>
         </file>
+        <file>
+            <url>Eda_Menu_Network.h</url>
+            <bookmark id="5">
+                <name/>
+                <line>20</line>
+                <key/>
+            </bookmark>
+        </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/main.cpp</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/event_handler_allegro.cpp</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/Eda_Menu_Network.cpp</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/Eda_Menu_Game.h</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/event_dispatcher.cpp</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/Eda_Menu.h</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/event_handler_button_clicks.cpp</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/setting_management.h</file>
             <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/Eda_Menu_Game.cpp</file>
         </group>
     </open-files>

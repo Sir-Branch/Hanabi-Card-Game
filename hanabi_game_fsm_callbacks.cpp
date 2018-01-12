@@ -45,7 +45,7 @@ void send_ack_pck(hanabi_game_data_t *user_data)
 
 void send_name_is_pck(hanabi_game_data_t *user_data)
 {
-	Hanabi_Name_Is_Packet name_is_packet(user_data->player_name);
+	Hanabi_Name_Is_Packet name_is_packet(user_data->player_name.c_str());
 	user_data->net_connection->send_packet(&name_is_packet);
 }
 
