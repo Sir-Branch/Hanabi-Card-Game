@@ -397,7 +397,7 @@ void Eda_Menu_Game::draw_graveyard(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme,
 	
 
 }
-
+#warning "puede que sea char, Hanabi_You_Have_Packet, tambien puede ser asi el get card"
 unsigned int Eda_Menu_Game::get_selected_clue(void)
 {
 	bool button_selected = false;
@@ -442,7 +442,7 @@ unsigned int Eda_Menu_Game::get_selected_clue(void)
 
 
 
-
+#warning "agregar comentario"
 unsigned int Eda_Menu_Game::get_selected_card(void)
 {
 	bool card_selected = false;

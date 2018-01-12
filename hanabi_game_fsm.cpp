@@ -219,7 +219,7 @@ STATE waiting_other_player[]=
 
 STATE waiting_action_ack[]=
 {
-	{RECEIVE_ACK,waiting_draw_ack,&draw_send_card},
+	{RECEIVE_ACK,waiting_draw_ack,&send_draw_card},
 	//{TIMEOUT,waiting_action_ack,&resend_action}
 	
 	
