@@ -20,7 +20,7 @@ extern "C" {
 
     #define EDA_DISPLAY_ICON                "Common Images Files/hanabi_icon.png"
 	#define EDA_DISPLAY_TITLE				"Hanabi Card Game"
-    #define BACKGROUND_MUSIC				"Music/ironman.wav"
+    #define BACKGROUND_MUSIC				"Music/track3.wav"
 
     int allegro_startup(void);
     void allegro_shut_down(void);
