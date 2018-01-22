@@ -22,7 +22,10 @@ Eda_Menu_Settings::Eda_Menu_Settings(game_configuration_t game_configuration)
 	apply = new Eda_Button(0.9, 0.8, 0.045 * 3.75, 0.08, CLUE_BUT_DIR "apply.png", CLUE_BUT_DIR "apply_hover.png", NULL, EDA_BUTTON_APPLY_PRESSED);
 	cancel = new Eda_Button(0.9, 0.9, 0.045 * 3.75, 0.08, CLUE_BUT_DIR "cancel.png",CLUE_BUT_DIR "cancel_hover.png", NULL, EDA_BUTTON_CANCEL_PRESSED );
 	memory_help = new Eda_Button(0.2, 0.7, 1.2 * 0.045, 1.2 * 0.08, CLUE_BUT_DIR "mem_help.png",CLUE_BUT_DIR "mem_help_hover.png", CLUE_BUT_DIR "mem_help_selection.png", NO_EVENT );
-	full_screen = new Eda_Button(0.2, 0.85, 1.2 * 0.045, 1.2 * 0.08, CLUE_BUT_DIR "mem_help.png",CLUE_BUT_DIR "mem_help_hover.png", CLUE_BUT_DIR "mem_help_selection.png", NO_EVENT );
+	full_screen = new Eda_Button(0.2, 0.8, 1.2 * 0.045, 1.2 * 0.08, CLUE_BUT_DIR "mem_help.png",CLUE_BUT_DIR "mem_help_hover.png", CLUE_BUT_DIR "mem_help_selection.png", NO_EVENT );
+	music = new Eda_Button(0.2, 0.9, 1.2 * 0.045, 1.2 * 0.08, CLUE_BUT_DIR "mem_help.png",CLUE_BUT_DIR "mem_help_hover.png", CLUE_BUT_DIR "mem_help_selection.png", NO_EVENT );
+	
+	
 	
 	resolution_arrows[0] = new Eda_Button(0.7, 0.25, 1.2 * 0.045, 1.2 * 0.08, CLUE_BUT_DIR "arrow_right.png",CLUE_BUT_DIR "arrow_right_hover.png", NULL, NO_EVENT );
 	resolution_arrows[1] = new Eda_Button(0.3, 0.25, 1.2 * 0.045, 1.2 * 0.08, CLUE_BUT_DIR "arrow_left.png",CLUE_BUT_DIR "arrow_left_hover.png", NULL, NO_EVENT );
@@ -34,11 +37,14 @@ Eda_Menu_Settings::Eda_Menu_Settings(game_configuration_t game_configuration)
 	selected_theme = game_configuration.selected_theme;
 	enable_mem_help = game_configuration.memory_help;
 	enable_full_screen = game_configuration.full_screen;
+	enable_music = game_configuration.music;
 	
 	if(enable_mem_help)
 		memory_help->select();
 	if(enable_full_screen)
 		full_screen->select();
+	if(enable_music)
+		music->select();
 }
 
 Eda_Menu_Settings::Eda_Menu_Settings(const Eda_Menu_Settings& orig) {
@@ -49,6 +55,7 @@ Eda_Menu_Settings::~Eda_Menu_Settings()
 	delete apply;
 	delete cancel;
 	delete memory_help;
+	delete music;
 	delete resolution_arrows[0];
 	delete resolution_arrows[1];
 	delete theme_arrows[0];
@@ -67,6 +74,7 @@ void Eda_Menu_Settings::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanab
 	cancel->draw(display);
 	memory_help->draw(display);
 	full_screen->draw(display);
+	music->draw(display);
 	resolution_arrows[0]->draw(display);
 	resolution_arrows[1]->draw(display);
 	theme_arrows[0]->draw(display);
@@ -80,8 +88,9 @@ void Eda_Menu_Settings::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanab
 	draw_font(display,FONT_PATH "/OpenSans-Regular.ttf", 0.5, 0.53 , 0.1, available_themes[selected_theme], al_color_name("black") );
 	
 	draw_font(display,FONT_PATH "/Alien-Encounters-Solid-Regular.ttf", 0.5, 0.7 , 0.12, "Memory Help", al_color_name("black") );
-	draw_font(display,FONT_PATH "/Alien-Encounters-Solid-Regular.ttf", 0.5, 0.85 , 0.12, "Full Screen", al_color_name("black") );
+	draw_font(display,FONT_PATH "/Alien-Encounters-Solid-Regular.ttf", 0.5, 0.8 , 0.12, "Full Screen", al_color_name("black") );
 	//draw_font(display,"AlexBrush-Regular.ttf", 0.35, 0.78 , 0.2, "Memory Help", al_color_name("black") );
+	draw_font(display,FONT_PATH "/Alien-Encounters-Solid-Regular.ttf", 0.5, 0.9 , 0.12, "Music", al_color_name("black") );
 	al_flip_display();
 }
 
@@ -93,6 +102,7 @@ void Eda_Menu_Settings::update_buttons(ALLEGRO_DISPLAY * display, float x_mouse,
 	cancel->update_hovering(display, x_mouse, y_mouse);
 	memory_help->update_hovering(display, x_mouse, y_mouse);
 	full_screen->update_hovering(display, x_mouse, y_mouse);
+	music->update_hovering(display,x_mouse,y_mouse);
 	resolution_arrows[0]->update_hovering(display, x_mouse, y_mouse);
 	resolution_arrows[1]->update_hovering(display, x_mouse, y_mouse);
 	theme_arrows[0]->update_hovering(display, x_mouse, y_mouse);
@@ -117,6 +127,8 @@ bool Eda_Menu_Settings::check_for_click(ALLEGRO_DISPLAY * display, float x_mouse
 		selected_theme = (selected_theme + 1) % HANABI_NUMBER_THEMES;
 	else if( theme_arrows[1]->check_mouse_over(display,x_mouse,y_mouse) )
 		selected_theme = (selected_theme + HANABI_NUMBER_THEMES - 1) % HANABI_NUMBER_THEMES;
+	else if(music ->check_mouse_over_toggle(display, x_mouse, y_mouse))
+		enable_music = !enable_music;
 	
 	else if( apply->check_mouse_over(display, x_mouse, y_mouse) )
 		button_event_queue.push( apply->get_click_event() );
@@ -169,5 +181,12 @@ void Eda_Menu_Settings::update_game_settings(hanabi_game_data_t & game_data)
 			!(al_get_display_flags(game_data.display) & ALLEGRO_FULLSCREEN_WINDOW));
 	}
 	
+	game_data.game_configuration.music = enable_music;
+	
+	if(enable_music)		
+		game_data.main_music = play_main_music();
+	else
+		stop_main_music(game_data.main_music);
+
 }
 

@@ -47,6 +47,8 @@ static void game_shutdown(hanabi_game_data_t &hanabi_game_data);
 
 int main(void)
 {		
+	   
+	
 	hanabi_game_data_t hanabi_game_data;
 	ALLEGRO_EVENT ev;
 	std::queue<hanabi_game_event_t> button_event_queue;
@@ -103,7 +105,6 @@ unsigned int game_startup(hanabi_game_data_t &hanabi_game_data)
 {
 	unsigned int height, width; //Variables used for screen height and width
 	load_configuration(&hanabi_game_data);
-	hanabi_game_data.main_music = loadPlayMusic(); //Loads and play music.
 	//stopMusic(hanabi_game_data.main_music); //Stops background music. 
 	
 	sscanf(get_resolution(hanabi_game_data.game_configuration.selected_resolution), "%dx%d",&width, &height);

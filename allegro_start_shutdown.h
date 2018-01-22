@@ -14,13 +14,13 @@
 extern "C" {
 #endif
 
-	 #include <allegro5/allegro_audio.h>
+	 
     #define AL_STARTUP_ERROR -1
     #define AL_STARTUP_SUCCESS 0
 
     #define EDA_DISPLAY_ICON                "Common Images Files/hanabi_icon.png"
 	#define EDA_DISPLAY_TITLE				"Hanabi Card Game"
-    #define BACKGROUND_MUSIC				"Music/track3.wav"
+    #define BACKGROUND_MUSIC				""
 
     int allegro_startup(void);
     void allegro_shut_down(void);

@@ -34,6 +34,8 @@ private:
 	Eda_Button * full_screen; 
 	Eda_Button * apply;
 	Eda_Button * cancel;
+	Eda_Button * music;
+			
 	
 	const char ** available_resolutions;//[HANABI_NUMBER_RESOLUTIONS];
 	const char ** available_themes;//[HANABI_NUMBER_THEMES];
@@ -42,6 +44,7 @@ private:
 	unsigned int selected_theme; //0 to number of themes
 	bool enable_full_screen;
 	bool enable_mem_help;
+	bool enable_music;
 };
 
 

@@ -13,6 +13,7 @@
 #define MONO_FONT_PATH "Fonts/DroidSansMono.ttf"
 #define COMMON_FILE_PATH "Common Images Files"
 #define FONT_PATH "Fonts"
+#define NUM_SAMPLES 4
 
 #include "Hanabi_Skin.h"
 #include "Hanabi_Board.h"
@@ -30,6 +31,8 @@ typedef struct
 	bool memory_help;
 	bool sound_mute;
 	bool full_screen;
+	bool music;
+
 }game_configuration_t;
 
 typedef struct
@@ -60,6 +63,7 @@ void get_static_themes_resolutions(const char *** available_themes ,  const char
 const char * get_resolution(unsigned int num_resol);
 const char * get_theme(unsigned int num_theme);
 unsigned int calculate_font_size (ALLEGRO_DISPLAY *display, float x_size_percent , float y_size_percent,char * path, unsigned int max_size);
-
+ALLEGRO_SAMPLE *play_main_music();
+void stop_main_music(ALLEGRO_SAMPLE *sample);
 #endif /* SETTING_MANAGEMENT_H */
 

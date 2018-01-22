@@ -6,9 +6,11 @@
  */
 
 #include "setting_management.h"
+#include "allegro_start_shutdown.h"
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <stdlib.h>  
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_font.h>
@@ -79,7 +81,7 @@ void load_configuration(hanabi_game_data_t * hanabi_game_data)
 
 void load_default_configuration(hanabi_game_data_t * hanabi_game_data)
 {
-	
+	hanabi_game_data->game_configuration.music = false;
 	hanabi_game_data->game_configuration.memory_help = false;
 	hanabi_game_data->game_configuration.full_screen = false;
 	hanabi_game_data->game_configuration.sound_mute = false;
@@ -155,4 +157,29 @@ unsigned int calculate_font_size (ALLEGRO_DISPLAY *display, float x_size_percent
 
 	else
 		return i; //Returns the font size 
+}
+
+ALLEGRO_SAMPLE *play_main_music()
+{
+	int rand_num = rand() % NUM_SAMPLES;   
+
+	const char *sample_array[] = {"Music/track1.wav", "Music/track2.wav", "Music/track3.wav", "Music/track4.wav"};
+
+	ALLEGRO_SAMPLE *sample = al_load_sample( sample_array[rand_num]);
+   
+	if(sample)
+		al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL); 
+		
+	else
+		fprintf(stderr,"Unable to load background music\n");
+	
+	return sample;
+}
+
+
+void stop_main_music(ALLEGRO_SAMPLE *sample)
+{
+	al_stop_samples();
+	if(sample!=NULL)
+		al_destroy_sample(sample);
 }
