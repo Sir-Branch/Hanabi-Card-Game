@@ -10,8 +10,9 @@
 
 #include "hanabi_events.h"
 #include "hanabi_game_data.h"
+#include "hanabi_game_fsm.h"
 
-void dispatch_event(hanabi_game_event_t event, hanabi_game_data_t * hanabi_game_data);
+void dispatch_event(hanabi_game_event_t event, hanabi_game_data_t * hanabi_game_data,std::queue<hanabi_fsm_events_t> *software_event_queue);
 
 
 #endif /* EVENT_DISPACHER_H */

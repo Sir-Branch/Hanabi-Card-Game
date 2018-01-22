@@ -8,7 +8,7 @@
 #ifndef SETTING_MANAGEMENT_H
 #define SETTING_MANAGEMENT_H
 
-#define HANABI_NUMBER_RESOLUTIONS	6	//1024×576, 1152×648, 1280×720, 1366×768, 1600×900, 1920×1080
+#define HANABI_NUMBER_RESOLUTIONS	7	//1024×576, 1152×648, 1280×720, 1366×768, 1600×900, 1920×1080
 #define HANABI_NUMBER_THEMES		2
 #define MONO_FONT_PATH "Fonts/DroidSansMono.ttf"
 #define COMMON_FILE_PATH "Common Images Files"
@@ -18,6 +18,7 @@
 #include "Hanabi_Board.h"
 #include "Eda_Menu.h"
 #include "TFTPCxn.h"
+#include "Networking.h"
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 #include <string>
@@ -39,10 +40,12 @@ typedef struct
 	ALLEGRO_DISPLAY * display;
 	Eda_Menu * active_menu;
 	bool do_exit, redraw;
-	TFTPCxn * net_connection;
+	bool connected, check_connection;
+	Networking * net_connection;
     TFTP_Packet * last_received_pck;
 	ALLEGRO_SAMPLE *main_music;
-	std::string player_name;	
+	std::string player_name,other_player_name;	
+	std::string join_ip;
 }hanabi_game_data_t;
 
 void load_configuration(hanabi_game_data_t * hanabi_game_data);

@@ -22,8 +22,8 @@ public:
 	void update_buttons(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse);
 	bool check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse, std::queue<hanabi_game_event_t> &button_event_queue);
 	void manage_keyboard_stroge(unsigned int allegro_key);
-	const char* read_ip_input(void);
-	const char* read_name_input(void);
+	std::string read_ip_input(void);
+	std::string read_name_input(void);
 
 private:
 	

@@ -15,8 +15,9 @@
 #include "TFTP_Packet.h"
 
 #define DEF_REMOTE_PORT		13796					// default connect port number 13796
-#define DEF_SOCK_TIMEOUT	(APR_USEC_PER_SEC * 5)	//TIMEOUT DE TODAS LAS OPERACIONES (ENVIAR, RECIBIR, CONECTAR) EN SEGUNDOS
-#define HOME_ADRESS			"192.168.43.187"					//aca escribimos el ip de esta pc, es decir, del host.
+#define DEF_TIMEOUT_SECS	0.1
+#define DEF_SOCK_TIMEOUT	100		//(APR_USEC_PER_SEC * 5)	//TIMEOUT DE TODAS LAS OPERACIONES (ENVIAR, RECIBIR, CONECTAR) EN SEGUNDOS
+#define HOME_ADRESS			"127.0.0.1"					//aca escribimos el ip de esta pc, es decir, del host.
 #define DEF_SOCKET_BACKLOG	SOMAXCONN				// cantidad maxima que el sistema operativo pone para aceptar.
 #define DEF_IPMODE			AF_INET
 
@@ -28,7 +29,7 @@ public:
 	virtual ~TFTPCxn();
 	//apr_socket_t * get_cxn_socket(); //Shouldn't be necessary ....
 	bool send_packet(TFTP_Packet * pck_to_send);
-	bool receive_packet(TFTP_Packet ** pck_to_recieve);
+	virtual bool receive_packet(TFTP_Packet ** pck_to_recieve);
 	bool connection_status_ok(void);
         apr_socket_t* get_cxn_socket (void);
 	

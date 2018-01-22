@@ -32,8 +32,11 @@
 #include "event_handler_allegro.h"
 #include "Eda_Menu_Network.h"
 #include "setting_management.h"
+#include "hanabi_game_fsm.h"
+#include "event_generator.h"
 
 #define FPS				30.0
+#define NETWORK_TIMER_RATE	0.001
 //#define SCREEN_W		1152 
 //#define SCREEN_H		648
 //16:9 1280×720 1024x576
@@ -45,9 +48,10 @@ int main(void)
 	hanabi_game_data_t hanabi_game_data;
 	ALLEGRO_EVENT ev;
 	ALLEGRO_EVENT_QUEUE *event_queue = NULL; //Declaration of allegro event queue
-	ALLEGRO_TIMER *timer = NULL; //Declaration of allegro timer
+	ALLEGRO_TIMER * fps_timer = NULL, * network_timer = NULL;
 	unsigned int height, width; //Variables used for screen height and width
-	std::queue<hanabi_game_event_t> button_event_queue, network_event_queue, software_event_queue;
+	std::queue<hanabi_game_event_t> button_event_queue;
+	std::queue<hanabi_fsm_events_t> software_event_queue;
 
 	load_configuration(&hanabi_game_data);
 	hanabi_game_data.main_music = loadPlayMusic(); //Loads and play music.
@@ -55,16 +59,25 @@ int main(void)
 	
 	
 	sscanf(get_resolution(hanabi_game_data.game_configuration.selected_resolution), "%dx%d",&width, &height);
- 
+	apr_initialize();
+	
 	if(allegro_startup() == AL_STARTUP_ERROR) {
 		fprintf(stderr, "failed to initialize allegro!\n");
 		allegro_shut_down();
 		return -1;
 	}
  
-	timer = al_create_timer(1.0 / FPS);
-	if(!timer) {
-		fprintf(stderr, "failed to create timer!\n");
+	fps_timer = al_create_timer(1.0 / FPS);
+	if(!fps_timer) {
+		fprintf(stderr, "failed to create fps_timer!\n");
+		allegro_shut_down();
+		return -1;
+	}
+	network_timer = al_create_timer(NETWORK_TIMER_RATE);
+	if(!network_timer) {
+		fprintf(stderr, "failed to create network timer!\n");
+		al_destroy_timer(fps_timer);
+		al_destroy_timer(network_timer);
 		allegro_shut_down();
 		return -1;
 	}
@@ -76,7 +89,8 @@ int main(void)
 	hanabi_game_data.display = create_display(width, height);//Creation of allegro display
 	if(!hanabi_game_data.display) {
 		fprintf(stderr, "failed to create display!\n");
-		al_destroy_timer(timer);
+		al_destroy_timer(fps_timer);
+		al_destroy_timer(network_timer);
 		allegro_shut_down();
 		return -1;
 	}
@@ -85,14 +99,16 @@ int main(void)
 	if(!event_queue) {
 		fprintf(stderr, "failed to create event_queue!\n");
 		al_destroy_display(hanabi_game_data.display);
-		al_destroy_timer(timer);
+		al_destroy_timer(fps_timer);
+		al_destroy_timer(network_timer);
 		allegro_shut_down();
 		return -1;
 	}
         
         //Registration of display, timer, mouse and keyboard
 	al_register_event_source(event_queue, al_get_display_event_source(hanabi_game_data.display));
-	al_register_event_source(event_queue, al_get_timer_event_source(timer));
+	al_register_event_source(event_queue, al_get_timer_event_source(fps_timer));
+	al_register_event_source(event_queue, al_get_timer_event_source(network_timer));
 	al_register_event_source(event_queue, al_get_mouse_event_source());
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	
@@ -100,87 +116,155 @@ int main(void)
 	hanabi_game_data.theme_settings->load_theme(get_theme(hanabi_game_data.game_configuration.selected_theme));
 	
 	hanabi_game_data.game_board = new Hanabi_Board();
-	hanabi_game_data.game_board->lose_live();
-	hanabi_game_data.game_board->remove_clue_token();
-	hanabi_game_data.game_board->start_game();
-	
+//	hanabi_game_data.game_board->lose_live();
+//	hanabi_game_data.game_board->remove_clue_token();
+//	hanabi_game_data.game_board->start_game();
+//	
 	hanabi_game_data.do_exit = false;
 	hanabi_game_data.redraw = false;
+	hanabi_game_data.connected = false;
 
 	hanabi_game_data.active_menu = new Eda_Menu_Main(hanabi_game_data.theme_settings->theme);
 	hanabi_game_data.active_menu->draw(hanabi_game_data.display,hanabi_game_data.theme_settings, hanabi_game_data.game_board);
-	al_start_timer(timer);
+	al_start_timer(fps_timer);
+	al_start_timer(network_timer);
 
-	
+	STATE * current_state = get_starting_state();
+	TFTP_Packet * temp_pck = NULL;
 	while(!hanabi_game_data.do_exit)  // idem anterior
 	{
 		
 		if( al_get_next_event(event_queue, &ev) )
-			event_handle_allegro(ev, &hanabi_game_data, &button_event_queue);
+		{
+			if(ev.type == ALLEGRO_EVENT_TIMER) 
+			{
+				if(ev.timer.source == fps_timer)
+					hanabi_game_data.redraw = true;
+				else if(ev.timer.source == network_timer)
+					hanabi_game_data.check_connection = true;
+			}
+			else
+				event_handle_allegro(ev, &hanabi_game_data, &button_event_queue);
+		}
 		
 		if(!button_event_queue.empty())
 		{
-			dispatch_event(button_event_queue.front(), &hanabi_game_data);
+			dispatch_event(button_event_queue.front(), &hanabi_game_data,&software_event_queue );
 			button_event_queue.pop();
 		}
 		
-		if(hanabi_game_data.redraw && al_is_event_queue_empty(event_queue) && button_event_queue.empty() ) 
+		if(!software_event_queue.empty())
+		{
+			std::cout << "Software event received" << software_event_queue.front() << std::endl;
+			std::cout << "State before" << current_state << std::endl;
+			current_state = manage_fsm(current_state, software_event_queue.front(), &hanabi_game_data);
+			software_event_queue.pop();
+			std::cout << "State after" << current_state << std::endl;
+		}
+		if(hanabi_game_data.redraw && al_is_event_queue_empty(event_queue)
+			&& button_event_queue.empty() && software_event_queue.empty() ) 
 		{
 			hanabi_game_data.redraw = false;
 			hanabi_game_data.active_menu->draw(hanabi_game_data.display,hanabi_game_data.theme_settings, hanabi_game_data.game_board);
 		}
-
+		
+		if(hanabi_game_data.connected && hanabi_game_data.check_connection)// && software_event_queue.empty())
+		{
+			hanabi_game_data.check_connection = false;
+			if( hanabi_game_data.net_connection->receive_packet(&temp_pck) )
+			{
+				hanabi_game_data.last_received_pck = temp_pck;
+				software_event_queue.push(event_generator(temp_pck));
+				std::cout<<"Packet received ";
+				temp_pck->print_packet();
+			}
+		}
+		
 	}
 
 	save_configuration(&hanabi_game_data);
 	
-	al_destroy_timer(timer);
+	al_destroy_timer(fps_timer);
 	al_destroy_display(hanabi_game_data.display);
 	al_destroy_event_queue(event_queue);
 	allegro_shut_down();
 	return 0;
 }
 
-#else
+#else 
+
+
 
 #include <cstdlib>
 #include <iostream>
 #include "TFTPServer.h"
+#include "my_sleep_ms.h"
+#include "Networking.h"
 #include "TFTPClient.h"
 #include "TFTP_Packet.h"
 #include "Hanabi_Name_Is_Packet.h"
-#include "Client.h"
+#include <unistd.h>
 using namespace std;
 
 int main(int argc, char** argv) {
+	bool connected = false;
 	apr_initialize();
-
-	Net_connection * cxn = new Client();
-	std::cout << "Will search for server for 5 seconds \n";
-	if(!((Client *)cxn)->connect_to_server(HOME_ADRESS,DEF_REMOTE_PORT,1000) )
+	srand(time(NULL));
+	Networking network;
+	string ip = "192.168.0.23";
+	
+	
+	char buffer[1000] = {0};
+	char inputed_char;
+	unsigned int length;
+	TFTP_Packet * tosend, * toreceive;
+	switch( inputed_char = getchar())
 	{
-		delete cxn;
-		cxn = new Server(DEF_REMOTE_PORT);
-		std::cout << "Server will now try listening for client for 500secs \n";
-		while (!((Server*)cxn)->listen_for_connection(500* 1000) )
-		{
+		case 'c':
 			getchar();
-		}
+			network.try_connect_server(2.0, ip);
+			tosend = new Hanabi_Name_Is_Packet( "I'm Client" );
+			//client
+			std::cout << "I'm Client" <<std::endl;
+			getchar();
+			network.send_packet(tosend);
+			getchar();
+			network.receive_packet(&toreceive);
+			getchar();
+			break;
+			
+		case 's':
+						getchar();
+			tosend = new Hanabi_Name_Is_Packet( "I'm Server" );
+			std::cout << "I'm Server" <<std::endl;
+			//network.abortConnecting();
+			//network.prepareToListen();
+			//server
+			if(network.listen_for_client(100))
+			{
+				getchar();
+				network.receive_packet(&toreceive);
+				getchar();
+				network.send_packet(tosend);
+				getchar();
+			}
+			break;
 	}
-	else
-	{
-		std::cout << "ABLE TO CONNECT TO SERVER YEAH BITCHES \n";
-		std::cout << "Server press character to receive packet WAIT FOR SERVER TO SEND \n";
-		getchar();
-	}
-	printf("END PROGRAM \n");
+	
+	
+
 	while(1);
 	return 0;
 }
 
+
+
+
+
+
+
+
 #endif 
-
-
 #if 0
 
 #include <cstdlib>
@@ -189,6 +273,7 @@ int main(int argc, char** argv) {
 #include "TFTPClient.h"
 #include "TFTP_Packet.h"
 #include "Hanabi_Name_Is_Packet.h"
+#include <unistd.h>
 using namespace std;
 
 int main(int argc, char** argv) {
@@ -204,30 +289,48 @@ int main(int argc, char** argv) {
 		if (((TFTPServer*)cxn)->listen_for_client(500.0) )
 		{
 			std::cout << "Able to connect to client \n";
-		
 			std::cout << "Server press character to send name packet \n";
-			getchar();
-			TFTP_Packet * tosend = new Hanabi_Name_Is_Packet( "Rama Merello" );
-			tosend->print_packet();
-			if (cxn->send_packet(tosend) == APR_SUCCESS )
-				std::cout << "Able to send packet \n";
-			else
-				std::cout << "Unable to send packet \n";
+			while( getchar() != 'q')
+			{
+				TFTP_Packet * toreceive;// = new Hanabi_Name_Is_Packet( "" );
+				if(cxn->receive_packet(&toreceive))
+				{
+					std::cout << "Packet receive correctly \n" ;
+					toreceive->print_packet();
+				}
+				
+				TFTP_Packet * tosend = new Hanabi_Name_Is_Packet( "" );
+				tosend->print_packet();
+				if (cxn->send_packet(tosend) )
+					std::cout << "Able to send packet \n";
+				else
+					std::cout << "Unable to send packet \n";
+			}
 		}
 	}
 	else
 	{
 		std::cout << "ABLE TO CONNECT TO SERVER YEAH BITCHES \n";
-		std::cout << "Server press character to receive packet WAIT FOR SERVER TO SEND \n";
-		getchar();
-		TFTP_Packet * toreceive;
-		if(cxn->receive_packet(&toreceive))
+		//std::cout << "Server press character to receive packet WAIT FOR SERVER TO SEND \n";
+//		TFTP_Packet * tosend = new Hanabi_Name_Is_Packet( "Sent by Client" );
+//		tosend->print_packet();
+//				if (cxn->send_packet(tosend) )
+//					std::cout << "Able to send packet \n";
+//				else
+//					std::cout << "Unable to send packet \n";
+
+		while( 1 )
 		{
-			std::cout << "Packet receive correctly \n" ;
-			toreceive->print_packet();
+			usleep(1000);
+			TFTP_Packet * toreceive;
+			if(cxn->receive_packet(&toreceive))
+			{
+				std::cout << "Packet receive correctly \n" ;
+				toreceive->print_packet();
+			}
+			//else 
+			//	std::cout << "No Packet to receive\n" ;
 		}
-		else 
-			std::cout << "Packet not receive correctly \n" ;
 	}
 	printf("END PROGRAM \n");
 	while(1);

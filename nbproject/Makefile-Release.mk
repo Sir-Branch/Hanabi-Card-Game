@@ -64,6 +64,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Hanabi_We_Won_Packet.o \
 	${OBJECTDIR}/Hanabi_You_Have_Packet.o \
 	${OBJECTDIR}/Hanabi_You_Start_Packet.o \
+	${OBJECTDIR}/Networking.o \
 	${OBJECTDIR}/TFTPClient.o \
 	${OBJECTDIR}/TFTPCxn.o \
 	${OBJECTDIR}/TFTPServer.o \
@@ -256,6 +257,11 @@ ${OBJECTDIR}/Hanabi_You_Start_Packet.o: Hanabi_You_Start_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Hanabi_You_Start_Packet.o Hanabi_You_Start_Packet.cpp
+
+${OBJECTDIR}/Networking.o: Networking.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Networking.o Networking.cpp
 
 ${OBJECTDIR}/TFTPClient.o: TFTPClient.cpp
 	${MKDIR} -p ${OBJECTDIR}

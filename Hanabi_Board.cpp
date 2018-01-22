@@ -395,7 +395,7 @@ void  Hanabi_Board::player_action_discard_card(unsigned int card_my_hand)
  * Return:
  *	-bool: Returns true if the hint was sent successfully
  */
-bool Hanabi_Board::player_action_give_clue(unsigned char value_or_suit, TFTPCxn * cxn)
+bool Hanabi_Board::player_action_give_clue(unsigned char value_or_suit, Networking * cxn)
 {
 	Hanabi_You_Have_Packet * to_send = new Hanabi_You_Have_Packet(value_or_suit);
 	return (APR_SUCCESS == cxn->send_packet(to_send));
@@ -550,11 +550,13 @@ void Hanabi_Board::receive_start_game(const char * start_pck)
 		card_value = (hanabi_values_t)( start_pck[1 + i*2]-'0' );
 		card_suit = (hanabi_suits_t) (start_pck[2 + i*2] );
 		my_cards[i].playing_card = Hanabi_Card(card_suit, card_value);
-		
+		this->hanabi_game_deck.remove_specific_card(my_cards[i].playing_card);
 		//Server cards
 		card_value = (hanabi_values_t)( start_pck[1 + i*2 + HANABI_CARDS_PER_HAND*2]-'0' );
 		card_suit = (hanabi_suits_t) (start_pck[2 + i*2 + HANABI_CARDS_PER_HAND*2] );
 		otherplayers_hand[i] = Hanabi_Card(card_suit, card_value);
+		this->hanabi_game_deck.remove_specific_card(otherplayers_hand[i]);
+
 	}
 	
 }

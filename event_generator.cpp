@@ -10,9 +10,9 @@
 #include "Hanabi_Network_Defines.h"
 
 
-unsigned int event_generator (TFTP_Packet* packet)
+hanabi_fsm_events_t event_generator(TFTP_Packet* packet)
 {
-    events_type_t event_name; 
+    hanabi_fsm_events_t event_name; 
     
     //I use switch to look all the packets and generate the correct event
     switch ((packet->get_data_pck())[0]){

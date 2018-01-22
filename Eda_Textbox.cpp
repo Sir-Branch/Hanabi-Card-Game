@@ -10,6 +10,7 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_color.h>
+#include <string>
 
 Eda_Textbox::Eda_Textbox(const Eda_Textbox& orig) {
 }
@@ -45,8 +46,9 @@ void Eda_Textbox::add_char_allegro(unsigned int allegro_key, textbox_modes_t tex
 	char char_to_add ='\0';
 	
 	
-	if(allegro_key == ALLEGRO_KEY_BACKSPACE && 
-		(this->num_in_buffer > 0 && !blink_placed || this->num_in_buffer > 1 && blink_placed)
+	if(allegro_key == ALLEGRO_KEY_BACKSPACE && (
+			(this->num_in_buffer > 0 && !blink_placed ) || 
+			(this->num_in_buffer > 1 && blink_placed))
 		)
 	{
 		num_in_buffer--;
@@ -176,6 +178,9 @@ void Eda_Textbox::draw(ALLEGRO_DISPLAY * display)
 	
 }
 
+#include <iostream>
+
+#warning "Remove after debugging"
 
 
 void Eda_Textbox::blink_input_char(unsigned int on_fps_rate, unsigned int on_fps_length)
@@ -197,7 +202,13 @@ void Eda_Textbox::blink_input_char(unsigned int on_fps_rate, unsigned int on_fps
 		on_count = 0;
 		count = 0;
 		this->blink_placed = false;
-		this->text_buffer[--num_in_buffer] = '\0';
+		if(!num_in_buffer)
+		{
+			this->text_buffer[num_in_buffer] = '\0';
+			std::cout << "This shouldn't be happening D: \n";
+		}
+		else
+			this->text_buffer[--num_in_buffer] = '\0';
 	}
 	
 }
@@ -215,7 +226,10 @@ void Eda_Textbox::deselect()
 
 }
 
-const char* Eda_Textbox::get_text_buffer(void)
+std::string Eda_Textbox::get_text_buffer(void)
 {
-    return text_buffer;
+	std::string buff_text(this->text_buffer);
+	if(blink_placed && buff_text.size() )
+		buff_text = buff_text.substr(0, buff_text.size()-1); // erases blinking character 
+    return buff_text;
 }

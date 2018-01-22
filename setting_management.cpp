@@ -14,9 +14,8 @@
 #include <allegro5/allegro_font.h>
 
 
-
 static const char * themes[HANABI_NUMBER_THEMES] = {"Classic" , "Pokemon" };
-static const char * resolutions[HANABI_NUMBER_RESOLUTIONS] = {"1024x576", "1152x648", "1280x720", "1366x768", "1600x900", "1920x1080" };
+static const char * resolutions[HANABI_NUMBER_RESOLUTIONS] = {"640x360","1024x576", "1152x648", "1280x720", "1366x768", "1600x900", "1920x1080" };
 
 static void load_default_configuration(hanabi_game_data_t * hanabi_game_data);
 

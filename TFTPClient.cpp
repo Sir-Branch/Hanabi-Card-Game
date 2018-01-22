@@ -34,9 +34,9 @@ apr_status_t TFTPClient::connect_server(const char* server_adress, unsigned int 
 	
 	if(	(cxn_status = apr_sockaddr_info_get(&sa, server_adress,ip_mode, port, 0, mem_pool))==APR_SUCCESS)
 	{
-		if( (cxn_status = apr_socket_create(&mysocket,APR_UNSPEC, SOCK_STREAM, APR_PROTO_TCP, mem_pool))==APR_SUCCESS)
+		if( (cxn_status = apr_socket_create(&mysocket,APR_INET, SOCK_STREAM, APR_PROTO_TCP, mem_pool))==APR_SUCCESS)
 		{
-			apr_socket_opt_set(mysocket, APR_SO_NONBLOCK, 1);//aqui ACTIVAMOS (PONIENDO 1) la opcion APR_SO_NONBLOCK. Si pusieramos 0 seria bloqueante.
+			//apr_socket_opt_set(mysocket, APR_SO_NONBLOCK, 1);//aqui ACTIVAMOS (PONIENDO 1) la opcion APR_SO_NONBLOCK. Si pusieramos 0 seria bloqueante.
 			apr_socket_timeout_set(mysocket, DEF_SOCK_TIMEOUT);//aqui seteamos el tiempo que tarda cualquier operacion (connect, send, reccv, etc) en tirar error si no pasa nada.
 			if(	(cxn_status = apr_socket_connect(mysocket, sa))==APR_SUCCESS)
 			{

@@ -24,8 +24,8 @@ public:
     virtual ~TFTPClient();
 	
     apr_status_t connect_server(const char* server_adress, unsigned int port /*= DEF_REMOTE_PORT*/ ,unsigned int ip_mode /*= DEF_IPMODE*/);
-    bool try_connect_server(double time_seconds,const char* server_adress, unsigned int port /*= DEF_REMOTE_PORT*/ ,
-											unsigned int ip_mode /*= DEF_IPMODE*/);
+    bool try_connect_server(double time_seconds,const char* server_adress, unsigned int port = DEF_REMOTE_PORT ,
+											unsigned int ip_mode = DEF_IPMODE);
 };
 
 

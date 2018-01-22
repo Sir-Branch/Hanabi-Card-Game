@@ -58,7 +58,6 @@
         <itemPath>Hanabi_Card.cpp</itemPath>
         <itemPath>Hanabi_Deck.cpp</itemPath>
         <itemPath>Token.cpp</itemPath>
-        <itemPath>event_generator.cpp</itemPath>
         <itemPath>hanabi_game_fsm.cpp</itemPath>
         <itemPath>hanabi_game_fsm_callbacks.cpp</itemPath>
         <itemPath>hanabi_game_fsm_callbacks.h</itemPath>
@@ -67,6 +66,8 @@
       <logicalFolder name="f4" displayName="Event Management" projectFiles="true">
         <itemPath>event_dispatcher.cpp</itemPath>
         <itemPath>event_dispatcher.h</itemPath>
+        <itemPath>event_generator.cpp</itemPath>
+        <itemPath>event_generator.h</itemPath>
         <itemPath>event_handler_allegro.cpp</itemPath>
         <itemPath>event_handler_allegro.h</itemPath>
         <itemPath>event_handler_button_clicks.cpp</itemPath>
@@ -128,6 +129,8 @@
           <itemPath>TFTP_Rq_Packet.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
+      <itemPath>Networking.cpp</itemPath>
+      <itemPath>Networking.h</itemPath>
       <itemPath>allegro_start_shutdown.c</itemPath>
       <itemPath>allegro_start_shutdown.h</itemPath>
       <itemPath>main.cpp</itemPath>
@@ -242,6 +245,19 @@
             <linkerOptionItem>`pkg-config --libs allegro_video-5`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs apr-1`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs apr-util-1`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro-5.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_acodec-5.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_audio-5.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_color-5.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_dialog-5.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_font-5.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_image-5.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_main-5.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_memfile-5.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_physfs-5.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_primitives-5.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs allegro_ttf-5.0`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs apr-1`</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -363,6 +379,10 @@
       </item>
       <item path="Hanabi_You_Start_Packet.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Networking.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Networking.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TFTPClient.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TFTPClient.h" ex="false" tool="3" flavor2="0">
@@ -408,6 +428,8 @@
       <item path="event_dispatcher.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="event_generator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="event_generator.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="event_handler_allegro.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -588,6 +610,10 @@
       </item>
       <item path="Hanabi_You_Start_Packet.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Networking.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Networking.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="TFTPClient.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="TFTPClient.h" ex="false" tool="3" flavor2="0">
@@ -633,6 +659,8 @@
       <item path="event_dispatcher.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="event_generator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="event_generator.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="event_handler_allegro.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -10,13 +10,14 @@
 
 #define HANABI_NAME_IS_SIZE_COUNT	1
 #define MAX_STRLEN	254	
-#define MIN(x,y) ((x>y)?(x):(y))
+#define MIN(x,y) ((x < y)?(x):(y))
 
-Hanabi_Name_Is_Packet::Hanabi_Name_Is_Packet(const char * const name ) : TFTP_Packet(HANABI_PCKS_OP_SIZE+ HANABI_NAME_IS_SIZE_COUNT +strlen(name))
+Hanabi_Name_Is_Packet::Hanabi_Name_Is_Packet(const char * const name ) : TFTP_Packet(HANABI_PCKS_OP_SIZE+ HANABI_NAME_IS_SIZE_COUNT + MIN(MAX_STRLEN,strlen(name)))
 {
+	unsigned char packet_length = MIN(MAX_STRLEN,strlen(name));
 	packet_data[0] = HANABI_NAME_IS_OP;
-	packet_data[1] = strlen(name);
-	memcpy(packet_data+2,name, MIN(MAX_STRLEN,strlen(name)) );
+	packet_data[1] = packet_length;
+	memcpy(packet_data+2,name, packet_length );
 	//VA SIN TERMINADOR packet_data[ MIN(MAX_STRLEN,strlen(name)) ] = '/0'; //Manually setting terminator
 	
 }

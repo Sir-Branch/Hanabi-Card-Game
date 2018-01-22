@@ -26,7 +26,7 @@ public:
     virtual ~TFTPServer();
 
     bool listen_for_client( double timeout_time); //in seconds double (supports miliseconds)
-	
+	//virtual bool receive_packet(TFTP_Packet ** pck_to_recieve);
 	
 protected:
 	TFTPServer(const TFTPServer& orig);

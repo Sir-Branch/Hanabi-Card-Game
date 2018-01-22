@@ -124,8 +124,9 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 		draw_graveyard(display,theme,
 						0.78,0.2,
 						0.063, 0.168,game_board);
-	draw_player_box_name(display, "el_terminador", 0.5, 0.25, 0.2, 0.025 );
-	draw_player_box_name(display, "gonza_puto", 0.5, 1-0.25, 0.2, 0.025);
+	#warning "Cambiar el uso de other_player_name al de game_data hay que cambiar la funcion draw para que reciba game_data"
+	draw_player_box_name(display, game_board->other_player_name.c_str(), 0.5, 0.25, 0.2, 0.025 );
+	//draw_player_box_name(display, "gonza_puto", 0.5, 1-0.25, 0.2, 0.025);
 	//draw_clue(display, theme, 
 				//	0.325, 0.9, 0.063, 0.168,0.005,
 				//	6,  cards_to_draw, )

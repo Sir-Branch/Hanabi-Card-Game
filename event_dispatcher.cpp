@@ -10,11 +10,11 @@
 #include "event_handler_network.h"
 #include "event_handler_software.h"
 
-void dispatch_event(hanabi_game_event_t event, hanabi_game_data_t * hanabi_game_data)
+void dispatch_event(hanabi_game_event_t event, hanabi_game_data_t * hanabi_game_data,std::queue<hanabi_fsm_events_t> *software_event_queue)
 {
 	if( event.type == HANABI_EVENT_BUTTON)
 	{
-		event_handle_button(event.button_event, hanabi_game_data);
+		event_handle_button(event.button_event, hanabi_game_data,software_event_queue );
 	}
 	else if( event.type == HANABI_EVENT_NETWORK)
 	{

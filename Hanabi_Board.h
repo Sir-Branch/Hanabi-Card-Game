@@ -14,6 +14,7 @@
 #include "Hanabi_Deck.h"
 #include "TFTPCxn.h"
 #include "Hanabi_Start_Info_Packet.h"
+#include "Networking.h"
 
 
 #define HANABI_LIGHT_TOKENS		3	//Numb of "lifes" 
@@ -45,8 +46,9 @@ public:
     //Players methods 
     bool player_action_play_card(unsigned int card_my_hand); 
     void player_action_discard_card(unsigned int card_my_hand);
-    bool player_action_give_clue(unsigned char value_or_suit, TFTPCxn * cxn );
-
+    bool player_action_give_clue(unsigned char value_or_suit, Networking * cxn );
+	std::string other_player_name;	
+#warning "Cambiar el uso de other_player_name al de game_data hay que cambiar la funcion draw para que reciba game_data"
 #warning "Falta probar give clue"
 	
     //Actions received methods

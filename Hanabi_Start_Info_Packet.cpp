@@ -17,7 +17,7 @@ Hanabi_Start_Info_Packet::Hanabi_Start_Info_Packet(Hanabi_Card client_hand[HANAB
 : TFTP_Packet(HANABI_PCKS_OP_SIZE+ 2 * HANABI_HAND_SIZE  * HANABI_CARD_SIZE_PCK) 
 {
 	packet_data[0] = HANABI_START_INFO_OP;	
-	for(int i = 0 , j = 0; i < HANABI_HAND_SIZE*HANABI_HAND_SIZE ; i += HANABI_CARD_SIZE_PCK , j++)
+	for(int i = 0 , j = 0; j < HANABI_HAND_SIZE ; i += HANABI_CARD_SIZE_PCK , j++)
 	{
 		packet_data[1+i] = (unsigned char)client_hand[j].get_value() + '0'; //Value in number convert to ascii
 		packet_data[2+i] = (unsigned char)client_hand[j].get_suit();

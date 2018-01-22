@@ -102,14 +102,19 @@ void Eda_Menu_Network::manage_keyboard_stroge(unsigned int allegro_key)
 		name_input->add_char_allegro(allegro_key,NICKNAME_MODE);
 }
 
+#warning "Maybe erase and make textbox public??"
 
-const char* Eda_Menu_Network::read_ip_input(void)
+std::string Eda_Menu_Network::read_ip_input(void)
 {
     return ip_input->get_text_buffer();
 }
 
-const char* Eda_Menu_Network::read_name_input(void)
+std::string Eda_Menu_Network::read_name_input(void)
 {
-	return name_input->get_text_buffer();
+	std::string temp = name_input->get_text_buffer();
+	if(!temp.size())
+		temp = "Player";
+	
+	return temp;
 
 }

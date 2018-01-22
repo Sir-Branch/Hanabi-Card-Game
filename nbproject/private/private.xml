@@ -25,10 +25,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/main.cpp</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/event_handler_allegro.cpp</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/event_dispatcher.cpp</file>
             <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/Eda_Menu_Network.cpp</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/Eda_Menu_Game.h</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/Eda_Menu_Game.cpp</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/TFTPCxn.h</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/event_handler_button_clicks.cpp</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/TFTPServer.cpp</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/TFTPCxn.cpp</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/setting_management.h</file>
         </group>
     </open-files>
 </project-private>

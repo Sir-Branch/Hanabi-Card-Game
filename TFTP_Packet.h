@@ -34,7 +34,7 @@ public:
     TFTP_Packet(long unsigned int size,  const char * data = NULL); //rule of zero/3/5
     TFTP_Packet(const TFTP_Packet& other);
     TFTP_Packet();
-    ~TFTP_Packet();
+    virtual ~TFTP_Packet();
 	
     //Funciones de paquetes recibir y enviar los mismo mediante un socket
     apr_status_t send_packet(apr_socket_t *sock); 

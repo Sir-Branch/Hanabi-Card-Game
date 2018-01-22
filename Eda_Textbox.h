@@ -13,6 +13,7 @@
 #include <allegro5/allegro5.h>
 
 #include "Eda_Button.h"
+#include <string>
 
 typedef enum{ NICKNAME_MODE, NUMBERS_ONLY_MODE, IP_MODE}textbox_modes_t;
 
@@ -23,7 +24,6 @@ typedef enum{ NICKNAME_MODE, NUMBERS_ONLY_MODE, IP_MODE}textbox_modes_t;
 #define BLINK_FPS_RATE		15	
 #define BLINK_ON_FPS_RATE	15
 
-#warning "Rethink text_box max text size on construct? Or calculate based on the font size???"
 class Eda_Textbox : public Eda_Button {
 public:
 	Eda_Textbox();
@@ -35,7 +35,7 @@ public:
 	void add_char_allegro(unsigned int allegro_key, textbox_modes_t textbox_mode);
 	bool load_mono_font(ALLEGRO_DISPLAY * display, char * path);
 	void draw(ALLEGRO_DISPLAY * display);
-    const char* get_text_buffer (void);
+	std::string get_text_buffer(void);
 	virtual void deselect();// Needs to remove blinker when not selected
 
 private:
