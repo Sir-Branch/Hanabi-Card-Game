@@ -39,6 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Eda_Button.o \
 	${OBJECTDIR}/Eda_Menu.o \
 	${OBJECTDIR}/Eda_Menu_Game.o \
+	${OBJECTDIR}/Eda_Menu_Gameover.o \
 	${OBJECTDIR}/Eda_Menu_Main.o \
 	${OBJECTDIR}/Eda_Menu_Network.o \
 	${OBJECTDIR}/Eda_Menu_Settings.o \
@@ -132,6 +133,11 @@ ${OBJECTDIR}/Eda_Menu_Game.o: Eda_Menu_Game.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Eda_Menu_Game.o Eda_Menu_Game.cpp
+
+${OBJECTDIR}/Eda_Menu_Gameover.o: Eda_Menu_Gameover.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Eda_Menu_Gameover.o Eda_Menu_Gameover.cpp
 
 ${OBJECTDIR}/Eda_Menu_Main.o: Eda_Menu_Main.cpp
 	${MKDIR} -p ${OBJECTDIR}

@@ -23,6 +23,7 @@
 #include "Eda_Menu_Settings.h"
 #include "Eda_Button.h"
 #include "Eda_Menu.h"
+#include "Eda_Menu_Gameover.h"
 #include "allegro5/allegro_font.h"
 #include "allegro5/allegro_ttf.h"
 #include "allegro_start_shutdown.h"

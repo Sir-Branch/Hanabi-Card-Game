@@ -130,7 +130,7 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 	//draw_clue(display, theme, 
 				//	0.325, 0.9, 0.063, 0.168,0.005,
 				//	6,  cards_to_draw, )
-
+	
 	al_flip_display();
 }
 
