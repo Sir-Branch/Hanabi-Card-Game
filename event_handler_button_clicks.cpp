@@ -49,7 +49,7 @@ void event_handle_button(event_button_t button_event,hanabi_game_data_t * hanabi
 	else if(button_event == EDA_BUTTON_APPLY_PRESSED)
 	{
 		software_event_queue->push(APPLY_CLICKED);
-#warning "Change reference for pointer in Eda_Menu_Settings update game setting method(class function) and change to recieve three things"
+		#warning "Change reference for pointer in Eda_Menu_Settings update game setting method(class function) and change to recieve three things"
 		((Eda_Menu_Settings *)hanabi_game_data->active_menu)->update_game_settings(*hanabi_game_data);
 		delete hanabi_game_data->active_menu;
 		hanabi_game_data->active_menu = new Eda_Menu_Main(hanabi_game_data->theme_settings->theme);
@@ -60,7 +60,6 @@ void event_handle_button(event_button_t button_event,hanabi_game_data_t * hanabi
 //		hanabi_game_data->player_name = 
 		std::cout << "CLient\n";
 		software_event_queue->push(JOIN_CLICKED);
-		#warning "Puede ser al pedo la variable join_ip"
 		
 		hanabi_game_data->join_ip = ((Eda_Menu_Network*)hanabi_game_data->active_menu)->read_ip_input();
 		hanabi_game_data->player_name = ((Eda_Menu_Network*)hanabi_game_data->active_menu)->read_name_input();
@@ -73,7 +72,6 @@ void event_handle_button(event_button_t button_event,hanabi_game_data_t * hanabi
 			hanabi_game_data->active_menu = new Eda_Menu_Game(hanabi_game_data->theme_settings->theme);
 			hanabi_game_data->connected = true;
 			std::cout<< "Client has found and connected to server\n"; 
-			
 		}
 		else
 		{

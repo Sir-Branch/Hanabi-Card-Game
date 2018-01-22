@@ -34,16 +34,22 @@ typedef struct
 
 typedef struct
 {
+	bool do_exit, redraw;
+	bool connected, check_connection;
+
+    TFTP_Packet * last_received_pck;
+	Networking * net_connection;
+
+	ALLEGRO_DISPLAY * display;
+	ALLEGRO_SAMPLE *main_music;
+	ALLEGRO_TIMER * fps_timer = NULL, * network_timer = NULL;
+	ALLEGRO_EVENT_QUEUE *event_queue;
+	
 	game_configuration_t game_configuration;
 	Hanabi_Board * game_board;
 	Hanabi_Skin * theme_settings;
-	ALLEGRO_DISPLAY * display;
 	Eda_Menu * active_menu;
-	bool do_exit, redraw;
-	bool connected, check_connection;
-	Networking * net_connection;
-    TFTP_Packet * last_received_pck;
-	ALLEGRO_SAMPLE *main_music;
+	
 	std::string player_name,other_player_name;	
 	std::string join_ip;
 }hanabi_game_data_t;

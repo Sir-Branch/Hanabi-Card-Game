@@ -42,112 +42,25 @@
 //#define SCREEN_H		648
 //16:9 1280×720 1024x576
 
- 
+static unsigned int game_startup(hanabi_game_data_t & hanabi_game_data);
+static void game_shutdown(hanabi_game_data_t &hanabi_game_data);
+
 int main(void)
-{
-						
+{		
 	hanabi_game_data_t hanabi_game_data;
 	ALLEGRO_EVENT ev;
-	ALLEGRO_EVENT_QUEUE *event_queue = NULL; //Declaration of allegro event queue
-	ALLEGRO_TIMER * fps_timer = NULL, * network_timer = NULL;
-	unsigned int height, width; //Variables used for screen height and width
 	std::queue<hanabi_game_event_t> button_event_queue;
 	std::queue<hanabi_fsm_events_t> software_event_queue;
-
-	load_configuration(&hanabi_game_data);
-	hanabi_game_data.main_music = loadPlayMusic(); //Loads and play music.
-	//stopMusic(hanabi_game_data.main_music); //Stops background music. 
-	
-	
-	sscanf(get_resolution(hanabi_game_data.game_configuration.selected_resolution), "%dx%d",&width, &height);
-	apr_initialize();
-	
-	if(allegro_startup() == AL_STARTUP_ERROR) {
-		fprintf(stderr, "failed to initialize allegro!\n");
-		allegro_shut_down();
-		return -1;
-	}
- 
-	fps_timer = al_create_timer(1.0 / FPS);
-	if(!fps_timer) {
-		fprintf(stderr, "failed to create fps_timer!\n");
-		allegro_shut_down();
-		return -1;
-	}
-	network_timer = al_create_timer(NETWORK_TIMER_RATE);
-	if(!network_timer) {
-		fprintf(stderr, "failed to create network timer!\n");
-		al_destroy_timer(fps_timer);
-		al_destroy_timer(network_timer);
-		allegro_shut_down();
-		return -1;
-	}
-
-	if(hanabi_game_data.game_configuration.full_screen) //Set of fullscreen window mode
-		al_set_new_display_flags( ALLEGRO_FULLSCREEN_WINDOW);
-	
-	
-	hanabi_game_data.display = create_display(width, height);//Creation of allegro display
-	if(!hanabi_game_data.display) {
-		fprintf(stderr, "failed to create display!\n");
-		al_destroy_timer(fps_timer);
-		al_destroy_timer(network_timer);
-		allegro_shut_down();
-		return -1;
-	}
- 
-	event_queue = al_create_event_queue(); //Creation of allegro event queue, if an error is found, the display, timer and allegro are destroy and the program is terminated
-	if(!event_queue) {
-		fprintf(stderr, "failed to create event_queue!\n");
-		al_destroy_display(hanabi_game_data.display);
-		al_destroy_timer(fps_timer);
-		al_destroy_timer(network_timer);
-		allegro_shut_down();
-		return -1;
-	}
-        
-        //Registration of display, timer, mouse and keyboard
-	al_register_event_source(event_queue, al_get_display_event_source(hanabi_game_data.display));
-	al_register_event_source(event_queue, al_get_timer_event_source(fps_timer));
-	al_register_event_source(event_queue, al_get_timer_event_source(network_timer));
-	al_register_event_source(event_queue, al_get_mouse_event_source());
-	al_register_event_source(event_queue, al_get_keyboard_event_source());
-	
-	hanabi_game_data.theme_settings = new Hanabi_Skin();
-	hanabi_game_data.theme_settings->load_theme(get_theme(hanabi_game_data.game_configuration.selected_theme));
-	
-	hanabi_game_data.game_board = new Hanabi_Board();
-//	hanabi_game_data.game_board->lose_live();
-//	hanabi_game_data.game_board->remove_clue_token();
-//	hanabi_game_data.game_board->start_game();
-//	
-	hanabi_game_data.do_exit = false;
-	hanabi_game_data.redraw = false;
-	hanabi_game_data.connected = false;
-
-	hanabi_game_data.active_menu = new Eda_Menu_Main(hanabi_game_data.theme_settings->theme);
-	hanabi_game_data.active_menu->draw(hanabi_game_data.display,hanabi_game_data.theme_settings, hanabi_game_data.game_board);
-	al_start_timer(fps_timer);
-	al_start_timer(network_timer);
-
-	STATE * current_state = get_starting_state();
 	TFTP_Packet * temp_pck = NULL;
+	STATE * current_state = get_starting_state();
+
+	game_startup(hanabi_game_data);//Starts APR, ALLEGRO, loads configuration
+	
 	while(!hanabi_game_data.do_exit)  // idem anterior
 	{
-		
-		if( al_get_next_event(event_queue, &ev) )
-		{
-			if(ev.type == ALLEGRO_EVENT_TIMER) 
-			{
-				if(ev.timer.source == fps_timer)
-					hanabi_game_data.redraw = true;
-				else if(ev.timer.source == network_timer)
-					hanabi_game_data.check_connection = true;
-			}
-			else
-				event_handle_allegro(ev, &hanabi_game_data, &button_event_queue);
-		}
-		
+		if( al_get_next_event(hanabi_game_data.event_queue, &ev) )
+			event_handle_allegro(ev, &hanabi_game_data, &button_event_queue);
+			
 		if(!button_event_queue.empty())
 		{
 			dispatch_event(button_event_queue.front(), &hanabi_game_data,&software_event_queue );
@@ -162,7 +75,7 @@ int main(void)
 			software_event_queue.pop();
 			std::cout << "State after" << current_state << std::endl;
 		}
-		if(hanabi_game_data.redraw && al_is_event_queue_empty(event_queue)
+		if(hanabi_game_data.redraw && al_is_event_queue_empty(hanabi_game_data.event_queue)
 			&& button_event_queue.empty() && software_event_queue.empty() ) 
 		{
 			hanabi_game_data.redraw = false;
@@ -182,15 +95,95 @@ int main(void)
 		}
 		
 	}
-
-	save_configuration(&hanabi_game_data);
-	
-	al_destroy_timer(fps_timer);
-	al_destroy_display(hanabi_game_data.display);
-	al_destroy_event_queue(event_queue);
-	allegro_shut_down();
+	game_shutdown(hanabi_game_data);
 	return 0;
 }
+
+unsigned int game_startup(hanabi_game_data_t &hanabi_game_data)
+{
+	unsigned int height, width; //Variables used for screen height and width
+	load_configuration(&hanabi_game_data);
+	hanabi_game_data.main_music = loadPlayMusic(); //Loads and play music.
+	//stopMusic(hanabi_game_data.main_music); //Stops background music. 
+	
+	sscanf(get_resolution(hanabi_game_data.game_configuration.selected_resolution), "%dx%d",&width, &height);
+	apr_initialize();
+	if(allegro_startup() == AL_STARTUP_ERROR) {
+		fprintf(stderr, "failed to initialize allegro!\n");
+		allegro_shut_down();
+		return -1;
+	}
+ 
+	hanabi_game_data.fps_timer = al_create_timer(1.0 / FPS);
+	if(!hanabi_game_data.fps_timer) {
+		fprintf(stderr, "failed to create fps_timer!\n");
+		allegro_shut_down();
+		return -1;
+	}
+	hanabi_game_data.network_timer = al_create_timer(NETWORK_TIMER_RATE);
+	if(!hanabi_game_data.network_timer) {
+		fprintf(stderr, "failed to create network timer!\n");
+		al_destroy_timer(hanabi_game_data.fps_timer);
+		al_destroy_timer(hanabi_game_data.network_timer);
+		allegro_shut_down();
+		return -1;
+	}
+
+	if(hanabi_game_data.game_configuration.full_screen) //Set of fullscreen window mode
+		al_set_new_display_flags( ALLEGRO_FULLSCREEN_WINDOW);
+	
+	
+	hanabi_game_data.display = create_display(width, height);//Creation of allegro display
+	if(!hanabi_game_data.display) {
+		fprintf(stderr, "failed to create display!\n");
+		al_destroy_timer(hanabi_game_data.fps_timer);
+		al_destroy_timer(hanabi_game_data.network_timer);
+		allegro_shut_down();
+		return -1;
+	}
+ 
+	hanabi_game_data.event_queue = al_create_event_queue(); //Creation of allegro event queue, if an error is found, the display, timer and allegro are destroy and the program is terminated
+	if(!hanabi_game_data.event_queue) {
+		fprintf(stderr, "failed to create event_queue!\n");
+		al_destroy_display(hanabi_game_data.display);
+		al_destroy_timer(hanabi_game_data.fps_timer);
+		al_destroy_timer(hanabi_game_data.network_timer);
+		allegro_shut_down();
+		return -1;
+	}
+        
+        //Registration of display, timer, mouse and keyboard
+	al_register_event_source(hanabi_game_data.event_queue, al_get_display_event_source(hanabi_game_data.display));
+	al_register_event_source(hanabi_game_data.event_queue, al_get_timer_event_source(hanabi_game_data.fps_timer));
+	al_register_event_source(hanabi_game_data.event_queue, al_get_timer_event_source(hanabi_game_data.network_timer));
+	al_register_event_source(hanabi_game_data.event_queue, al_get_mouse_event_source());
+	al_register_event_source(hanabi_game_data.event_queue, al_get_keyboard_event_source());
+	
+	hanabi_game_data.theme_settings = new Hanabi_Skin();
+	hanabi_game_data.theme_settings->load_theme(get_theme(hanabi_game_data.game_configuration.selected_theme));
+	
+	hanabi_game_data.game_board = new Hanabi_Board();
+	hanabi_game_data.do_exit = false;
+	hanabi_game_data.redraw = false;
+	hanabi_game_data.connected = false;
+
+	hanabi_game_data.active_menu = new Eda_Menu_Main(hanabi_game_data.theme_settings->theme);
+	hanabi_game_data.active_menu->draw(hanabi_game_data.display,hanabi_game_data.theme_settings, hanabi_game_data.game_board);
+	al_start_timer(hanabi_game_data.fps_timer);
+	al_start_timer(hanabi_game_data.network_timer);
+	
+}
+void game_shutdown(hanabi_game_data_t &hanabi_game_data)
+{
+	save_configuration(&hanabi_game_data);
+	al_destroy_timer(hanabi_game_data.fps_timer);
+	al_destroy_timer(hanabi_game_data.network_timer);
+	al_destroy_display(hanabi_game_data.display);
+	al_destroy_event_queue(hanabi_game_data.event_queue);
+	allegro_shut_down();
+}
+
+
 
 #else 
 
