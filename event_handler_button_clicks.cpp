@@ -108,55 +108,27 @@ void event_handle_button(event_button_t button_event,hanabi_game_data_t * hanabi
 	else if(button_event >= EDA_BUTTON_WHITE_PRESSED && button_event <= EDA_BUTTON_RED_PRESSED);//
 	else if(button_event >= EDA_BUTTON_GIVE_CARD_ONE && button_event <= EDA_BUTTON_GIVE_CARD_SIX);
 
-	else if(button_event == EDA_BUTTON_GIVE_CLUE_PRESSED)
+	else if( !hanabi_game_data->other_players_turn && button_event == EDA_BUTTON_GIVE_CLUE_PRESSED)
 	{
 		unsigned int selected_clue = ((Eda_Menu_Game *)hanabi_game_data->active_menu)->get_selected_clue();
-		if( selected_clue && hanabi_game_data->game_board->any_clues_left() )
-		{
-//			if( hanabi_game_data->net_connection == NULL || !hanabi_game_data->net_connection->connection_status_ok() )
-//			{
-//				//GENERATE NETWORK ERROR EVENT;
-//			}
-//			else
-//			{
-//				hanabi_game_data->game_board->player_action_give_clue(selected_clue,hanabi_game_data->net_connection);
-//			}
-		}
-		else
-		{
-			;//unable to give_clue no clue tokens left discard a Card for a Clue Token
-		}
+		if( hanabi_game_data->game_board->any_clues_left() && 
+			hanabi_game_data->game_board->validate_give_clue(selected_clue) )
+			software_event_queue->push(ACTION_YOU_HAVE);
+		//else unable to give_clue no clue tokens left discard a Card for a Clue Token
 		
 	}
-	else if(button_event == EDA_BUTTON_PLAY_CARD_PRESSED)
+	else if( !hanabi_game_data->other_players_turn && button_event == EDA_BUTTON_PLAY_CARD_PRESSED)
 	{
 		unsigned int selected_card = ((Eda_Menu_Game *)hanabi_game_data->active_menu)->get_selected_card();
-		TFTP_Packet * to_send = new Hanabi_Play_Packet(selected_card);
-		if( selected_card ) 
-		{
-//			hanabi_game_data->game_board->player_action_play_card(selected_card-1);
-//			if( hanabi_game_data->net_connection == NULL || !hanabi_game_data->net_connection->connection_status_ok() )
-//			{
-//				//GENERATE NETWORK ERROR EVENT;
-//			}
-//			else
-//			{
-//				hanabi_game_data->net_connection->send_packet(to_send);
-//			}
-			
-		}
+		if( selected_card != NO_CARD_SELECTED )
+			software_event_queue->push(ACTION_PLAY);
 			
 	}
-	else if(button_event == EDA_BUTTON_DISCARD_CARD_PRESSED)
+	else if(!hanabi_game_data->other_players_turn && button_event == EDA_BUTTON_DISCARD_CARD_PRESSED)
 	{
 		unsigned int selected_card = ((Eda_Menu_Game *)hanabi_game_data->active_menu)->get_selected_card();
-		if( selected_card && !hanabi_game_data->game_board->all_clues_left() )
-		{
-			hanabi_game_data->game_board->player_action_discard_card(selected_card-1);
-		}
-		else
-		{
-			;//all clues left cannot discard card
-		}
+		if( selected_card != NO_CARD_SELECTED && !hanabi_game_data->game_board->all_clues_left() )
+			software_event_queue->push(ACTION_DISCARD);
+		//else;//all clues left cannot discard card
 	}
 }

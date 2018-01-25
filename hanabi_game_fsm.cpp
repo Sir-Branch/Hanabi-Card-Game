@@ -29,8 +29,18 @@ extern STATE playing[];
 extern STATE waiting_other_player_draw[];
 extern STATE waiting_other_player[];
 extern STATE waiting_action_ack[];
-extern STATE waiting_draw_ack[];
+//extern STATE waiting_draw_ack[];
 
+//Finishing Game
+extern STATE waiting_receive_result_draw_sent[];
+extern STATE playing_last_turn_draw_sent[];
+extern STATE waiting_other_player_last_draw_sent[];
+
+extern STATE playing_last_turn_draw_received[];
+extern STATE waiting_other_player_last_draw_received[];
+extern STATE waiting_receive_result_draw_received[];
+
+extern STATE play_again_quit_menu[];
 
 STATE * get_starting_state(void)
 {
@@ -136,7 +146,7 @@ STATE defining_start_player[]=//SERVER
 	
 	//Fue mandado un U_START
 	{RECEIVE_PLAY, waiting_other_player_draw, &manage_play_send_ack	},
-	{RECEIVE_YOU_HAVE, playing	, &manage_you_have_send_ack	}, //Si se llega a perder unos de estos paquetes me parece que se cuelga
+	{RECEIVE_YOU_HAVE, playing	, &manage_you_have	}, //Si se llega a perder unos de estos paquetes me parece que se cuelga
 	{RECEIVE_DISCARD, waiting_other_player_draw,&manage_discard_send_ack  },
 	{TABLE_END, defining_start_player, &do_nothing}
 	
@@ -147,8 +157,8 @@ STATE defining_start_player[]=//SERVER
 
 STATE waiting_starting_player[]=//CLIENT
 {
-	{RECEIVE_USTART,playing ,&do_nothing},
-	{RECEIVE_ISTART,waiting_other_player,&send_ack_pck},
+	{RECEIVE_USTART,playing ,&message_ustart},
+	{RECEIVE_ISTART,waiting_other_player,&receive_istart_send_ack},
 	{TABLE_END, waiting_starting_player, &do_nothing}
 		
 };
@@ -216,47 +226,117 @@ STATE playing[]=
 
 
 
-//MY turn
-STATE waiting_other_player_draw[]=
-{
-	{RECEIVE_DRAW, playing, &remove_card},
-	{TABLE_END, waiting_other_player_draw, &do_nothing}
-
-	//Se perdio el ack si llega una de estas 
-	//{RECEIVE_PLAY, waiting_other_player_draw	, &send_ack_pck	},
-	//{RECEIVE_DISCARD, waiting_other_player_draw,&send_ack_pck  },
-
-};
 
 //Other players turn
 STATE waiting_other_player[]=
 {
-	{RECEIVE_PLAY, waiting_other_player_draw	, &manage_play_send_ack	},
-	{RECEIVE_YOU_HAVE, playing	, &manage_you_have_send_ack	}, //Si se llega a perder unos de estos paquetes me parece que se cuelga
+	{RECEIVE_PLAY, waiting_other_player_draw, &manage_play_send_ack	},
+	{RECEIVE_YOU_HAVE, playing	, &manage_you_have	}, //Si se llega a perder unos de estos paquetes me parece que se cuelga
 	{RECEIVE_DISCARD, waiting_other_player_draw,&manage_discard_send_ack  },
+	{LAST_DRAW_SENT, waiting_other_player_last_draw_sent, &do_nothing},
 	{TABLE_END, waiting_other_player, &do_nothing}
 	
 };
 
-
+//LAST_DRAW_SENT
 STATE waiting_action_ack[]=
 {
-	{RECEIVE_ACK,waiting_draw_ack,&send_draw_card},
+	{RECEIVE_ACK,waiting_other_player,&send_draw_card},
 	{TABLE_END, waiting_action_ack, &do_nothing}
-
 	//{TIMEOUT,waiting_action_ack,&resend_action}
-	
-	
 };
 
-STATE waiting_draw_ack[]=
+//MY turn
+STATE waiting_other_player_draw[]=
 {
-	{RECEIVE_ACK,waiting_other_player,&do_nothing},
-	{TABLE_END, waiting_draw_ack, &do_nothing}
-	//{TIMEOUT,waiting_action_ack,&resend_draw}
+	{RECEIVE_DRAW, playing, &remove_card_to_hand},
+	{RECEIVE_DRAW_LAST, playing_last_turn_draw_received, &do_nothing},
+	{TABLE_END, waiting_other_player_draw, &do_nothing}
+
+};
+
+//*****************************Ending Game STATES **********************************************
 
 	
+STATE waiting_other_player_last_draw_sent[]=
+{
+	{RECEIVE_PLAY, playing_last_turn_draw_sent	, &manage_play_send_ack	},
+	{RECEIVE_YOU_HAVE, playing_last_turn_draw_sent	, &manage_you_have	}, //Si se llega a perder unos de estos paquetes me parece que se cuelga
+	{RECEIVE_DISCARD, playing_last_turn_draw_sent,&manage_discard_send_ack  },
+	{LAST_DRAW_SENT, playing_last_turn_draw_sent, &do_nothing},
+	{TABLE_END, waiting_other_player_last_draw_sent, &do_nothing}
+	
 };
+
+
+STATE playing_last_turn_draw_sent[]=
+{
+	{ACTION_YOU_HAVE,waiting_receive_result_draw_sent, &send_you_have},
+	{ACTION_PLAY, waiting_receive_result_draw_sent, &send_play_pck},
+	{ACTION_DISCARD, waiting_receive_result_draw_sent, &send_discard_pck},
+	{TABLE_END, playing_last_turn_draw_sent, &do_nothing}
+	
+};
+
+STATE waiting_receive_result_draw_sent[]=
+{
+
+	{RECEIVE_WE_WON, play_again_quit_menu, &send_you_have},
+	{RECEIVE_WE_LOST, play_again_quit_menu, &send_play_pck},
+	{RECEIVE_GAME_OVER, play_again_quit_menu, &send_discard_pck},
+	{TABLE_END, waiting_receive_result_draw_sent, &do_nothing}
+	
+};
+
+
+//Draw received
+
+STATE playing_last_turn_draw_received[]=
+{
+	{ACTION_YOU_HAVE,waiting_other_player_last_draw_received, &send_you_have},
+	{ACTION_PLAY, waiting_other_player_last_draw_received, &send_play_pck},
+	{ACTION_DISCARD, waiting_other_player_last_draw_received, &send_discard_pck},
+	{TABLE_END, waiting_other_player_last_draw_received, &do_nothing}
+	
+};
+
+STATE waiting_other_player_last_draw_received[]=
+{
+	{RECEIVE_PLAY, play_again_quit_menu	, &manage_play_send_ack	},
+	{RECEIVE_YOU_HAVE, play_again_quit_menu	, &manage_you_have	}, //Si se llega a perder unos de estos paquetes me parece que se cuelga
+	{RECEIVE_DISCARD, play_again_quit_menu,&manage_discard_send_ack  },
+	{LAST_DRAW_SENT, play_again_quit_menu, &do_nothing},
+	{TABLE_END, waiting_other_player_last_draw_sent, &do_nothing}
+	
+};
+
+
+STATE waiting_receive_result_draw_received[]=
+{
+	{RECEIVE_WE_WON, play_again_quit_menu, &send_you_have},
+	{RECEIVE_WE_LOST, play_again_quit_menu, &send_play_pck},
+	{RECEIVE_GAME_OVER, play_again_quit_menu, &send_discard_pck},
+	{TABLE_END, waiting_receive_result_draw_sent, &do_nothing}
+};
+
+
+
+STATE play_again_quit_menu[]=
+{
+	{TABLE_END, play_again_quit_menu, &do_nothing}
+
+};
+
+
+//
+//STATE waiting_draw_ack[]=
+//{
+//	{RECEIVE_ACK,waiting_other_player,&message_other_player_turn},
+//	{TABLE_END, waiting_draw_ack, &do_nothing}
+//	//{TIMEOUT,waiting_action_ack,&resend_draw}
+//
+//	
+//};
 
 #endif 
 //FIN DE PROTOCOLO DE COMUNICACION  inicio de estados de juego

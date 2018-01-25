@@ -35,7 +35,6 @@ public:
     bool any_clues_left(void); //Returns true if there are any clues left, see more comments in .cpp
     bool all_clues_left(void); //Returns true if there are all clues left, see more comments in .cpp
     bool add_clue_token(void); //Adds a clue token. Returns true if it was successfull, see more comments in .cpp
-    bool remove_clue_token(void); //Removes a clue token. Returns true if it was successfull, see more comments in .cpp
     unsigned int number_clues_left(void); //Returns number of clues left, see more comments in .cpp
     bool validate_give_clue(unsigned char value_or_suit); //Checks the clue before sending it to the other player, see more comments in .cpp
     
@@ -46,7 +45,7 @@ public:
     //Players methods 
     bool player_action_play_card(unsigned int card_my_hand); 
     void player_action_discard_card(unsigned int card_my_hand);
-    bool player_action_give_clue(unsigned char value_or_suit, Networking * cxn );
+	void player_action_give_clue(unsigned char value_or_suit);
 	std::string other_player_name;	
 #warning "Cambiar el uso de other_player_name al de game_data hay que cambiar la funcion draw para que reciba game_data"
 #warning "Falta probar give clue"
@@ -58,6 +57,7 @@ public:
     void receive_action_get_clue(unsigned char value_or_suit);//player can only "receive" one action which is a clue
 	
     void print_my_hand(void); //Funcion de debug se puede borrar. 
+	unsigned int calculate_score(void);
     
 
     
@@ -67,11 +67,14 @@ public://Public for testing functions
 	bool start_game(void);
 	void receive_start_game(const char * start_pck);
     
+    bool remove_clue_token(void); //Removes a clue token. Returns true if it was successfull, see more comments in .cpp
 	void lose_live(void);
+	
     bool can_place_card(unsigned int card_my_hand);
+	bool can_other_place_card(unsigned int card_others_hand);
     bool draw_card(unsigned int card_my_hand);
     void discard_card(unsigned int card_my_hand);
-	unsigned int calculate_score(void);
+	void discard_others_card(unsigned int card_others_hand);
 
 	
     Hanabi_Deck hanabi_game_deck;
@@ -84,6 +87,7 @@ public://Public for testing functions
 	//Convendra usar una de ints del 0 al 5??
     Hanabi_Card otherplayers_hand[HANABI_CARDS_PER_HAND];
     unsigned int otherplayers_card_replace; // Card to be replaced on draw. 	
+    unsigned int my_card_replace; // Card to be replaced on draw. 	
     in_game_hanabi_Card_t my_cards[HANABI_CARDS_PER_HAND];	
     bool last_hand; //True if deck is empty. 
     bool lost_game; //True if the game is lost. 

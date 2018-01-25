@@ -14,6 +14,8 @@
 #include "Eda_Menu.h"
 #include "Hanabi_Skin.h"
 #include "Hanabi_Board.h"
+#include "Eda_Textbox.h"
+#include "Eda_Textbox_Status.h"
 
 #define CLUE_BUT_DIR "Clue Buttons/" //Clue button Directory path
 #define NAME_SIZE 10
@@ -26,7 +28,7 @@ public:
 	void draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board);
 	void update_buttons(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse);
 	bool check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse, std::queue<hanabi_game_event_t> &button_event_queue);
-	
+	void add_message(std::string message);
 	unsigned int get_selected_clue(void);
 	unsigned int get_selected_card(void);
 	
@@ -54,8 +56,8 @@ private:
 	Eda_Button * give_clue;
 	Eda_Button * discard_card;
 	Eda_Button * play_card;
-	
 	Eda_Button * my_cards_buttons[6];
+	Eda_Textbox_Status * textbox_status;
 };
 
 #endif /* EDA_MENU_GAME_H */

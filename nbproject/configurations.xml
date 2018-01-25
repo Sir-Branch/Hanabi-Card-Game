@@ -95,6 +95,8 @@
         <itemPath>Eda_Menu_Settings.h</itemPath>
         <itemPath>Eda_Textbox.cpp</itemPath>
         <itemPath>Eda_Textbox.h</itemPath>
+        <itemPath>Eda_Textbox_Status.cpp</itemPath>
+        <itemPath>Eda_Textbox_Status.h</itemPath>
         <itemPath>Hanabi_Skin.cpp</itemPath>
         <itemPath>Hanabi_Skin.h</itemPath>
         <itemPath>setting_management.cpp</itemPath>
@@ -298,6 +300,10 @@
       <item path="Eda_Textbox.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Eda_Textbox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eda_Textbox_Status.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Eda_Textbox_Status.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Hanabi_Ack_Packet.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -533,6 +539,10 @@
       <item path="Eda_Textbox.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Eda_Textbox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eda_Textbox_Status.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Eda_Textbox_Status.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Hanabi_Ack_Packet.cpp" ex="false" tool="1" flavor2="0">
       </item>

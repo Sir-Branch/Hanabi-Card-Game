@@ -104,8 +104,8 @@ bool Deck<CARD_T>::remove_specific_card(CARD_T card_to_remove)
 {
 	bool card_found = false;
 	if( deck.size() )
-		for(it = deck.begin() ; card_found == false && it!= deck.end(); it++ )
-			if(*it == card_to_remove)
+		for(it = deck.begin() ; !card_found && it!= deck.end(); it++ )
+			if( (*it) == card_to_remove)
 			{
 				card_found = true;
 				deck.erase(it++);

@@ -23,8 +23,13 @@ Eda_Menu_Game::Eda_Menu_Game(std::string theme)
 	discard_card = new Eda_Button(0.85, 0.9, 0.045 * 3.75, 0.08, CLUE_BUT_DIR "discard_card.png", CLUE_BUT_DIR "discard_card_hover.png", NULL, EDA_BUTTON_DISCARD_CARD_PRESSED);
 	play_card = new Eda_Button(0.15, 0.9, 0.045 * 3.75, 0.08, CLUE_BUT_DIR "play_card.png", CLUE_BUT_DIR "play_card_hover.png", NULL, EDA_BUTTON_PLAY_CARD_PRESSED);
 	graveyard_toggle = new Eda_Button(0.85, 0.78, 0.07, 0.07 * 16.0/9.0, CLUE_BUT_DIR "graveyard.png", CLUE_BUT_DIR "graveyard_hover.png", NULL, NO_EVENT);
-	hidden_graveyard = false;
 	
+	textbox_status = new Eda_Textbox_Status(0.86,0.5, 0.25, 0.30, 
+		COMMON_FILE_PATH"/text_box_status.png",NULL,NULL,NO_EVENT, 20);
+	
+	
+	this->add_message(">Connection est.");
+	hidden_graveyard = true;
 	give_clue->hide();
 	discard_card->hide();
 	play_card->hide();
@@ -48,6 +53,7 @@ Eda_Menu_Game::Eda_Menu_Game(std::string theme)
 	my_cards_buttons[4] = new Eda_Button(0.605, 0.9, 0.063, 0.168, ("Hanabi Themes/" + theme + "/Deck/back.png").c_str(), ("Hanabi Themes/" + theme + "/Deck/Card_hover.png").c_str(), ("Hanabi Themes/" + theme + "/Deck/Card_selected.png").c_str(), EDA_BUTTON_GIVE_CARD_FIVE);
 	my_cards_buttons[5] = new Eda_Button(0.675, 0.9, 0.063, 0.168, ("Hanabi Themes/" + theme + "/Deck/back.png").c_str(), ("Hanabi Themes/" + theme + "/Deck/Card_hover.png").c_str(), ("Hanabi Themes/" + theme + "/Deck/Card_selected.png").c_str(), EDA_BUTTON_GIVE_CARD_SIX);
 
+
 }
 
 Eda_Menu_Game::Eda_Menu_Game(const Eda_Menu_Game& orig) {
@@ -63,10 +69,23 @@ Eda_Menu_Game::~Eda_Menu_Game()
 	delete give_clue; 
 	delete discard_card;
 	delete play_card;
+	delete textbox_status;
+}
+
+void Eda_Menu_Game::add_message(std::string message)
+{
+	textbox_status->add_message(message);
 }
 
 void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board)
 {
+	static int first_call = 0;
+	#warning "Fix esta villa"
+	if(!first_call)
+	{
+		textbox_status->load_mono_font(display,MONO_FONT_PATH);
+		first_call++;
+	}
 	al_draw_scaled_bitmap(theme->game_mat, 
 							0.0, 0.0, al_get_bitmap_width(theme->game_mat), al_get_bitmap_height(theme->game_mat),
 							0.0, 0.0, al_get_display_width(display), al_get_display_height(display), //x , y cord to draw and width and height to draw
@@ -130,7 +149,7 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 	//draw_clue(display, theme, 
 				//	0.325, 0.9, 0.063, 0.168,0.005,
 				//	6,  cards_to_draw, )
-	
+	textbox_status->draw(display);
 	al_flip_display();
 }
 
@@ -179,6 +198,10 @@ bool Eda_Menu_Game::check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, fl
 	else if( graveyard_toggle->check_mouse_over(display, x_mouse, y_mouse))
 	{
 		hidden_graveyard = !hidden_graveyard;
+		if(!hidden_graveyard)
+			textbox_status->hide();
+		else
+			textbox_status->show();
 	}
 	
 
@@ -447,12 +470,12 @@ unsigned int Eda_Menu_Game::get_selected_clue(void)
 unsigned int Eda_Menu_Game::get_selected_card(void)
 {
 	bool card_selected = false;
-	unsigned int selected = 0;// 0 stands for no selected
+	unsigned int selected = NO_CARD_SELECTED;
 	for(int i = 0 ; !card_selected && i < 6 ; i++)
 	{
 		if( this->my_cards_buttons[i]->is_selected() )
 		{
-			selected = i + 1;
+			selected = i;
 			card_selected = true;
 		}
 	}		
@@ -495,7 +518,6 @@ void Eda_Menu_Game::draw_player_box_name (ALLEGRO_DISPLAY *display,const char* p
  * Return:
  *	-void.
  */
-
 void Eda_Menu_Game::draw_clue(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, 
 					float x_center , float y_center ,float x_size_percent , float y_size_percent, float space_between,
 					int number_cards, const in_game_hanabi_Card_t * cards, unsigned char value_or_suit)

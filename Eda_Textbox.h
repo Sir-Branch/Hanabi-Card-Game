@@ -34,11 +34,11 @@ public:
 	virtual ~Eda_Textbox();
 	void add_char_allegro(unsigned int allegro_key, textbox_modes_t textbox_mode);
 	bool load_mono_font(ALLEGRO_DISPLAY * display, char * path);
-	void draw(ALLEGRO_DISPLAY * display);
+	virtual void draw(ALLEGRO_DISPLAY * display);
 	std::string get_text_buffer(void);
 	virtual void deselect();// Needs to remove blinker when not selected
 
-private:
+protected:
 	void blink_input_char(unsigned int on_fps_rate, unsigned int on_fps_length);
 	ALLEGRO_FONT * font;
 	char * text_buffer;

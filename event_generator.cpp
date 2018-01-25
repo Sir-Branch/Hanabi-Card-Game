@@ -76,7 +76,11 @@ hanabi_fsm_events_t event_generator(TFTP_Packet* packet)
         
         case HANABI_DRAW_OP:
         {
-            event_name = RECEIVE_DRAW;
+			if( (packet->get_data_pck())[1] != NO_CARD_TO_DRAW)
+				event_name = RECEIVE_DRAW;
+			else
+				event_name = RECEIVE_DRAW_LAST;
+				
             break;
         }
         

@@ -13,7 +13,7 @@
 class Hanabi_Draw_Packet : public TFTP_Packet{
 public:
 	Hanabi_Draw_Packet(Hanabi_Card card_drawn);
-	
+	Hanabi_Draw_Packet(); // LAST HAND DRAW PACKET
 private:
 
 };

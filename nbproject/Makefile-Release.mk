@@ -44,6 +44,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Eda_Menu_Network.o \
 	${OBJECTDIR}/Eda_Menu_Settings.o \
 	${OBJECTDIR}/Eda_Textbox.o \
+	${OBJECTDIR}/Eda_Textbox_Status.o \
 	${OBJECTDIR}/Hanabi_Ack_Packet.o \
 	${OBJECTDIR}/Hanabi_Board.o \
 	${OBJECTDIR}/Hanabi_Card.o \
@@ -158,6 +159,11 @@ ${OBJECTDIR}/Eda_Textbox.o: Eda_Textbox.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Eda_Textbox.o Eda_Textbox.cpp
+
+${OBJECTDIR}/Eda_Textbox_Status.o: Eda_Textbox_Status.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Eda_Textbox_Status.o Eda_Textbox_Status.cpp
 
 ${OBJECTDIR}/Hanabi_Ack_Packet.o: Hanabi_Ack_Packet.cpp
 	${MKDIR} -p ${OBJECTDIR}

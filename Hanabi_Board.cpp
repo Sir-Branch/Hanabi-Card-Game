@@ -15,8 +15,6 @@
 #include "Hanabi_Network_Defines.h"
 
 Hanabi_Board::Hanabi_Board() {	
-#warning "Move at end stage to main srand"
-	srand(time(NULL)); 
 	lost_game = false;
 	last_hand = false;
 }
@@ -83,7 +81,7 @@ bool Hanabi_Board::all_clues_left(void)
 bool Hanabi_Board::add_clue_token(void)
 {
 	bool clue_added = false;
-	for( int i = 0 ; i < HANABI_LIGHT_TOKENS && clue_added == false ; i++)
+	for( int i = 0 ; i < HANABI_CLUE_TOKENS && clue_added == false ; i++)
 		if( !clue_tokens[i].token_heads())
 		{
 			clue_tokens[i].flip_token();
@@ -110,7 +108,7 @@ bool Hanabi_Board::add_clue_token(void)
 bool Hanabi_Board::remove_clue_token(void)
 {
 	bool clue_removed = false;
-	for( int i = 0 ; i < HANABI_LIGHT_TOKENS && clue_removed == false; i++)
+	for( int i = 0 ; i < HANABI_CLUE_TOKENS && clue_removed == false; i++)
 		if(clue_tokens[i].token_heads()) //Check if the token is heads up (true)
 		{
 			clue_tokens[i].flip_token(); //Flip token to cross (false) 
@@ -124,7 +122,7 @@ bool Hanabi_Board::remove_clue_token(void)
  * then checks if the clue corresponds with the others player hand. If something of the above is not fulfilled, it returns false.
  *
  * Input:
- *	-unsigned char value_or_suit: Card value goes from 0 to 5 and suits values are 0, Y, R, B, W, G. 
+ *	-unsigned char value_or_suit: Card value goes from '1' to '5' and suits values are 0, Y, R, B, W, G. 
  * 
  * Return:
  *	-bool: Returns true if the clue corresponds to the other players hand, false if its not.
@@ -133,7 +131,13 @@ bool Hanabi_Board::remove_clue_token(void)
 bool Hanabi_Board::validate_give_clue(unsigned char value_or_suit)
 {
     bool valid = false;
-    bool value = (value_or_suit <= 5) ? true : false; //Check if is value or suit
+    bool value = false; //Check if is value or suit
+	
+	if(value_or_suit >= '1' && value_or_suit <= '5' )
+	{
+		value = true;
+		value_or_suit -= '0'; //to make it compatible with get_value
+	}
 
     for(int i = 0; !valid && i < 6 ; i++)
     {
@@ -193,6 +197,22 @@ void Hanabi_Board::discard_card(unsigned int card_my_hand)
 	Hanabi_Card * card = &my_cards[card_my_hand].playing_card;
 	grave_yard[ card->get_suit_number() ].addcard_front( *card);
 }
+/*
+ * This function discards a specific card in the others players hands, and sends it to the graveyard
+ * Note: This game is not Yu-gi-oh, no monster reborn from graveyard.
+ *
+ * Input:
+ *	-unsigned int card_my_hand: Card position in hand, goes from 0 to 5. 
+ * 
+ * Return:
+ *	-void
+ *
+ */
+void Hanabi_Board::discard_others_card(unsigned int card_others_hand)
+{
+	Hanabi_Card * card = &otherplayers_hand[card_others_hand];
+	grave_yard[ card->get_suit_number() ].addcard_front( *card);
+}
 
 /*
  * This function tells us if a specific card in the players hands can be placed in the center decks/piles 
@@ -216,6 +236,17 @@ bool Hanabi_Board::can_place_card(unsigned int card_my_hand)
 	return can_place_card;
 }
 
+bool Hanabi_Board::can_other_place_card(unsigned int card_others_hand)
+{
+	bool can_place_card = false;
+	
+	Hanabi_Card * card = &otherplayers_hand[card_others_hand];
+	if( card->get_suit() != HANABI_CARD_SUIT_EMPTY)
+		if ( central_cards[ card->get_suit_number() ].get_value() == (card->get_value()-1) )
+			can_place_card = true;//If the card of the same suit in the central array is the previous value then I can place the card.
+		
+	return can_place_card;
+}
 /*
  * Receive action functions. The following functions are called upon receiving the other player's actions.
  * Possibles actions that can be receive are: get a clue, draw a card, play a card and discard a card. 
@@ -234,6 +265,7 @@ bool Hanabi_Board::can_place_card(unsigned int card_my_hand)
  */
 void Hanabi_Board::receive_action_get_clue(unsigned char value_or_suit)
 {
+	this->remove_clue_token();
 	if(value_or_suit >= 'A' && value_or_suit <= 'Z') //if its a suit/color hint
 	{
 		for(int i = 0 ; i < HANABI_HAND_SIZE ; i++ )
@@ -277,7 +309,7 @@ void Hanabi_Board::receive_action_draw_card(Hanabi_Card card_drawn)
  * be placed and then is added to the central deck or the card is send to the graveyard.
  * 
  * Input:
- *	-unsigned int: receives the card number played by the other player.
+ *	-unsigned int: receives the card number played by the other player. 0 to 5
  * 
  * Return:
  *	-void
@@ -285,16 +317,14 @@ void Hanabi_Board::receive_action_draw_card(Hanabi_Card card_drawn)
  */
 void Hanabi_Board::receive_action_play_card(unsigned int card_other_hand)
 {
-	bool could_place_card;
-	
-	if( could_place_card = can_place_card(card_other_hand) ) // If the card could be placed we add it to the central deck.
+	if( can_other_place_card(card_other_hand) ) // If the card could be placed we add it to the central deck.
 	{
 		central_cards[ otherplayers_hand[card_other_hand].get_suit_number() ] = otherplayers_hand[card_other_hand];
 	}
 	else
 	{
 		//Adds card to graveyard, no monster reborn in this game
-		grave_yard[ otherplayers_hand[card_other_hand].get_suit_number() ].addcard_end( otherplayers_hand[card_other_hand] );
+		discard_others_card(card_other_hand);
 		this->lose_live(); //Both players lose a live.
 	}
 	
@@ -303,10 +333,10 @@ void Hanabi_Board::receive_action_play_card(unsigned int card_other_hand)
 
 /*
  * This function receives the number of the other player played card. The function checks if the card could 
- * be placed and then is added to the central deck or the 
+ * be placed and then is added to the central deck or the graveyard
  * 
  * Input:
- *	-unsigned int: receives the card number played by the other player.
+ *	-unsigned int: receives the card number played by the other player. from 0 to 5
  * 
  * Return:
  *	-void
@@ -318,7 +348,7 @@ void Hanabi_Board::receive_action_discard_card(unsigned int card_other_hand)
 	if ( !this->add_clue_token()) //Checks if a clue can be added. In fact this code will never we executed since before the other player
             //discards a card, clue tokens are previously checked. 
             std::cerr << "Could not add a clue since there are already the max number of clues" << std::endl;	 
-            
+	discard_others_card(card_other_hand);
 }
 
 
@@ -332,7 +362,7 @@ void Hanabi_Board::receive_action_discard_card(unsigned int card_other_hand)
  * This function carries out one of the three possible player actions: Play card
  * 
  * Play card action:	1) Tries to play card in center, if not possible loses a life and discard the card
- *			2) Draw card
+ *			MUST CALL DRAW CARD AFTER
  *
  * Input:
  *	-unsigned int card_my_hand: Card position in hand, goes from 0 to 5. 
@@ -355,7 +385,8 @@ bool Hanabi_Board::player_action_play_card(unsigned int card_my_hand)
 	}
 	
 	//Either way the card is draw.
-        draw_card(card_my_hand); //Draw a new card. If there are no more card in the deck the function draw_card changes the flag
+	my_card_replace = card_my_hand;
+   // draw_card(card_my_hand); //Draw a new card. If there are no more card in the deck the function draw_card changes the flag
 	return could_place_card;
 }
 /*
@@ -381,8 +412,6 @@ void  Hanabi_Board::player_action_discard_card(unsigned int card_my_hand)
         std::cerr << "Could not add a clue since there are already the max number of clues" << std::endl;
     }
 
-    draw_card(card_my_hand); //Draw a new card. If there are no more card in the deck the function draw_card changes the flag
-
 }
 /*
  * This function carries out one of the three possible player actions: Give hint
@@ -395,10 +424,9 @@ void  Hanabi_Board::player_action_discard_card(unsigned int card_my_hand)
  * Return:
  *	-bool: Returns true if the hint was sent successfully
  */
-bool Hanabi_Board::player_action_give_clue(unsigned char value_or_suit, Networking * cxn)
+void Hanabi_Board::player_action_give_clue(unsigned char value_or_suit)
 {
-	Hanabi_You_Have_Packet * to_send = new Hanabi_You_Have_Packet(value_or_suit);
-	return (APR_SUCCESS == cxn->send_packet(to_send));
+	this->remove_clue_token();
 }
 
 /*
@@ -424,6 +452,7 @@ bool Hanabi_Board::draw_card(unsigned int card_my_hand)
             
             #warning "que hacemos cuando no hay mas cartas"
 	}
+	
 	my_cards[card_my_hand] = card_to_draw;
 	return could_draw_card;
 }

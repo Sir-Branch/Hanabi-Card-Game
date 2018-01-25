@@ -72,35 +72,44 @@ void manage_receive_start_info(hanabi_game_data_t *user_data)
 void create_send_random_start(hanabi_game_data_t *user_data)
 {
 	int random;
-	random = rand()%2;
+#warning "Cambiar por random"
+	random = 0;// rand()%2;
 	if (random)
 	{
 		Hanabi_IStart_Packet i_start;
 		user_data->net_connection->send_packet(&i_start);
+		user_data->other_players_turn = false;
+		message_my_turn(user_data);
 	}
 	else 
 	{
 		Hanabi_You_Start_Packet you_start;
 		user_data->net_connection->send_packet(&you_start);
+		user_data->other_players_turn = true;
+		message_other_player_turn(user_data);
+
 	}
 }
 
 void manage_play_send_ack(hanabi_game_data_t *user_data)
 {
-	user_data->game_board->receive_action_play_card(user_data->last_received_pck->get_data_pck()[1]);
+	user_data->game_board->receive_action_play_card(user_data->last_received_pck->get_data_pck()[1]-1);
 	send_ack_pck(user_data);
 }
 
 #warning "Hacer esta funcion"
-void manage_you_have_send_ack(hanabi_game_data_t *user_data)
+void manage_you_have(hanabi_game_data_t *user_data)
 {
-	
-	send_ack_pck(user_data);
+	user_data->game_board->receive_action_get_clue(user_data->last_received_pck->get_data_pck()[1]);
+	user_data->message_event_queue.push(">Clue Received fixed func!");
+	user_data->other_players_turn = false;
+
+//send_ack_pck(user_data);
 }
 
 void manage_discard_send_ack(hanabi_game_data_t *user_data)
 {
-	user_data->game_board->receive_action_discard_card(user_data->last_received_pck->get_data_pck()[1]);
+	user_data->game_board->receive_action_discard_card(user_data->last_received_pck->get_data_pck()[1]-1);
 	send_ack_pck(user_data);
 }
 
@@ -111,45 +120,101 @@ void manage_name_is_ack(hanabi_game_data_t *user_data)
 	memcpy(temp_buff,user_data->last_received_pck->get_data_pck() + 2,name_len);
 	temp_buff[name_len] = '\0';
 	
+#warning "make draw receive user data to fix"
 	user_data->game_board->other_player_name = std::string(temp_buff);
+	user_data->other_player_name = std::string(temp_buff);
+	
 	send_ack_pck(user_data);
 	
 }
 void send_you_have(hanabi_game_data_t *user_data)
 {
-	Hanabi_You_Have_Packet you_have(((Eda_Menu_Game *)user_data->active_menu)->get_selected_clue());
+	unsigned char value_or_suit = ((Eda_Menu_Game *)user_data->active_menu)->get_selected_clue();
+	user_data->game_board->player_action_give_clue(value_or_suit);
+	Hanabi_You_Have_Packet you_have(value_or_suit);
 	user_data->net_connection->send_packet(&you_have);
+	user_data->other_players_turn = true;
+	
+	user_data->message_event_queue.push(">Clue Sent!!");
+	message_other_player_turn(user_data);
 }
 
 void send_play_pck(hanabi_game_data_t *user_data)
 {
-	Hanabi_Play_Packet play_pck (((Eda_Menu_Game*) user_data->active_menu)->get_selected_card());
+	unsigned int selected_card =((Eda_Menu_Game*) user_data->active_menu)->get_selected_card();
+	user_data->game_board->player_action_play_card(selected_card);	
+	Hanabi_Play_Packet play_pck(selected_card+1); //Packets goes 1 to 6
 	user_data->net_connection->send_packet(&play_pck);
+
+	user_data->message_event_queue.push(">Card played!!");
 }
 
 void send_discard_pck(hanabi_game_data_t *user_data)
 {
-	Hanabi_Discard_Packet discard_pck (((Eda_Menu_Game*) user_data->active_menu)->get_selected_card());
+	unsigned int selected_card = ((Eda_Menu_Game*) user_data->active_menu)->get_selected_card();
+	user_data->game_board->player_action_discard_card(selected_card);
+	Hanabi_Discard_Packet discard_pck(selected_card+1);
 	user_data->net_connection->send_packet(&discard_pck);
+	
+	user_data->message_event_queue.push(">Card discarded!!");
 }
 
 void send_error(hanabi_game_data_t *user_data)
 {
+	user_data->message_event_queue.push(">Error sent!!");
 	Hanabi_Error_Packet error;
 	user_data->net_connection->send_packet(&error);
 }
 
-void remove_card(hanabi_game_data_t *user_data)
+void remove_card_to_hand(hanabi_game_data_t *user_data)
 {
-	hanabi_values_t received_value = (hanabi_values_t)user_data->last_received_pck->get_data_pck()[1];
+	hanabi_values_t received_value = (hanabi_values_t)(user_data->last_received_pck->get_data_pck()[1] - '0');
 	hanabi_suits_t received_suit = (hanabi_suits_t)user_data->last_received_pck->get_data_pck()[2];
-	user_data->game_board->hanabi_game_deck.remove_specific_card(Hanabi_Card(received_suit, received_value));
+	user_data->game_board->receive_action_draw_card(Hanabi_Card(received_suit, received_value));
+	user_data->other_players_turn = false;
+	message_my_turn(user_data);
+
 #warning "puede llegar a ir un ACK aca"
 }
 
 void send_draw_card(hanabi_game_data_t *user_data)
 {
-	//Hanabi_Draw_Packet draw_packet;
-	//user_data->net_connection->send_packet(&draw_packet);
+	if( user_data->game_board->draw_card(user_data->game_board->my_card_replace) )
+	{
+		Hanabi_Draw_Packet draw_packet(user_data->game_board->my_cards[user_data->game_board->my_card_replace].playing_card);
+		user_data->net_connection->send_packet(&draw_packet);
+		
+	}
+	else
+	{
+		
+	}
+		;
+	
+	user_data->other_players_turn = true;
+	message_other_player_turn(user_data);
+#warning "Add end game if no draw possible"
+}
+
+void message_ustart(hanabi_game_data_t *user_data)
+{
+	user_data->message_event_queue.push(">It's your turn!!");
+}
+
+void message_other_player_turn(hanabi_game_data_t *user_data)
+{
+	user_data->message_event_queue.push(">It's " + user_data->other_player_name + " turn!!");
+}
+
+void message_my_turn(hanabi_game_data_t *user_data)
+{
+	user_data->message_event_queue.push(">It's your turn!!");
+}
+
+
+void receive_istart_send_ack(hanabi_game_data_t *user_data)
+{
+	user_data->message_event_queue.push(">It's " + user_data->other_player_name + " turn!!");
+	send_ack_pck(user_data);
 }
 #endif

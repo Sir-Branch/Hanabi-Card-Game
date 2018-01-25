@@ -12,7 +12,7 @@
 #define HANABI_PCKS_OP_SIZE			1 //HANABI OPCODE PCKS SIZE
 #define HANABI_HAND_SIZE			6
 #define HANABI_CARD_SIZE_PCK		2	//Size of card in pck
-
+#define NO_CARD_TO_DRAW				0xFF
 enum packets_type
 {   HANABI_ACK_OP = 0x01,			HANABI_NAME_OP = 0x10,		HANABI_NAME_IS_OP = 0x11,	HANABI_START_INFO_OP = 0x12 , //Game configuration and communication packets
     HANABI_YOU_START_OP = 0x20,		HANABI_ISTART_OP = 0x21,	//Game start packets

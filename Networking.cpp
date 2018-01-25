@@ -188,3 +188,11 @@ bool Networking::try_connect_server(double timeout_seconds, std::string ip)//,st
 		this->abortConnecting();
 	return connected;
 }
+
+bool Networking::connection_status_ok(void)
+{
+	size_t empty_test = 0;
+	char buffer[20];
+	return apr_socket_send( principalSocket, buffer, &empty_test) == APR_SUCCESS;
+
+}

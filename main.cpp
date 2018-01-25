@@ -47,12 +47,10 @@ static void game_shutdown(hanabi_game_data_t &hanabi_game_data);
 
 int main(void)
 {		
-	   
-	
 	hanabi_game_data_t hanabi_game_data;
 	ALLEGRO_EVENT ev;
-	std::queue<hanabi_game_event_t> button_event_queue;
-	std::queue<hanabi_fsm_events_t> software_event_queue;
+
+
 	TFTP_Packet * temp_pck = NULL;
 	STATE * current_state = get_starting_state();
 
@@ -61,24 +59,32 @@ int main(void)
 	while(!hanabi_game_data.do_exit)  // idem anterior
 	{
 		if( al_get_next_event(hanabi_game_data.event_queue, &ev) )
-			event_handle_allegro(ev, &hanabi_game_data, &button_event_queue);
+			event_handle_allegro(ev, &hanabi_game_data, &hanabi_game_data.button_event_queue);
 			
-		if(!button_event_queue.empty())
+		if(!hanabi_game_data.button_event_queue.empty())
 		{
-			dispatch_event(button_event_queue.front(), &hanabi_game_data,&software_event_queue );
-			button_event_queue.pop();
+			dispatch_event(hanabi_game_data.button_event_queue.front(), &hanabi_game_data,&hanabi_game_data.software_event_queue );
+			hanabi_game_data.button_event_queue.pop();
 		}
 		
-		if(!software_event_queue.empty())
+		if(!hanabi_game_data.software_event_queue.empty())
 		{
-			std::cout << "Software event received" << software_event_queue.front() << std::endl;
+			std::cout << "Software event received" << hanabi_game_data.software_event_queue.front() << std::endl;
 			std::cout << "State before" << current_state << std::endl;
-			current_state = manage_fsm(current_state, software_event_queue.front(), &hanabi_game_data);
-			software_event_queue.pop();
+			current_state = manage_fsm(current_state, hanabi_game_data.software_event_queue.front(), &hanabi_game_data);
+			hanabi_game_data.software_event_queue.pop();
 			std::cout << "State after" << current_state << std::endl;
+			
+			
+		}
+		
+		if(!hanabi_game_data.message_event_queue.empty())
+		{
+			((Eda_Menu_Game *)hanabi_game_data.active_menu)->add_message(hanabi_game_data.message_event_queue.front());
+			hanabi_game_data.message_event_queue.pop();
 		}
 		if(hanabi_game_data.redraw && al_is_event_queue_empty(hanabi_game_data.event_queue)
-			&& button_event_queue.empty() && software_event_queue.empty() ) 
+			&& hanabi_game_data.button_event_queue.empty() && hanabi_game_data.software_event_queue.empty() ) 
 		{
 			hanabi_game_data.redraw = false;
 			hanabi_game_data.active_menu->draw(hanabi_game_data.display,hanabi_game_data.theme_settings, hanabi_game_data.game_board);
@@ -90,7 +96,7 @@ int main(void)
 			if( hanabi_game_data.net_connection->receive_packet(&temp_pck) )
 			{
 				hanabi_game_data.last_received_pck = temp_pck;
-				software_event_queue.push(event_generator(temp_pck));
+				hanabi_game_data.software_event_queue.push(event_generator(temp_pck));
 				std::cout<<"Packet received ";
 				temp_pck->print_packet();
 			}
@@ -106,7 +112,8 @@ unsigned int game_startup(hanabi_game_data_t &hanabi_game_data)
 	unsigned int height, width; //Variables used for screen height and width
 	load_configuration(&hanabi_game_data);
 	//stopMusic(hanabi_game_data.main_music); //Stops background music. 
-	
+	srand(time(NULL)); 
+
 	sscanf(get_resolution(hanabi_game_data.game_configuration.selected_resolution), "%dx%d",&width, &height);
 	apr_initialize();
 	if(allegro_startup() == AL_STARTUP_ERROR) {
@@ -167,7 +174,7 @@ unsigned int game_startup(hanabi_game_data_t &hanabi_game_data)
 	hanabi_game_data.do_exit = false;
 	hanabi_game_data.redraw = false;
 	hanabi_game_data.connected = false;
-
+	
 	hanabi_game_data.active_menu = new Eda_Menu_Main(hanabi_game_data.theme_settings->theme);
 	hanabi_game_data.active_menu->draw(hanabi_game_data.display,hanabi_game_data.theme_settings, hanabi_game_data.game_board);
 	al_start_timer(hanabi_game_data.fps_timer);

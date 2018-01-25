@@ -22,6 +22,8 @@ public:
 	bool receive_packet(TFTP_Packet ** pck_to_receive);	
 	bool try_connect_server(double timeout_seconds,std::string ip);//,std::string &server_adress, unsigned int port /*= DEF_REMOTE_PORT*/ ,unsigned int ip_mode /*= DEF_CLIENT_IPMODE*/)
 	bool listen_for_client(double timeout_time);
+	bool connection_status_ok(void);
+	
 	~Networking();
 protected:
 	
