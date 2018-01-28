@@ -12,8 +12,7 @@
 #define BUFSIZE	516 
 #define HEADER_SIZE 1
 #define STANDARD_PORT 13796 	
-#define HOME_IP "192.168.1.94"
-//"192.168.1.125"
+#define HOME_IP "127.0.0.1"
 
 class Networking
 {

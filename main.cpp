@@ -24,6 +24,14 @@
 #include "Eda_Button.h"
 #include "Eda_Menu.h"
 #include "Eda_Menu_Gameover.h"
+#include "hanabi_events.h"
+#include "setting_management.h"
+#include "hanabi_events.h"
+#include "setting_management.h"
+#include "event_dispatcher.h" 
+#include "event_handler_allegro.h"
+#include "event_dispatcher.h" 
+#include "event_handler_allegro.h"
 #include "allegro5/allegro_font.h"
 #include "allegro5/allegro_ttf.h"
 #include "allegro_start_shutdown.h"
@@ -85,7 +93,9 @@ int main(void)
 			&& hanabi_game_data.button_event_queue.empty() && hanabi_game_data.software_event_queue.empty() ) 
 		{
 			hanabi_game_data.redraw = false;
-			hanabi_game_data.active_menu->draw(hanabi_game_data.display,hanabi_game_data.theme_settings, hanabi_game_data.game_board);
+			hanabi_game_data.active_menu->draw(hanabi_game_data.display, hanabi_game_data.theme_settings, hanabi_game_data.game_board,hanabi_game_data.game_configuration.memory_help);
+			//std::cout<<"hola   "<<hanabi_game_data.game_configuration.memory_help<<std::endl<<((Eda_Menu_Settings*)hanabi_game_data.active_menu)->get_enable_full_screen();
+			
 		}
 		
 		if(hanabi_game_data.connected && hanabi_game_data.check_connection)// && software_event_queue.empty())
@@ -174,7 +184,7 @@ unsigned int game_startup(hanabi_game_data_t &hanabi_game_data)
 	hanabi_game_data.connected = false;
 	
 	hanabi_game_data.active_menu = new Eda_Menu_Main(hanabi_game_data.theme_settings->theme);
-	hanabi_game_data.active_menu->draw(hanabi_game_data.display,hanabi_game_data.theme_settings, hanabi_game_data.game_board);
+	hanabi_game_data.active_menu->draw(hanabi_game_data.display, hanabi_game_data.theme_settings, hanabi_game_data.game_board,hanabi_game_data.game_configuration.memory_help);
 	al_start_timer(hanabi_game_data.fps_timer);
 	al_start_timer(hanabi_game_data.network_timer);
 	

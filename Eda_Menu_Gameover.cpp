@@ -46,9 +46,11 @@ Eda_Menu_GameOver::~Eda_Menu_GameOver() {
 	delete quit;
 }
 
-void Eda_Menu_GameOver::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board)
+void Eda_Menu_GameOver::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board *game_board, bool mem_help)
 {
 	ALLEGRO_FONT * font;
+	std::string numberscore(1,game_board->score+'0'); //Strings para el score
+	std::string str = "Score: " + str; 
 	//Draw the background
 	//al_draw_scaled_bitmap(theme->connecting_background, 
 	//						0.0, 0.0, al_get_bitmap_width(theme->connecting_background), al_get_bitmap_height(theme->connecting_background),
@@ -76,10 +78,7 @@ void Eda_Menu_GameOver::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanab
 	font = al_load_ttf_font(MONO_FONT_PATH,calculate_font_size(display, 0.8-0.7, 0.8-0.7, MONO_FONT_PATH, 8),0); //Loads font for "game over"
 	al_draw_text(font, al_color_name("white"),0.5 * al_get_display_width(display),
 				(0.5) * al_get_display_height(display) - al_get_font_line_height(font)*0.5,
-				 ALLEGRO_ALIGN_CENTRE, "Score: 25" );
-	
-	//std::string score_message = "Score: " + std::to_string(game_board->score); //Esto va arriba 
-#warning "no se porque no encuentra std"
+				 ALLEGRO_ALIGN_CENTRE,str.c_str());
 	
 	al_destroy_font(font);	
 	al_flip_display();

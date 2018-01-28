@@ -40,7 +40,7 @@ Eda_Menu_Network::~Eda_Menu_Network() {
 	delete cancel;
 }
 
-void Eda_Menu_Network::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board)
+void Eda_Menu_Network::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board *game_board, bool mem_help)
 {
 	al_draw_scaled_bitmap(theme->connecting_background, 
 							0.0, 0.0, al_get_bitmap_width(theme->connecting_background), al_get_bitmap_height(theme->connecting_background),

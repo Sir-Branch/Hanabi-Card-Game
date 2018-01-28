@@ -161,25 +161,25 @@ unsigned int calculate_font_size (ALLEGRO_DISPLAY *display, float x_size_percent
 
 ALLEGRO_SAMPLE *play_main_music()
 {
-	int rand_num = rand() % NUM_SAMPLES;   
+	//int rand_num = rand() % NUM_SAMPLES;   
 
-	const char *sample_array[] = {"Music/track1.wav", "Music/track2.wav", "Music/track3.wav", "Music/track4.wav"};
+//	const char *sample_array[] = {"Music/track1.wav", "Music/track2.wav", "Music/track3.wav", "Music/track4.wav"};
 
-	ALLEGRO_SAMPLE *sample = al_load_sample( sample_array[rand_num]);
+	//ALLEGRO_SAMPLE *sample = al_load_sample( sample_array[rand_num]);
    
-	if(sample)
-		al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL); 
+	//if(sample)
+	//	al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL); 
 		
-	else
-		fprintf(stderr,"Unable to load background music\n");
+	//else
+	//	fprintf(stderr,"Unable to load background music\n");
 	
-	return sample;
+	return 0;
 }
 
 
 void stop_main_music(ALLEGRO_SAMPLE *sample)
 {
-	al_stop_samples();
-	if(sample!=NULL)
-		al_destroy_sample(sample);
+//	al_stop_samples();
+	//if(sample!=NULL)
+	//	al_destroy_sample(sample);
 }

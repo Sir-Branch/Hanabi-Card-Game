@@ -34,12 +34,13 @@ public:
 	void show(void);
 	hanabi_game_event_t get_click_event(void);
 	//void set_hovering(bool hovering);
-	
+	float x_center , y_center; 
+	float x_size_percent , y_size_percent; //Percentage of display size, this allows for same button size across various resolutions	
 protected:
 	Eda_Button(const Eda_Button& orig);
 	//This must be from 0 to 1.0 and represents the percentage of screen, this allows for correct placement on various resolutions
-	float x_center , y_center; 
-	float x_size_percent , y_size_percent; //Percentage of display size, this allows for same button size across various resolutions
+
+	
 	
 	ALLEGRO_BITMAP * fill_image;
 	ALLEGRO_BITMAP * fill_hover_image; //On hover will always draw fill_image and hover on top just incase hover is a border

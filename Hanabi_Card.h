@@ -51,7 +51,9 @@ typedef struct
 {
     bool color_hint;
     bool num_hint;
-	Hanabi_Card playing_card;
+    int number_time_hint;
+    int color_time_hint;
+    Hanabi_Card playing_card;
 }in_game_hanabi_Card_t;
 
 #endif /* CARD_H */

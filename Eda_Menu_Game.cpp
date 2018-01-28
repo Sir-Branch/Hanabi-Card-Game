@@ -9,6 +9,8 @@
 #include "Eda_Button.h"
 #include "Hanabi_Board.h"
 #include "setting_management.h"
+#include "Eda_Menu_Settings.h"
+#include "Eda_Menu_Network.h"
 #include <string>
 #include <iostream>
 #include <allegro5/allegro_color.h>
@@ -77,7 +79,7 @@ void Eda_Menu_Game::add_message(std::string message)
 	textbox_status->add_message(message);
 }
 
-void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board)
+void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board *game_board, bool mem_help)
 {
 	static int first_call = 0;
 	#warning "Fix esta villa"
@@ -117,10 +119,10 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 	draw_clue_tokens(display, theme, game_board, 
 					0.1, 0.1,
 					0.045, 0.08 );
+	
 	draw_lightning_tokens(display, theme, game_board, 
 					0.2, 0.1,
 					0.045, 0.08 );
-	
 	
 	draw_cards(display,theme, //DRAW OTHER PLAYERS CARDS
 					0.5, 0.1,
@@ -146,11 +148,54 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 	#warning "Cambiar el uso de other_player_name al de game_data hay que cambiar la funcion draw para que reciba game_data"
 	draw_player_box_name(display, game_board->other_player_name.c_str(), 0.5, 0.25, 0.2, 0.025 );
 	//draw_player_box_name(display, "gonza_puto", 0.5, 1-0.25, 0.2, 0.025);
-	//draw_clue(display, theme, 
-				//	0.325, 0.9, 0.063, 0.168,0.005,
-				//	6,  cards_to_draw, )
+	
+	//draw_clue(display, game_board,1); //El game_board->my_cards para leer el arreglo
+	//draw_clue(display, game_board,2); //El game_board->my_cards para leer el arreglo
+	//draw_clue(display, game_board,3); //El game_board->my_cards para leer el arreglo
+	//draw_clue(display, game_board,4); //El game_board->my_cards para leer el arreglo
+	//draw_clue(display, game_board,5);
+	//draw_clue(display, game_board,'Y'); //El game_board->my_cards para leer el arreglo
+	//draw_clue(display, game_board,'R');
+	//draw_clue(display, game_board,'B');
+	//draw_clue(display, game_board,'G');
+	//draw_clue(display, game_board,'W');
+	
+	for (int i=0; i<HANABI_HAND_SIZE; i++)
+		if (game_board->my_cards[i].color_hint == true && game_board->my_cards[i].color_time_hint >= 0)
+		{
+			draw_clue(display, game_board, game_board->my_cards[i].playing_card.get_suit());//draw the color hint
+			
+			if (mem_help==0)
+			{
+				game_board->my_cards[i].color_time_hint--;
+				if(game_board->my_cards[i].color_time_hint == 0)
+					game_board->my_cards[i].color_hint == false;
+				//std::cout<<"mem help  "<<mem_help<<std::endl;
+			}
+		}
+	
+	for (int i=0; i<HANABI_HAND_SIZE; i++)
+		if(game_board->my_cards[i].num_hint == true && game_board->my_cards[i].number_time_hint>=0)
+		{
+			draw_clue(display, game_board, game_board->my_cards[i].playing_card.get_value());//draw the number hint
+			if (mem_help==0)
+				game_board->my_cards[i].number_time_hint--;
+			if(game_board->my_cards[i].number_time_hint == 0)
+					game_board->my_cards[i].num_hint == false;
+		}
+			
+			
+		
+		
+			//:draw_clue(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, 
+			//		float x_center , float y_center ,float x_size_percent , float y_size_percent, float space_between,
+			//		int number_cards, const in_game_hanabi_Card_t * cards, unsigned char value_or_suit)
+			
+			
+			
 	textbox_status->draw(display);
 	al_flip_display();
+	
 }
 
 
@@ -433,7 +478,7 @@ unsigned int Eda_Menu_Game::get_selected_clue(void)
 			selected = i + '1';
 			button_selected = true;
 		}
-		else if( this->color_buttons[i]->is_selected() )
+		else if( this->color_buttons[i]->is_selected())
 		{
 			switch(i)
 			{
@@ -518,43 +563,91 @@ void Eda_Menu_Game::draw_player_box_name (ALLEGRO_DISPLAY *display,const char* p
  * Return:
  *	-void.
  */
-void Eda_Menu_Game::draw_clue(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, 
-					float x_center , float y_center ,float x_size_percent , float y_size_percent, float space_between,
-					int number_cards, const in_game_hanabi_Card_t * cards, unsigned char value_or_suit)
+void Eda_Menu_Game::draw_clue(ALLEGRO_DISPLAY *display,  
+					 Hanabi_Board * game_board, unsigned char value_or_suit)
 {
+		
+	float font_width = my_cards_buttons[1]->x_size_percent-0.1;
+	float font_height = my_cards_buttons[1]->y_size_percent -0.1;
 	ALLEGRO_FONT * font;
-	font = al_load_ttf_font(MONO_FONT_PATH,calculate_font_size(display, x_size_percent, y_size_percent, MONO_FONT_PATH, 1),0);
+	font = al_load_ttf_font(MONO_FONT_PATH,calculate_font_size(display,font_width , font_height, MONO_FONT_PATH, 1),0);
 	
     bool value = (value_or_suit <= 5) ? true : false; //Check if is value or suit
 	if(value) //The clue is a value
 	{
-		for (int i=0; i<= number_cards ; i++) //Checks all the hand. 
+		for (int i=0; i< HANABI_CARDS_PER_HAND ; i++) //Checks all the hand. 
 		{
 			
-			if (cards->playing_card.get_value() == value_or_suit)
+			if (game_board->my_cards[i].playing_card.get_value() == value_or_suit)
 			{		
 				std::string number2draw(1,value_or_suit+'0');
+				//al_draw_text(font, al_color_name("white"),
+				//		((x_center + (space_between+x_size_percent) * (i-number_cards/2.0)) * al_get_display_width(display))+ (x_size_percent * (al_get_display_width(display))/2),
+				//		((y_center - 0.5 * y_size_percent) * al_get_display_height(display)) + ((y_size_percent * al_get_display_height(display))/2),
+				//		0, number2draw.c_str());			
 				al_draw_text(font, al_color_name("white"),
-						((x_center + (space_between+x_size_percent) * (i-number_cards/2.0)) * al_get_display_width(display))+ (x_size_percent * (al_get_display_width(display))/2),
-						((y_center - 0.5 * y_size_percent) * al_get_display_height(display)) + ((y_size_percent * al_get_display_height(display))/2),
-						0, number2draw.c_str());	
+						((my_cards_buttons[i]->x_center-0.5 * my_cards_buttons[i]->x_size_percent) - font_width/2) * al_get_display_width(display), 
+						((my_cards_buttons[i]->y_center-0.5 * my_cards_buttons[i]->y_size_percent)+font_height/2) * al_get_display_height(display),
+						0, number2draw.c_str());
+				
+	
+				
 			}
 		}
 	}
 	else //The clue is a suit
 	{
-		for (int i=0; i<= number_cards; i++) //Checks all the hand
+		for (int i=0; i< HANABI_CARDS_PER_HAND; i++) //Checks all the hand
 		{
-			if ((int)cards->playing_card.get_suit() == value_or_suit)
+			if (game_board->my_cards[i].playing_card.get_suit() == value_or_suit)
 			{
-				//Draws a border 
-				al_draw_scaled_bitmap(theme->cards_backside, 
-									0.0, 0.0, al_get_bitmap_width(theme->cards_backside), al_get_bitmap_height(theme->cards_backside),
-									(x_center + (space_between+x_size_percent) * (i-number_cards/2.0)) * al_get_display_width(display), //x_cord to draw
-									(y_center - 0.5 * y_size_percent) * al_get_display_height(display),  //y_cord to draw
-									x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
-									0);
+				switch (value_or_suit)
+				{
+					case 'Y':
+						al_draw_filled_circle(((my_cards_buttons[i]->x_center-0.5 * my_cards_buttons[i]->x_size_percent) - font_width/2 - .004) * al_get_display_width(display),
+											((my_cards_buttons[i]->y_center-0.5 * my_cards_buttons[i]->y_size_percent)+ font_height - .04) * al_get_display_height(display),
+											0.015 * al_get_display_height(display), al_map_rgba_f(0.8,0.8,0,0.5));
+						break;
+					case 'R':
+						al_draw_filled_circle(((my_cards_buttons[i]->x_center-0.5 * my_cards_buttons[i]->x_size_percent) - font_width/2 - .004) * al_get_display_width(display),
+											((my_cards_buttons[i]->y_center-0.5 * my_cards_buttons[i]->y_size_percent)+ font_height - .04) * al_get_display_height(display),
+											0.015 * al_get_display_height(display), al_map_rgba_f(0.7,0,0,0.5));
+						break;
+					case 'B':
+						al_draw_filled_circle(((my_cards_buttons[i]->x_center-0.5 * my_cards_buttons[i]->x_size_percent) - font_width/2 - .004) * al_get_display_width(display),
+											((my_cards_buttons[i]->y_center-0.5 * my_cards_buttons[i]->y_size_percent)+ font_height - .04) * al_get_display_height(display),
+											0.015 * al_get_display_height(display), al_map_rgba_f(0,0,0.7,0.5));
+						break;
+						
+					case 'G':
+						al_draw_filled_circle(((my_cards_buttons[i]->x_center-0.5 * my_cards_buttons[i]->x_size_percent) - font_width/2 - .004) * al_get_display_width(display),
+											((my_cards_buttons[i]->y_center-0.5 * my_cards_buttons[i]->y_size_percent)+ font_height - .04) * al_get_display_height(display),
+											0.015 * al_get_display_height(display), al_map_rgba_f(0,0.75,0,0.5));
+						break;
+					case 'W':
+						al_draw_filled_circle(((my_cards_buttons[i]->x_center-0.5 * my_cards_buttons[i]->x_size_percent) - font_width/2 - .004) * al_get_display_width(display),
+											((my_cards_buttons[i]->y_center-0.5 * my_cards_buttons[i]->y_size_percent)+ font_height - .04) * al_get_display_height(display),
+											0.015 * al_get_display_height(display), al_map_rgba_f(0.9,0.9,0.9,0.5));
+						break;
+				}
 			}
+			
+			//if ((int)cards->playing_card.get_suit() == value_or_suit)
+			//{
+				//Draws a border 
+				//al_draw_scaled_bitmap(theme->cards_backside, 
+				//					0.0, 0.0, al_get_bitmap_width(theme->cards_backside), al_get_bitmap_height(theme->cards_backside),
+				//					(x_center + (space_between+x_size_percent) * (i-number_cards/2.0)) * al_get_display_width(display), //x_cord to draw
+				//					(y_center - 0.5 * y_size_percent) * al_get_display_height(display),  //y_cord to draw
+				//					x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
+				//					0);
+				
+				//al_draw_circle( 
+				//		(x_center + (space_between+x_size_percent) * (i-number_cards/2.0)) * al_get_display_width(display),
+				//		(y_center - 0.5 * y_size_percent) * al_get_display_height(display), 0.2,
+				//		al_color_name("white"), 1.);
+									
+			//}
 		}
 
 
