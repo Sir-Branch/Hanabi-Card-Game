@@ -23,8 +23,8 @@
  */
 Eda_Menu_GameOver::Eda_Menu_GameOver() {
 	
-	Eda_Button* play_again =  new Eda_Button( 0.4, 0.75, 0.045 * 3.75, 0.08, COMMON_FILE_PATH "/join.png", COMMON_FILE_PATH "/join_hover.png", NULL, EDA_BUTTON_JOIN_PRESSED);
-	Eda_Button* quit = new Eda_Button(0.6, 0.75, 0.045 * 3.75, 0.08, COMMON_FILE_PATH "/host.png", COMMON_FILE_PATH "/host_hover.png", NULL, EDA_BUTTON_HOST_PRESSED );
+	play_again =  new Eda_Button( 0.4, 0.75, 0.045 * 3.75, 0.08, COMMON_FILE_PATH "/join.png", COMMON_FILE_PATH "/join_hover.png", NULL, EDA_BUTTON_JOIN_PRESSED);
+	quit = new Eda_Button(0.6, 0.75, 0.045 * 3.75, 0.08, COMMON_FILE_PATH "/host.png", COMMON_FILE_PATH "/host_hover.png", NULL, EDA_BUTTON_HOST_PRESSED );
 }
 
 Eda_Menu_GameOver::Eda_Menu_GameOver(const Eda_Menu_GameOver& orig) {

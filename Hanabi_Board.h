@@ -21,7 +21,7 @@
 #define HANABI_CLUE_TOKENS		9	//Numb of clue tokens
 #define HANABI_NUMBER_COLORS	5	//Yeah colors, the u is only if u are British 
 #define HANABI_CARDS_PER_HAND	6	//Numb cards per hand
-
+#define MAX_SCORE				25
 
 
 //The suit of each card has a position for the central array use get_suit_number_array

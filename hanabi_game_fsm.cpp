@@ -177,6 +177,7 @@ STATE connected_to_server[]=
 STATE sending_name_to_server[]=
 {
 	{RECEIVE_ACK, waiting_name_server ,&send_name_pck},
+	{RECEIVE_WE_LOST, play_again_quit_menu, &change_play_again_menu},
 	{TABLE_END, sending_name_to_server, &do_nothing}
 	//{TIMEOUT, sending_name_to_server ,&send_name_is_pck}
 	
@@ -242,6 +243,7 @@ STATE waiting_other_player[]=
 STATE waiting_action_ack[]=
 {
 	{RECEIVE_ACK,waiting_other_player,&send_draw_card},
+	{RECEIVE_WE_LOST,play_again_quit_menu,&change_play_again_menu},
 	{TABLE_END, waiting_action_ack, &do_nothing}
 	//{TIMEOUT,waiting_action_ack,&resend_action}
 };
@@ -251,6 +253,7 @@ STATE waiting_other_player_draw[]=
 {
 	{RECEIVE_DRAW, playing, &remove_card_to_hand},
 	{RECEIVE_DRAW_LAST, playing_last_turn_draw_received, &do_nothing},
+	{RECEIVE_WE_LOST, play_again_quit_menu, &change_play_again_menu},
 	{TABLE_END, waiting_other_player_draw, &do_nothing}
 
 };
@@ -260,10 +263,9 @@ STATE waiting_other_player_draw[]=
 	
 STATE waiting_other_player_last_draw_sent[]=
 {
-	{RECEIVE_PLAY, playing_last_turn_draw_sent	, &manage_play_send_ack	},
-	{RECEIVE_YOU_HAVE, playing_last_turn_draw_sent	, &manage_you_have	}, //Si se llega a perder unos de estos paquetes me parece que se cuelga
-	{RECEIVE_DISCARD, playing_last_turn_draw_sent,&manage_discard_send_ack  },
-	{LAST_DRAW_SENT, playing_last_turn_draw_sent, &do_nothing},
+	{RECEIVE_PLAY, playing_last_turn_draw_sent	, &manage_final_play	},
+	{RECEIVE_YOU_HAVE, playing_last_turn_draw_sent	, &manage_final_you_have}, //Si se llega a perder unos de estos paquetes me parece que se cuelga
+	{RECEIVE_DISCARD, playing_last_turn_draw_sent,&manage_final_discard  },
 	{TABLE_END, waiting_other_player_last_draw_sent, &do_nothing}
 	
 };
@@ -274,6 +276,7 @@ STATE playing_last_turn_draw_sent[]=
 	{ACTION_YOU_HAVE,waiting_receive_result_draw_sent, &send_you_have},
 	{ACTION_PLAY, waiting_receive_result_draw_sent, &send_play_pck},
 	{ACTION_DISCARD, waiting_receive_result_draw_sent, &send_discard_pck},
+	{RECEIVE_WE_LOST, play_again_quit_menu, &change_play_again_menu},
 	{TABLE_END, playing_last_turn_draw_sent, &do_nothing}
 	
 };
@@ -281,9 +284,9 @@ STATE playing_last_turn_draw_sent[]=
 STATE waiting_receive_result_draw_sent[]=
 {
 
-	{RECEIVE_WE_WON, play_again_quit_menu, &send_you_have},
-	{RECEIVE_WE_LOST, play_again_quit_menu, &send_play_pck},
-	{RECEIVE_GAME_OVER, play_again_quit_menu, &send_discard_pck},
+	{RECEIVE_WE_WON, play_again_quit_menu, &change_play_again_menu},
+	{RECEIVE_WE_LOST, play_again_quit_menu, &change_play_again_menu},
+	{RECEIVE_GAME_OVER, play_again_quit_menu, &change_play_again_menu},
 	{TABLE_END, waiting_receive_result_draw_sent, &do_nothing}
 	
 };
@@ -302,24 +305,22 @@ STATE playing_last_turn_draw_received[]=
 
 STATE waiting_other_player_last_draw_received[]=
 {
-	{RECEIVE_PLAY, play_again_quit_menu	, &manage_play_send_ack	},
-	{RECEIVE_YOU_HAVE, play_again_quit_menu	, &manage_you_have	}, //Si se llega a perder unos de estos paquetes me parece que se cuelga
-	{RECEIVE_DISCARD, play_again_quit_menu,&manage_discard_send_ack  },
-	{LAST_DRAW_SENT, play_again_quit_menu, &do_nothing},
+	{RECEIVE_PLAY, play_again_quit_menu	, &manage_final_play_send_result	},
+	{RECEIVE_YOU_HAVE, play_again_quit_menu	, &manage_final_you_have_send_result}, //Si se llega a perder unos de estos paquetes me parece que se cuelga
+	{RECEIVE_DISCARD, play_again_quit_menu,&manage_final_discard_send_result },
+	{RECEIVE_WE_LOST, play_again_quit_menu, &change_play_again_menu},
 	{TABLE_END, waiting_other_player_last_draw_sent, &do_nothing}
 	
 };
 
-
-STATE waiting_receive_result_draw_received[]=
-{
-	{RECEIVE_WE_WON, play_again_quit_menu, &send_you_have},
-	{RECEIVE_WE_LOST, play_again_quit_menu, &send_play_pck},
-	{RECEIVE_GAME_OVER, play_again_quit_menu, &send_discard_pck},
-	{TABLE_END, waiting_receive_result_draw_sent, &do_nothing}
-};
-
-
+//
+//STATE waiting_receive_result_draw_received[]=
+//{
+//	{RECEIVE_WE_WON, play_again_quit_menu, &change_play_again_menu},
+//	{RECEIVE_WE_LOST, play_again_quit_menu, &change_play_again_menu},
+//	{RECEIVE_GAME_OVER, play_again_quit_menu, &change_play_again_menu},
+//	{TABLE_END, waiting_receive_result_draw_sent, &do_nothing}
+//};
 
 STATE play_again_quit_menu[]=
 {

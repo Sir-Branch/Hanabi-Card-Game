@@ -20,7 +20,7 @@ public:
 
 private:
 	
-Eda_Button * play_again;
+	Eda_Button * play_again;
 	Eda_Button * quit;
 
 };

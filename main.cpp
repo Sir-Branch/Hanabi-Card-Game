@@ -74,8 +74,6 @@ int main(void)
 			current_state = manage_fsm(current_state, hanabi_game_data.software_event_queue.front(), &hanabi_game_data);
 			hanabi_game_data.software_event_queue.pop();
 			std::cout << "State after" << current_state << std::endl;
-			
-			
 		}
 		
 		if(!hanabi_game_data.message_event_queue.empty())

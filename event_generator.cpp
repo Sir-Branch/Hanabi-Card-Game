@@ -89,32 +89,32 @@ hanabi_fsm_events_t event_generator(TFTP_Packet* packet)
         //Match End cases
         case HANABI_WE_WON_OP:
         {
-           // event_name = ;
+			event_name = RECEIVE_WE_WON;
             break;
         }
             
         case HANABI_WE_LOST_OP:
         {
-           // event_name = ;
+			event_name = RECEIVE_WE_LOST;
             break;
         }
             
         case HANABI_MATCH_OVER_OP:
         {
-            //event_name = ;
+            event_name = RECEIVE_MATCH_IS_OVER;
             break;
         }
         
         //Game finished cases
         case HANABI_PLAY_AGAIN_OP:
         {
-           // event_name = ;
+            event_name = RECEIVE_PLAY_AGAIN;
             break;
         }
         
         case HANABI_GAME_OVER_OP:
         {
-           // event_name = ;
+            event_name = RECEIVE_GAME_OVER;
             break;
         }
             

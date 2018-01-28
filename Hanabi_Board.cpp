@@ -323,8 +323,7 @@ void Hanabi_Board::receive_action_play_card(unsigned int card_other_hand)
 	}
 	else
 	{
-		//Adds card to graveyard, no monster reborn in this game
-		discard_others_card(card_other_hand);
+		discard_others_card(card_other_hand);//Adds card to graveyard, no monster reborn in this game
 		this->lose_live(); //Both players lose a live.
 	}
 	

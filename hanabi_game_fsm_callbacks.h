@@ -37,5 +37,15 @@ void message_other_player_turn(hanabi_game_data_t *user_data);
 void message_my_turn(hanabi_game_data_t *user_data);
 void receive_istart_send_ack(hanabi_game_data_t *user_data);
 
+void manage_final_play(hanabi_game_data_t *user_data);
+void manage_final_you_have(hanabi_game_data_t *user_data);
+void manage_final_discard(hanabi_game_data_t *user_data);
+void manage_final_play_send_result(hanabi_game_data_t *user_data);
+void manage_final_you_have_send_result(hanabi_game_data_t *user_data);
+void manage_final_discard_send_result(hanabi_game_data_t *user_data);
+void change_play_again_menu(hanabi_game_data_t *user_data);
+void get_game_result(hanabi_game_data_t *user_data, TFTP_Packet * game_result);
+void send_game_result(hanabi_game_data_t *user_data);
+
 #endif /* HANABI_GAME_FSM_CALLBACKS_H */
 

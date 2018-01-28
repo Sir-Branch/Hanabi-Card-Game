@@ -4,7 +4,7 @@
         <activeConfTypeElem>1</activeConfTypeElem>
         <activeConfIndexElem>0</activeConfIndexElem>
     </data>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="5">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="6">
         <file>
             <url>Eda_Menu_Game.h</url>
             <bookmark id="3">
@@ -17,7 +17,15 @@
             <url>Hanabi_Board.cpp</url>
             <bookmark id="4">
                 <name/>
-                <line>544</line>
+                <line>570</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>setting_management.h</url>
+            <bookmark id="6">
+                <name/>
+                <line>63</line>
                 <key/>
             </bookmark>
         </file>
@@ -32,15 +40,16 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/Eda_Textbox_Status.h</file>
             <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/main.cpp</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/Eda_Textbox_Status.cpp</file>
             <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/hanabi_game_fsm_callbacks.cpp</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/Hanabi_Board.cpp</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/Eda_Textbox.h</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/hanabi_game_fsm_callbacks.h</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/Networking.h</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/event_dispatcher.cpp</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/Hanabi_Draw_Packet.cpp</file>
             <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/hanabi_game_fsm.cpp</file>
-            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/Eda_Menu_Game.cpp</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/allegro_start_shutdown.h</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/event_handler_button_clicks.cpp</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/setting_management.h</file>
+            <file>file:/home/r2d2/NetBeansProjects/Hanabi-Card-Game/Hanabi_Draw_Packet.h</file>
         </group>
     </open-files>
 </project-private>
