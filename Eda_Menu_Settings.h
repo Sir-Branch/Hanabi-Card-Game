@@ -20,10 +20,11 @@ public:
 	Eda_Menu_Settings(game_configuration_t game_configuration);
 	virtual ~Eda_Menu_Settings();
 
-	void draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board);
+	void draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board *game_board, bool mem_help);
 	void update_buttons(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse);
 	bool check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse, std::queue<hanabi_game_event_t> &button_event_queue);
-	
+	bool get_enable_mem_help (void);
+        bool get_enable_full_screen(void);
 	void update_game_settings(hanabi_game_data_t & game_config);
 private:
 	Eda_Menu_Settings(const Eda_Menu_Settings& orig);

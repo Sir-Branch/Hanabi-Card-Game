@@ -25,7 +25,7 @@ class Eda_Menu_Game : public Eda_Menu
 public:
 	Eda_Menu_Game(std::string theme = "");
 	virtual ~Eda_Menu_Game();
-	void draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board);
+	void draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board *game_board, bool mem_help);
 	void update_buttons(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse);
 	bool check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse, std::queue<hanabi_game_event_t> &button_event_queue);
 	void add_message(std::string message);

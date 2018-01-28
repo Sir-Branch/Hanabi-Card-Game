@@ -63,7 +63,7 @@ Eda_Menu_Settings::~Eda_Menu_Settings()
 }
 
 
-void Eda_Menu_Settings::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board)
+void Eda_Menu_Settings::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board *game_board, bool mem_help)
 {
 	al_draw_scaled_bitmap(theme->setting_background, 
 							0.0, 0.0, al_get_bitmap_width(theme->setting_background), al_get_bitmap_height(theme->setting_background),
@@ -188,5 +188,15 @@ void Eda_Menu_Settings::update_game_settings(hanabi_game_data_t & game_data)
 	else
 		stop_main_music(game_data.main_music);
 
+}
+
+bool Eda_Menu_Settings::get_enable_mem_help(void)
+{
+	return enable_mem_help;
+}
+
+bool Eda_Menu_Settings::get_enable_full_screen()
+{
+	return enable_full_screen;
 }
 

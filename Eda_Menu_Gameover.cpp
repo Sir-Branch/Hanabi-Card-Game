@@ -46,7 +46,7 @@ Eda_Menu_GameOver::~Eda_Menu_GameOver() {
 	delete quit;
 }
 
-void Eda_Menu_GameOver::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board)
+void Eda_Menu_GameOver::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board *game_board, bool mem_help)
 {
 	ALLEGRO_FONT * font;
 	std::string numberscore(1,game_board->score+'0'); //Strings para el score

@@ -9,6 +9,8 @@
 #include "Eda_Button.h"
 #include "Hanabi_Board.h"
 #include "setting_management.h"
+#include "Eda_Menu_Settings.h"
+#include "Eda_Menu_Network.h"
 #include <string>
 #include <iostream>
 #include <allegro5/allegro_color.h>
@@ -77,7 +79,7 @@ void Eda_Menu_Game::add_message(std::string message)
 	textbox_status->add_message(message);
 }
 
-void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board)
+void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board *game_board, bool mem_help)
 {
 	static int first_call = 0;
 	#warning "Fix esta villa"
@@ -117,10 +119,10 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 	draw_clue_tokens(display, theme, game_board, 
 					0.1, 0.1,
 					0.045, 0.08 );
+	
 	draw_lightning_tokens(display, theme, game_board, 
 					0.2, 0.1,
 					0.045, 0.08 );
-	
 	
 	draw_cards(display,theme, //DRAW OTHER PLAYERS CARDS
 					0.5, 0.1,
@@ -147,16 +149,44 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 	draw_player_box_name(display, game_board->other_player_name.c_str(), 0.5, 0.25, 0.2, 0.025 );
 	//draw_player_box_name(display, "gonza_puto", 0.5, 1-0.25, 0.2, 0.025);
 	
-	draw_clue(display, game_board,1); //El game_board->my_cards para leer el arreglo
-	draw_clue(display, game_board,2); //El game_board->my_cards para leer el arreglo
-	draw_clue(display, game_board,3); //El game_board->my_cards para leer el arreglo
-	draw_clue(display, game_board,4); //El game_board->my_cards para leer el arreglo
-	draw_clue(display, game_board,5);
-	draw_clue(display, game_board,'Y'); //El game_board->my_cards para leer el arreglo
-	draw_clue(display, game_board,'R');
-	draw_clue(display, game_board,'B');
-	draw_clue(display, game_board,'G');
-	draw_clue(display, game_board,'W');
+	//draw_clue(display, game_board,1); //El game_board->my_cards para leer el arreglo
+	//draw_clue(display, game_board,2); //El game_board->my_cards para leer el arreglo
+	//draw_clue(display, game_board,3); //El game_board->my_cards para leer el arreglo
+	//draw_clue(display, game_board,4); //El game_board->my_cards para leer el arreglo
+	//draw_clue(display, game_board,5);
+	//draw_clue(display, game_board,'Y'); //El game_board->my_cards para leer el arreglo
+	//draw_clue(display, game_board,'R');
+	//draw_clue(display, game_board,'B');
+	//draw_clue(display, game_board,'G');
+	//draw_clue(display, game_board,'W');
+	
+	for (int i=0; i<HANABI_HAND_SIZE; i++)
+		if (game_board->my_cards[i].color_hint == true && game_board->my_cards[i].color_time_hint >= 0)
+		{
+			draw_clue(display, game_board, game_board->my_cards[i].playing_card.get_suit());//draw the color hint
+			
+			if (mem_help==0)
+			{
+				game_board->my_cards[i].color_time_hint--;
+				if(game_board->my_cards[i].color_time_hint == 0)
+					game_board->my_cards[i].color_hint == false;
+				//std::cout<<"mem help  "<<mem_help<<std::endl;
+			}
+		}
+	
+	for (int i=0; i<HANABI_HAND_SIZE; i++)
+		if(game_board->my_cards[i].num_hint == true && game_board->my_cards[i].number_time_hint>=0)
+		{
+			draw_clue(display, game_board, game_board->my_cards[i].playing_card.get_value());//draw the number hint
+			if (mem_help==0)
+				game_board->my_cards[i].number_time_hint--;
+			if(game_board->my_cards[i].number_time_hint == 0)
+					game_board->my_cards[i].num_hint == false;
+		}
+			
+			
+		
+		
 			//:draw_clue(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, 
 			//		float x_center , float y_center ,float x_size_percent , float y_size_percent, float space_between,
 			//		int number_cards, const in_game_hanabi_Card_t * cards, unsigned char value_or_suit)
@@ -448,7 +478,7 @@ unsigned int Eda_Menu_Game::get_selected_clue(void)
 			selected = i + '1';
 			button_selected = true;
 		}
-		else if( this->color_buttons[i]->is_selected() )
+		else if( this->color_buttons[i]->is_selected())
 		{
 			switch(i)
 			{

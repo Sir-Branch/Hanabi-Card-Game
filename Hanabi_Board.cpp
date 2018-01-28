@@ -13,6 +13,7 @@
 #include "Hanabi_You_Have_Packet.h"
 #include "TFTP_Packet.h"
 #include "Hanabi_Network_Defines.h"
+#include "Eda_Menu_Game.h"
 
 Hanabi_Board::Hanabi_Board() {	
 	lost_game = false;
@@ -270,15 +271,20 @@ void Hanabi_Board::receive_action_get_clue(unsigned char value_or_suit)
 	{
 		for(int i = 0 ; i < HANABI_HAND_SIZE ; i++ )
 			if(my_cards[i].playing_card.get_suit() == value_or_suit)
+			{
 				my_cards[i].color_hint = true; 
+				my_cards[i].color_time_hint = 7;
+			}
 	}
 	else // is a value hint
 	{
 		for(int i = 0 ; i < HANABI_HAND_SIZE ; i++ )
-			if(my_cards[i].playing_card.get_value() == value_or_suit)
+			if(my_cards[i].playing_card.get_value() == (value_or_suit-'0'))
+			{
 				my_cards[i].num_hint = true;
+				my_cards[i].number_time_hint = 7;
+			}
 	}
-	
 }
 
 /*

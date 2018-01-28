@@ -17,6 +17,7 @@
 #include "Networking.h"
 
 
+
 #define HANABI_LIGHT_TOKENS		3	//Numb of "lifes" 
 #define HANABI_CLUE_TOKENS		9	//Numb of clue tokens
 #define HANABI_NUMBER_COLORS	5	//Yeah colors, the u is only if u are British 

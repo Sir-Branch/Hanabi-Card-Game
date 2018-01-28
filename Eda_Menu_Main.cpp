@@ -22,7 +22,7 @@ Eda_Menu_Main::Eda_Menu_Main(std::string theme):
 Eda_Menu_Main::~Eda_Menu_Main() {
 }
 
-void Eda_Menu_Main::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board * game_board)
+void Eda_Menu_Main::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board *game_board, bool mem_help)
 {
 	al_draw_scaled_bitmap(theme->main_menu, 
 							0.0, 0.0, al_get_bitmap_width(theme->main_menu), al_get_bitmap_height(theme->main_menu),
