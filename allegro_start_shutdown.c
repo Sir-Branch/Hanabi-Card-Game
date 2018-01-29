@@ -140,5 +140,6 @@ void stopMusic(ALLEGRO_SAMPLE *music)
 	if(music!=NULL)
 		al_destroy_sample(music);
 	
+	
 }
 

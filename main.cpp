@@ -199,6 +199,7 @@ void game_shutdown(hanabi_game_data_t &hanabi_game_data)
 	al_destroy_timer(hanabi_game_data.network_timer);
 	al_destroy_display(hanabi_game_data.display);
 	al_destroy_event_queue(hanabi_game_data.event_queue);
+	stopMusic(hanabi_game_data.main_music);
 	allegro_shut_down();
 }
 

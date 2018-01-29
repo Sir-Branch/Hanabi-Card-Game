@@ -186,8 +186,10 @@ void Eda_Menu_Settings::update_game_settings(hanabi_game_data_t & game_data)
 	if(!disable_sound)		
 		game_data.main_music = play_main_music();
 	else
+	{
 		stop_main_music(game_data.main_music);
-
+		game_data.main_music = NULL;
+	}
 }
 
 bool Eda_Menu_Settings::get_enable_mem_help(void)
