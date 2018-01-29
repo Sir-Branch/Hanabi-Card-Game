@@ -61,6 +61,9 @@ void load_configuration(hanabi_game_data_t * hanabi_game_data)
 	{
 		hanabi_game_data->game_configuration.memory_help = 
 			atoi(al_get_config_value(config_file, "Game Settings","Memory Help"));	
+		
+		//hanabi_game_data->game_configuration.music = 
+			//atoi(al_get_config_value(config_file, "Sound Settings","Music"));	
 
 		hanabi_game_data->game_configuration.full_screen =
 			atoi(al_get_config_value(config_file, "Screen Settings","Full Screen"));
@@ -81,7 +84,7 @@ void load_configuration(hanabi_game_data_t * hanabi_game_data)
 
 void load_default_configuration(hanabi_game_data_t * hanabi_game_data)
 {
-	hanabi_game_data->game_configuration.music = false;
+	//hanabi_game_data->game_configuration.music = false;
 	hanabi_game_data->game_configuration.memory_help = false;
 	hanabi_game_data->game_configuration.full_screen = false;
 	hanabi_game_data->game_configuration.sound_mute = false;
@@ -111,6 +114,9 @@ void save_configuration(hanabi_game_data_t * hanabi_game_data)
 		
 		al_set_config_value(config_file, "Theme Settings", "Selected Theme",
 			num2string(hanabi_game_data->game_configuration.selected_theme).c_str());
+		
+		//al_set_config_value(config_file, "Sound Settings", "Music",
+		//	num2string(hanabi_game_data->game_configuration.sound_mute).c_str());
 		
 		al_save_config_file("settings.ini",config_file);
 	}
@@ -161,25 +167,25 @@ unsigned int calculate_font_size (ALLEGRO_DISPLAY *display, float x_size_percent
 
 ALLEGRO_SAMPLE *play_main_music()
 {
-	//int rand_num = rand() % NUM_SAMPLES;   
+	int rand_num = rand() % NUM_SAMPLES;   
 
-//	const char *sample_array[] = {"Music/track1.wav", "Music/track2.wav", "Music/track3.wav", "Music/track4.wav"};
+	const char *sample_array[] = {"Music/track1.wav", "Music/track2.wav", "Music/track3.wav", "Music/track4.wav"};
 
-	//ALLEGRO_SAMPLE *sample = al_load_sample( sample_array[rand_num]);
+	ALLEGRO_SAMPLE *sample = al_load_sample( sample_array[rand_num]);
    
-	//if(sample)
-	//	al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL); 
+	if(sample)
+		al_play_sample(sample, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL); 
 		
-	//else
-	//	fprintf(stderr,"Unable to load background music\n");
+	else
+		fprintf(stderr,"Unable to load background music\n");
 	
-	return 0;
+	return sample;
 }
 
 
 void stop_main_music(ALLEGRO_SAMPLE *sample)
 {
-//	al_stop_samples();
-	//if(sample!=NULL)
-	//	al_destroy_sample(sample);
+	al_stop_samples();
+	if(sample!=NULL)
+		al_destroy_sample(sample);
 }

@@ -57,7 +57,7 @@ typedef struct
 	bool memory_help;
 	bool sound_mute;
 	bool full_screen;
-	bool music;
+	//bool music;
 
 }game_configuration_t;
 

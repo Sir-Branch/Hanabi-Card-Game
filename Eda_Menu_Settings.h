@@ -24,7 +24,7 @@ public:
 	void update_buttons(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse);
 	bool check_for_click(ALLEGRO_DISPLAY * display, float x_mouse, float y_mouse, std::queue<hanabi_game_event_t> &button_event_queue);
 	bool get_enable_mem_help (void);
-        bool get_enable_full_screen(void);
+    bool get_enable_full_screen(void);
 	void update_game_settings(hanabi_game_data_t & game_config);
 private:
 	Eda_Menu_Settings(const Eda_Menu_Settings& orig);
@@ -35,7 +35,7 @@ private:
 	Eda_Button * full_screen; 
 	Eda_Button * apply;
 	Eda_Button * cancel;
-	Eda_Button * music;
+	Eda_Button * sound_mute;
 			
 	
 	const char ** available_resolutions;//[HANABI_NUMBER_RESOLUTIONS];
@@ -45,7 +45,7 @@ private:
 	unsigned int selected_theme; //0 to number of themes
 	bool enable_full_screen;
 	bool enable_mem_help;
-	bool enable_music;
+	bool disable_sound;
 };
 
 

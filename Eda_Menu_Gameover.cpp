@@ -49,8 +49,9 @@ Eda_Menu_GameOver::~Eda_Menu_GameOver() {
 void Eda_Menu_GameOver::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Board *game_board, bool mem_help)
 {
 	ALLEGRO_FONT * font;
-	std::string numberscore(1,game_board->score+'0'); //Strings para el score
-	std::string str = "Score: " + str; 
+	std::string numberscore(1,game_board->calculate_score()+'0'); //Strings para el score
+	std::string str = "Score: " + numberscore; 
+	std::cout<<game_board->calculate_score();
 	//Draw the background
 	//al_draw_scaled_bitmap(theme->connecting_background, 
 	//						0.0, 0.0, al_get_bitmap_width(theme->connecting_background), al_get_bitmap_height(theme->connecting_background),
@@ -79,6 +80,27 @@ void Eda_Menu_GameOver::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanab
 	al_draw_text(font, al_color_name("white"),0.5 * al_get_display_width(display),
 				(0.5) * al_get_display_height(display) - al_get_font_line_height(font)*0.5,
 				 ALLEGRO_ALIGN_CENTRE,str.c_str());
+	
+	font = al_load_ttf_font(MONO_FONT_PATH,calculate_font_size(display, 0.8-0.7, 0.8-0.7, MONO_FONT_PATH, 18),0);
+	if(game_board->calculate_score() == 0)
+		al_draw_text(font, al_color_name("white"),0.5 * al_get_display_width(display),
+				(0.58) * al_get_display_height(display) - al_get_font_line_height(font)*0.5,
+				 ALLEGRO_ALIGN_CENTRE,"You achieved the minimum score. Better luck next time");
+	
+	if(((game_board->calculate_score() > 0)) && (game_board->calculate_score() <= 10))
+		al_draw_text(font, al_color_name("white"),0.5 * al_get_display_width(display),
+				(0.58) * al_get_display_height(display) - al_get_font_line_height(font)*0.5,
+				 ALLEGRO_ALIGN_CENTRE,"You achieved a mediocre score. Try harder next time");
+	
+	if(((game_board->calculate_score() > 10)) && (game_board->calculate_score() < 25))
+		al_draw_text(font, al_color_name("white"),0.5 * al_get_display_width(display),
+				(0.58) * al_get_display_height(display) - al_get_font_line_height(font)*0.5,
+				 ALLEGRO_ALIGN_CENTRE,"Nice score ! Try to get to 25 !");
+	
+	if(game_board->calculate_score() == 25)
+		al_draw_text(font, al_color_name("white"),0.5 * al_get_display_width(display),
+				(0.58) * al_get_display_height(display) - al_get_font_line_height(font)*0.5,
+				 ALLEGRO_ALIGN_CENTRE,"You are the MASTER of this 'great' game");
 	
 	al_destroy_font(font);	
 	al_flip_display();

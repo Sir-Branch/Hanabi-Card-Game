@@ -148,6 +148,9 @@ unsigned int game_startup(hanabi_game_data_t &hanabi_game_data)
 	if(hanabi_game_data.game_configuration.full_screen) //Set of fullscreen window mode
 		al_set_new_display_flags( ALLEGRO_FULLSCREEN_WINDOW);
 	
+	if(!hanabi_game_data.game_configuration.sound_mute)
+		hanabi_game_data.main_music = play_main_music();
+	
 	
 	hanabi_game_data.display = create_display(width, height);//Creation of allegro display
 	if(!hanabi_game_data.display) {
