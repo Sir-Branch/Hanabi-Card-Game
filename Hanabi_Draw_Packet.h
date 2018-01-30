@@ -16,7 +16,7 @@ public:
 	Hanabi_Draw_Packet(); // LAST HAND DRAW PACKET
 private:
 
-};
+};       
 
 #endif /* HANABI_DRAW_PACKET_H */
 

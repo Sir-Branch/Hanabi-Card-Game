@@ -197,6 +197,8 @@ void Hanabi_Board::discard_card(unsigned int card_my_hand)
 {
 	Hanabi_Card * card = &my_cards[card_my_hand].playing_card;
 	grave_yard[ card->get_suit_number() ].addcard_front( *card);
+	my_card_replace = card_my_hand;
+	
 }
 /*
  * This function discards a specific card in the others players hands, and sends it to the graveyard
@@ -305,6 +307,7 @@ void Hanabi_Board::receive_action_draw_card(Hanabi_Card card_drawn)
 	
 	else //The card could not be removed.
 	{
+		
             #warning "que pasa si no se pudo sacar del mazo una carta, paquete de error ??"
 		;//ERROR
 	}
@@ -334,6 +337,8 @@ void Hanabi_Board::receive_action_play_card(unsigned int card_other_hand)
 	}
 	
 	otherplayers_card_replace = card_other_hand; //Will receieve a Draw after this (the other player will draw a new card), so we must know in which position to place the drawn card.
+	Hanabi_Card empty_card;
+	otherplayers_hand[card_other_hand] = empty_card; //makes the played card a white card
 }
 
 /*
@@ -354,6 +359,8 @@ void Hanabi_Board::receive_action_discard_card(unsigned int card_other_hand)
             //discards a card, clue tokens are previously checked. 
             std::cerr << "Could not add a clue since there are already the max number of clues" << std::endl;	 
 	discard_others_card(card_other_hand);
+	Hanabi_Card empty_card;
+	otherplayers_hand[card_other_hand]=empty_card; //make the discarded card a white card
 }
 
 
@@ -391,7 +398,7 @@ bool Hanabi_Board::player_action_play_card(unsigned int card_my_hand)
 	
 	//Either way the card is draw.
 	my_card_replace = card_my_hand;
-   // draw_card(card_my_hand); //Draw a new card. If there are no more card in the deck the function draw_card changes the flag
+    //draw_card(card_my_hand); //Draw a new card. If there are no more card in the deck the function draw_card changes the flag
 	return could_place_card;
 }
 /*

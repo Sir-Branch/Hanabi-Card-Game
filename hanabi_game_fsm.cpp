@@ -222,7 +222,6 @@ STATE playing[]=
 	{ACTION_PLAY, waiting_action_ack, &send_play_pck},
 	{ACTION_DISCARD, waiting_action_ack, &send_discard_pck},
 	{TABLE_END, playing, &do_nothing}
-	
 };
 
 
@@ -233,7 +232,7 @@ STATE waiting_other_player[]=
 {
 	{RECEIVE_PLAY, waiting_other_player_draw, &manage_play_send_ack	},
 	{RECEIVE_YOU_HAVE, playing	, &manage_you_have	}, //Si se llega a perder unos de estos paquetes me parece que se cuelga
-	{RECEIVE_DISCARD, waiting_other_player_draw,&manage_discard_send_ack  },
+	{RECEIVE_DISCARD, waiting_other_player_draw,&manage_discard_send_ack},
 	{LAST_DRAW_SENT, waiting_other_player_last_draw_sent, &do_nothing},
 	{TABLE_END, waiting_other_player, &do_nothing}
 	
@@ -261,56 +260,51 @@ STATE waiting_other_player_draw[]=
 //*****************************Ending Game STATES **********************************************
 
 	
-STATE waiting_other_player_last_draw_sent[]=
+STATE waiting_other_player_last_draw_sent[]= //el primero que entra aca, el companero tiene que jugar y despues le queda un turno mas
 {
-	{RECEIVE_PLAY, playing_last_turn_draw_sent	, &manage_final_play	},
+	{RECEIVE_PLAY, playing_last_turn_draw_sent	, &manage_final_play},
 	{RECEIVE_YOU_HAVE, playing_last_turn_draw_sent	, &manage_final_you_have}, //Si se llega a perder unos de estos paquetes me parece que se cuelga
-	{RECEIVE_DISCARD, playing_last_turn_draw_sent,&manage_final_discard  },
+	{RECEIVE_DISCARD, playing_last_turn_draw_sent,&manage_final_discard},
 	{TABLE_END, waiting_other_player_last_draw_sent, &do_nothing}
-	
 };
 
 
-STATE playing_last_turn_draw_sent[]=
+STATE playing_last_turn_draw_sent[]= 
 {
 	{ACTION_YOU_HAVE,waiting_receive_result_draw_sent, &send_you_have},
 	{ACTION_PLAY, waiting_receive_result_draw_sent, &send_play_pck},
 	{ACTION_DISCARD, waiting_receive_result_draw_sent, &send_discard_pck},
 	{RECEIVE_WE_LOST, play_again_quit_menu, &change_play_again_menu},
-	{TABLE_END, playing_last_turn_draw_sent, &do_nothing}
-	
+	{TABLE_END, playing_last_turn_draw_sent, &do_nothing}	
 };
 
-STATE waiting_receive_result_draw_sent[]=
-{
 
+STATE waiting_receive_result_draw_sent[]=//
+{
 	{RECEIVE_WE_WON, play_again_quit_menu, &change_play_again_menu},
 	{RECEIVE_WE_LOST, play_again_quit_menu, &change_play_again_menu},
 	{RECEIVE_GAME_OVER, play_again_quit_menu, &change_play_again_menu},
-	{TABLE_END, waiting_receive_result_draw_sent, &do_nothing}
-	
+	{TABLE_END, waiting_receive_result_draw_sent, &do_nothing}	
 };
 
 
 //Draw received
 
-STATE playing_last_turn_draw_received[]=
+STATE playing_last_turn_draw_received[]= //el primero que entra acca esta el mazo vacio y queda su jugada y la del companero
 {
 	{ACTION_YOU_HAVE,waiting_other_player_last_draw_received, &send_you_have},
 	{ACTION_PLAY, waiting_other_player_last_draw_received, &send_play_pck},
 	{ACTION_DISCARD, waiting_other_player_last_draw_received, &send_discard_pck},
-	{TABLE_END, waiting_other_player_last_draw_received, &do_nothing}
-	
+	{TABLE_END, playing_last_turn_draw_received, &do_nothing}
 };
 
-STATE waiting_other_player_last_draw_received[]=
+STATE waiting_other_player_last_draw_received[]=  
 {
-	{RECEIVE_PLAY, play_again_quit_menu	, &manage_final_play_send_result	},
+	{RECEIVE_PLAY, play_again_quit_menu	, &manage_final_play_send_result},
 	{RECEIVE_YOU_HAVE, play_again_quit_menu	, &manage_final_you_have_send_result}, //Si se llega a perder unos de estos paquetes me parece que se cuelga
 	{RECEIVE_DISCARD, play_again_quit_menu,&manage_final_discard_send_result },
 	{RECEIVE_WE_LOST, play_again_quit_menu, &change_play_again_menu},
-	{TABLE_END, waiting_other_player_last_draw_sent, &do_nothing}
-	
+	{TABLE_END, waiting_other_player_last_draw_received, &do_nothing}
 };
 
 //
@@ -325,7 +319,6 @@ STATE waiting_other_player_last_draw_received[]=
 STATE play_again_quit_menu[]=
 {
 	{TABLE_END, play_again_quit_menu, &do_nothing}
-
 };
 
 
@@ -335,8 +328,6 @@ STATE play_again_quit_menu[]=
 //	{RECEIVE_ACK,waiting_other_player,&message_other_player_turn},
 //	{TABLE_END, waiting_draw_ack, &do_nothing}
 //	//{TIMEOUT,waiting_action_ack,&resend_draw}
-//
-//	
 //};
 
 #endif 

@@ -186,6 +186,6 @@ ALLEGRO_SAMPLE *play_main_music()
 void stop_main_music(ALLEGRO_SAMPLE *sample)
 {
 	al_stop_samples();
-	if(sample!=NULL)
+	if(sample!=NULL);
 		al_destroy_sample(sample);
 }

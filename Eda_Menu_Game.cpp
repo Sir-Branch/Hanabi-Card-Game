@@ -93,6 +93,7 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 							0.0, 0.0, al_get_display_width(display), al_get_display_height(display), //x , y cord to draw and width and height to draw
 							0); //flags	
 	
+	
 	for(int i = 0 ; i < 5 ; i++)
 	{
 		color_buttons[i]->draw(display);
@@ -149,16 +150,6 @@ void Eda_Menu_Game::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanabi_Bo
 	draw_player_box_name(display, game_board->other_player_name.c_str(), 0.5, 0.25, 0.2, 0.025 );
 	//draw_player_box_name(display, "gonza_puto", 0.5, 1-0.25, 0.2, 0.025);
 	
-	//draw_clue(display, game_board,1); //El game_board->my_cards para leer el arreglo
-	//draw_clue(display, game_board,2); //El game_board->my_cards para leer el arreglo
-	//draw_clue(display, game_board,3); //El game_board->my_cards para leer el arreglo
-	//draw_clue(display, game_board,4); //El game_board->my_cards para leer el arreglo
-	//draw_clue(display, game_board,5);
-	//draw_clue(display, game_board,'Y'); //El game_board->my_cards para leer el arreglo
-	//draw_clue(display, game_board,'R');
-	//draw_clue(display, game_board,'B');
-	//draw_clue(display, game_board,'G');
-	//draw_clue(display, game_board,'W');
 	
 	for (int i=0; i<HANABI_HAND_SIZE; i++)
 		if (game_board->my_cards[i].color_hint == true && game_board->my_cards[i].color_time_hint >= 0)

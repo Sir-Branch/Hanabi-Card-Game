@@ -31,7 +31,7 @@
 
 void do_nothing (hanabi_game_data_t *user_data)
 {
-	;
+
 }
 
 void send_name_pck(hanabi_game_data_t *user_data)
@@ -73,8 +73,7 @@ void manage_receive_start_info(hanabi_game_data_t *user_data)
 void create_send_random_start(hanabi_game_data_t *user_data)
 {
 	int random;
-#warning "Cambiar por random"
-	random = 0;// rand()%2;
+	random = rand()%2;
 	if (random)
 	{
 		Hanabi_IStart_Packet i_start;
@@ -150,6 +149,7 @@ void send_you_have(hanabi_game_data_t *user_data)
 void send_play_pck(hanabi_game_data_t *user_data)
 {
 	unsigned int selected_card =((Eda_Menu_Game*) user_data->active_menu)->get_selected_card();
+	std::cout<<"chau"<<std::endl;
 	user_data->game_board->player_action_play_card(selected_card);	
 	Hanabi_Play_Packet play_pck(selected_card+1); //Packets goes 1 to 6
 	user_data->net_connection->send_packet(&play_pck);
@@ -187,7 +187,7 @@ void remove_card_to_hand(hanabi_game_data_t *user_data)
 
 void send_draw_card(hanabi_game_data_t *user_data)
 {
-	if( user_data->game_board->draw_card(user_data->game_board->my_card_replace) )
+	if(user_data->game_board->draw_card(user_data->game_board->my_card_replace) )
 	{
 		Hanabi_Draw_Packet draw_packet(user_data->game_board->my_cards[user_data->game_board->my_card_replace].playing_card);
 		user_data->net_connection->send_packet(&draw_packet);
@@ -230,18 +230,35 @@ void receive_istart_send_ack(hanabi_game_data_t *user_data)
 void manage_final_play(hanabi_game_data_t *user_data)
 {
 	user_data->game_board->receive_action_play_card(user_data->last_received_pck->get_data_pck()[1]-1);
+	std::cout<<"hola"<<std::endl;
+
 	if(!user_data->game_board->any_lives_left())
 	{
-		Hanabi_Game_Over_Packet game_over;
-		user_data->net_connection->send_packet(&game_over);
+		Hanabi_We_Lost_Packet we_lost;
+		user_data->net_connection->send_packet(&we_lost);
 		user_data->software_event_queue.push(RECEIVE_WE_LOST);
+	}
+	else if(user_data->game_board->score != 25)
+	{
+		Hanabi_We_Lost_Packet we_lost;
+		user_data->net_connection->send_packet(&we_lost);
+		user_data->software_event_queue.push(RECEIVE_WE_LOST);
+	}
+	else 
+	{
+		Hanabi_We_Won_Packet we_won;
+		user_data->net_connection->send_packet(&we_won);
+		user_data->software_event_queue.push(RECEIVE_WE_WON);
 	}
 	//send_ack_pck(user_data);
 }
 void manage_final_you_have(hanabi_game_data_t *user_data)
 {
+	Hanabi_We_Lost_Packet we_lost;
 	user_data->game_board->receive_action_get_clue(user_data->last_received_pck->get_data_pck()[1]);
 	user_data->message_event_queue.push(">Clue Received fixed func!");
+	user_data->net_connection->send_packet(&we_lost);
+	user_data->software_event_queue.push(RECEIVE_WE_LOST);
 	user_data->other_players_turn = false;
 }
 
@@ -249,6 +266,10 @@ void manage_final_you_have(hanabi_game_data_t *user_data)
 void manage_final_discard(hanabi_game_data_t *user_data)
 {
 	user_data->game_board->receive_action_discard_card(user_data->last_received_pck->get_data_pck()[1]-1);
+	Hanabi_We_Lost_Packet we_lost;
+	user_data->net_connection->send_packet(&we_lost);
+	user_data->software_event_queue.push(RECEIVE_WE_LOST);
+	
 	///send_ack_pck(user_data);
 }
 
