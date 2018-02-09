@@ -187,5 +187,6 @@ void stop_main_music(ALLEGRO_SAMPLE *sample)
 {
 	al_stop_samples();
 	if(sample!=NULL);
-		al_destroy_sample(sample);
+		//al_destroy_sample(sample); 
+#warning "al destroy sample traia problemas no se por que"
 }

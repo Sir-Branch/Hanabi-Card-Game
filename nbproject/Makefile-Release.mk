@@ -43,6 +43,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/Eda_Menu_Main.o \
 	${OBJECTDIR}/Eda_Menu_Network.o \
 	${OBJECTDIR}/Eda_Menu_Settings.o \
+	${OBJECTDIR}/Eda_Menu_Waiting_Connecction.o \
 	${OBJECTDIR}/Eda_Textbox.o \
 	${OBJECTDIR}/Eda_Textbox_Status.o \
 	${OBJECTDIR}/Hanabi_Ack_Packet.o \
@@ -154,6 +155,11 @@ ${OBJECTDIR}/Eda_Menu_Settings.o: Eda_Menu_Settings.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Eda_Menu_Settings.o Eda_Menu_Settings.cpp
+
+${OBJECTDIR}/Eda_Menu_Waiting_Connecction.o: Eda_Menu_Waiting_Connecction.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Eda_Menu_Waiting_Connecction.o Eda_Menu_Waiting_Connecction.cpp
 
 ${OBJECTDIR}/Eda_Textbox.o: Eda_Textbox.cpp
 	${MKDIR} -p ${OBJECTDIR}

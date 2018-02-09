@@ -18,6 +18,11 @@
 Hanabi_Board::Hanabi_Board() {	
 	lost_game = false;
 	last_hand = false;
+	for (int i=0; i<HANABI_CARDS_PER_HAND; i++)
+	{
+		my_cards[i].num_hint=false;
+		my_cards[i].color_hint=false;
+	}
 }
 
 
@@ -131,7 +136,7 @@ bool Hanabi_Board::remove_clue_token(void)
  */
 bool Hanabi_Board::validate_give_clue(unsigned char value_or_suit)
 {
-    bool valid = false;
+    bool valid = true;
     bool value = false; //Check if is value or suit
 	
 	if(value_or_suit >= '1' && value_or_suit <= '5' )
@@ -156,6 +161,7 @@ bool Hanabi_Board::validate_give_clue(unsigned char value_or_suit)
         }
 	}
     return valid;
+#warning "creo que esta funcion no sirve"
 }
 
 
@@ -277,6 +283,8 @@ void Hanabi_Board::receive_action_get_clue(unsigned char value_or_suit)
 				my_cards[i].color_hint = true; 
 				my_cards[i].color_time_hint = 7;
 			}
+			else;
+				//hint_not_in_hand=true;
 	}
 	else // is a value hint
 	{
@@ -286,6 +294,8 @@ void Hanabi_Board::receive_action_get_clue(unsigned char value_or_suit)
 				my_cards[i].num_hint = true;
 				my_cards[i].number_time_hint = 7;
 			}
+			else ;
+				//myhint_not_in_hand=true;
 	}
 }
 

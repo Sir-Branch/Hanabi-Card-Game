@@ -564,6 +564,7 @@ void Eda_Menu_Game::draw_clue(ALLEGRO_DISPLAY *display,
 	font = al_load_ttf_font(MONO_FONT_PATH,calculate_font_size(display,font_width , font_height, MONO_FONT_PATH, 1),0);
 	
     bool value = (value_or_suit <= 5) ? true : false; //Check if is value or suit
+	bool clue_is_in_hand=false;
 	if(value) //The clue is a value
 	{
 		for (int i=0; i< HANABI_CARDS_PER_HAND ; i++) //Checks all the hand. 
@@ -580,13 +581,11 @@ void Eda_Menu_Game::draw_clue(ALLEGRO_DISPLAY *display,
 						((my_cards_buttons[i]->x_center-0.5 * my_cards_buttons[i]->x_size_percent) - font_width/2) * al_get_display_width(display), 
 						((my_cards_buttons[i]->y_center-0.5 * my_cards_buttons[i]->y_size_percent)+font_height/2) * al_get_display_height(display),
 						0, number2draw.c_str());
-				
-	
-				
+				clue_is_in_hand=true;
 			}
 		}
 	}
-	else //The clue is a suit
+	else
 	{
 		for (int i=0; i< HANABI_CARDS_PER_HAND; i++) //Checks all the hand
 		{
@@ -621,28 +620,16 @@ void Eda_Menu_Game::draw_clue(ALLEGRO_DISPLAY *display,
 											0.015 * al_get_display_height(display), al_map_rgba_f(0.9,0.9,0.9,0.5));
 						break;
 				}
+				clue_is_in_hand=true;
 			}
-			
-			//if ((int)cards->playing_card.get_suit() == value_or_suit)
-			//{
-				//Draws a border 
-				//al_draw_scaled_bitmap(theme->cards_backside, 
-				//					0.0, 0.0, al_get_bitmap_width(theme->cards_backside), al_get_bitmap_height(theme->cards_backside),
-				//					(x_center + (space_between+x_size_percent) * (i-number_cards/2.0)) * al_get_display_width(display), //x_cord to draw
-				//					(y_center - 0.5 * y_size_percent) * al_get_display_height(display),  //y_cord to draw
-				//					x_size_percent * al_get_display_width(display), y_size_percent * al_get_display_height(display), //width and height to draw
-				//					0);
-				
-				//al_draw_circle( 
-				//		(x_center + (space_between+x_size_percent) * (i-number_cards/2.0)) * al_get_display_width(display),
-				//		(y_center - 0.5 * y_size_percent) * al_get_display_height(display), 0.2,
-				//		al_color_name("white"), 1.);
-									
-			//}
 		}
-
-
 	}
+	//if (clue_is_in_hand==false)
+	/*	al_draw_filled_rounded_rectangle((my_cards_buttons[3]->x_center-0.5) * al_get_display_width(display),
+					(my_cards_buttons[3]->y_center-0.5) * al_get_display_width(display),
+					(my_cards_buttons[3]->x_center-0.5 + 10) * al_get_display_width(display),
+					(my_cards_buttons[3]->y_center-0.5 + 10) * al_get_display_width(display),
+					0,0,al_color_name("black"));*/
 	
 	al_destroy_font(font);
 	 

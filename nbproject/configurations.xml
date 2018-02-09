@@ -93,6 +93,8 @@
         <itemPath>Eda_Menu_Network.h</itemPath>
         <itemPath>Eda_Menu_Settings.cpp</itemPath>
         <itemPath>Eda_Menu_Settings.h</itemPath>
+        <itemPath>Eda_Menu_Waiting_Connecction.cpp</itemPath>
+        <itemPath>Eda_Menu_Waiting_Connecction.h</itemPath>
         <itemPath>Eda_Textbox.cpp</itemPath>
         <itemPath>Eda_Textbox.h</itemPath>
         <itemPath>Eda_Textbox_Status.cpp</itemPath>
@@ -296,6 +298,10 @@
       <item path="Eda_Menu_Settings.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Eda_Menu_Settings.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eda_Menu_Waiting_Connecction.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Eda_Menu_Waiting_Connecction.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Eda_Textbox.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -535,6 +541,10 @@
       <item path="Eda_Menu_Settings.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Eda_Menu_Settings.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Eda_Menu_Waiting_Connecction.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Eda_Menu_Waiting_Connecction.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Eda_Textbox.cpp" ex="false" tool="1" flavor2="0">
       </item>

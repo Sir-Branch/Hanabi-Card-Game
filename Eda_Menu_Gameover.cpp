@@ -23,8 +23,8 @@
  */
 Eda_Menu_GameOver::Eda_Menu_GameOver() {
 	
-	play_again =  new Eda_Button( 0.4, 0.75, 0.045 * 3.75, 0.08, COMMON_FILE_PATH "/join.png", COMMON_FILE_PATH "/join_hover.png", NULL, EDA_BUTTON_JOIN_PRESSED);
-	quit = new Eda_Button(0.6, 0.75, 0.045 * 3.75, 0.08, COMMON_FILE_PATH "/host.png", COMMON_FILE_PATH "/host_hover.png", NULL, EDA_BUTTON_HOST_PRESSED );
+	play_again =  new Eda_Button( 0.4, 0.75, 0.045 * 3.75, 0.08, COMMON_FILE_PATH "/play.png", COMMON_FILE_PATH "/play_glow.png", NULL, EDA_BUTTON_PLAY_PRESSED);
+	quit = new Eda_Button(0.6, 0.75, 0.045 * 3.75, 0.08, COMMON_FILE_PATH "/quit.png", COMMON_FILE_PATH "/quit_glow.png", NULL, EDA_BUTTON_QUIT_PRESSED );
 }
 
 Eda_Menu_GameOver::Eda_Menu_GameOver(const Eda_Menu_GameOver& orig) {
@@ -58,7 +58,7 @@ void Eda_Menu_GameOver::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanab
 	//						0.0, 0.0, al_get_display_width(display), al_get_display_height(display), //x , y cord to draw and width and height to draw
 	//						0); //flags	
 	
-#warning "o ponemos otro background ?"
+
 	al_draw_filled_rounded_rectangle( 0.1 * al_get_display_width(display) , 
 							  0.1 * al_get_display_height(display),
 							  0.9	* al_get_display_width(display), 
@@ -66,9 +66,7 @@ void Eda_Menu_GameOver::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanab
 							  15, 15, al_map_rgba(0,0,0,200)
 							);
 
-	play_again->draw(display); //Draws the play again button
-	quit->draw(display);// Draws the quit button 
-		
+
 	font = al_load_ttf_font(MONO_FONT_PATH,calculate_font_size(display, 0.3, 0.3, MONO_FONT_PATH, 9),0); //Loads font for "game over"	
 	al_draw_text(font, al_color_name("white"),0.5 * al_get_display_width(display),
 				(0.5 - 0.2) * al_get_display_height(display) - al_get_font_line_height(font)*0.5,
@@ -102,6 +100,9 @@ void Eda_Menu_GameOver::draw(ALLEGRO_DISPLAY *display, Hanabi_Skin *theme, Hanab
 				(0.58) * al_get_display_height(display) - al_get_font_line_height(font)*0.5,
 				 ALLEGRO_ALIGN_CENTRE,"You are the MASTER of this 'great' game");
 	
+	play_again->draw(display); //Draws the play again button
+	quit->draw(display);// Draws the quit button 
+
 	al_destroy_font(font);	
 	al_flip_display();
 	

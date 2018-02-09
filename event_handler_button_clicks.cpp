@@ -65,7 +65,7 @@ void event_handle_button(event_button_t button_event,hanabi_game_data_t * hanabi
 		hanabi_game_data->player_name = ((Eda_Menu_Network*)hanabi_game_data->active_menu)->read_name_input();
 		hanabi_game_data->net_connection = new Networking();
 		#warning "Hardcoded to loopback because net connection is not working"
-		if( hanabi_game_data->net_connection->try_connect_server(DEF_TIMEOUT_SECS, HOME_IP))
+		if( hanabi_game_data->net_connection->try_connect_server(DEF_TIMEOUT_SECS, ((Eda_Menu_Network*)hanabi_game_data->active_menu)->read_ip_input()))
 		{
 			software_event_queue->push(FOUND_SERVER);
 			delete hanabi_game_data->active_menu;

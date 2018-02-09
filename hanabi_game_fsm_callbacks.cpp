@@ -149,7 +149,6 @@ void send_you_have(hanabi_game_data_t *user_data)
 void send_play_pck(hanabi_game_data_t *user_data)
 {
 	unsigned int selected_card =((Eda_Menu_Game*) user_data->active_menu)->get_selected_card();
-	std::cout<<"chau"<<std::endl;
 	user_data->game_board->player_action_play_card(selected_card);	
 	Hanabi_Play_Packet play_pck(selected_card+1); //Packets goes 1 to 6
 	user_data->net_connection->send_packet(&play_pck);
